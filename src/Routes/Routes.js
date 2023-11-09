@@ -21,8 +21,9 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: '/hall',
+    path: '/:name',
     element: <HallDetails></HallDetails>,
+    loader: ({ params }) => fetch(`data.json/${params.name}`),
   },
   {
     path: '*',

@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useLoaderData } from 'react-router';
 
 const HallDetails = () => {
+  const data = useLoaderData();
+  console.log(data);
+
   return (
     <div>
-      <h1 className='text-5xl font-bold'>Hall home page is comming soon</h1>
+      <h1 className='text-5xl font-bold'>... hall home page is comming soon</h1>
     </div>
   );
 };

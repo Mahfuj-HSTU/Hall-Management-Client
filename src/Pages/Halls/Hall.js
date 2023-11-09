@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 
 const Hall = ({ hall }) => {
   console.log(hall);
-  const { name, img } = hall;
+  const { name, img, id } = hall;
   return (
     <Link
-      to='/hall'
+      to={`/${name}`}
+      target='blank'
       className='card w-96 bg-base-100 shadow-xl'>
       <figure>
         <img
