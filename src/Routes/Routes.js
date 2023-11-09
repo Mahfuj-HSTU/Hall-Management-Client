@@ -3,6 +3,7 @@ import error from '../images/images.png';
 import Main from '../Layout/Main';
 import Home from '../Pages/Home/Home';
 import Halls from '../Pages/Halls/Halls';
+import HallDetails from '../Pages/Halls/HallDetails';
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
         element: <Halls></Halls>,
       },
     ],
+  },
+  {
+    path: '/hall',
+    element: <HallDetails></HallDetails>,
   },
   {
     path: '*',
