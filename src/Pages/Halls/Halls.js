@@ -14,7 +14,7 @@ const Halls = () => {
   return (
     <div>
       <h2>All Halls</h2>
-      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center	shadow-xl gap-5'>
+      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center gap-6'>
         {Halls.map((hall) => (
           <Hall
             hall={hall}

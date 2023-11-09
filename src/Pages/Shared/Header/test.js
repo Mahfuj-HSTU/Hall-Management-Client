@@ -1,21 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import hstu from '../../../images/HSTU_Logo.png';
-import MujibBorsho from '../../../images/Mujib Borsho.png';
-import { RiArrowDropDownLine } from 'react-icons/ri';
 
-const Header = () => {
+const test = () => {
   const menuItems = (
     <>
       {' '}
-      <li className='font-semibold dropdown dropdown-hover'>
+      <li className='font-semibold'>
         <Link to='/'>Home</Link>{' '}
       </li>
       <li className='font-semibold dropdown dropdown-hover'>
-        <label tabIndex={0}>
+        <button tabIndex={1}>
           Academic
           <RiArrowDropDownLine className='text-xl' />
-        </label>
+        </button>
         <ul className='dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52'>
           <li className='font-semibold'>
             <Link to=''>Faculties & Department</Link>
@@ -87,8 +83,6 @@ const Header = () => {
       </li>
     </>
   );
-  //flex flex-col justify-center items-center
-
   return (
     <div>
       <div className='flex justify-evenly items-center'>
@@ -98,10 +92,10 @@ const Header = () => {
           alt='hstu logo'
         />{' '}
         <span>
-          <h2 className='text-4xl font-semibold leading-relaxed	drop-shadow-lg'>
+          <h2 className='text-4xl font-semibold leading-relaxed	'>
             Hajje Mohammad Danesh Science and Technology University
           </h2>
-          <h2 className='text-3xl font-semibold drop-shadow-lg'>
+          <h2 className='text-3xl font-semibold '>
             হাজী মোহাম্মদ দানেশ বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়
           </h2>
         </span>
@@ -111,7 +105,7 @@ const Header = () => {
           alt='Mujib Borsho'
         />
       </div>
-      <div className='navbar justify-center h-16 bg-slate-300 mx-auto'>
+      <div className='navbar justify-center h-20 bg-slate-300 mx-auto'>
         <div className='navbar-start lg:hidden'>
           <div className='dropdown'>
             <label
@@ -151,4 +145,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default test;

@@ -7,7 +7,7 @@ const Hall = ({ hall }) => {
   return (
     <Link
       to='/'
-      className='card w-96 bg-base-200 shadow-xl'>
+      className='card w-96 bg-base-100 shadow-xl'>
       <figure>
         <img
           className='h-52 w-full'
