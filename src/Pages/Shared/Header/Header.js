@@ -79,22 +79,22 @@ const Header = () => {
 
   return (
     <div>
-      <div className='flex justify-evenly items-center'>
+      <div className='flex justify-between lg:justify-evenly items-center'>
         <img
-          className='h-32'
+          className='h-16 lg:h-32'
           src={hstu}
           alt='hstu logo'
         />{' '}
         <span>
-          <h2 className='text-4xl font-semibold leading-relaxed drop-shadow-lg'>
+          <h2 className='lg:text-4xl md:text-2xl font-semibold leading-relaxed drop-shadow-lg'>
             Hajje Mohammad Danesh Science and Technology University
           </h2>
-          <h2 className='text-3xl font-semibold drop-shadow-lg'>
+          <h2 className='lg:text-3xl md:text-xl font-semibold drop-shadow-lg md:pt-3'>
             হাজী মোহাম্মদ দানেশ বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়
           </h2>
         </span>
         <img
-          className='h-32'
+          className='h-16 lg:h-32'
           src={MujibBorsho}
           alt='Mujib Borsho'
         />

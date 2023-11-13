@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLoaderData } from 'react-router';
 import hstu from '../../images/HSTU_Logo.png';
 import { Link } from 'react-router-dom';
+import { RiArrowDropDownLine } from 'react-icons/ri';
 
 const HallDetails = () => {
   const menuItems = (
@@ -10,14 +11,28 @@ const HallDetails = () => {
       <li className='font-semibold'>
         <Link to=''>Home</Link>{' '}
       </li>
-      <li className='font-semibold'>
-        <Link to=''>Admission</Link>{' '}
+      <li className='font-semibold relative group'>
+        <button tabIndex={1}>
+          Hall Administration
+          <RiArrowDropDownLine className='text-xl' />
+        </button>
+        <ul className='absolute hidden group-hover:block mt-9 z-[1] menu p-2 shadow bg-base-100 rounded-box w-52'>
+          <li className='font-semibold'>
+            <Link to=''>Hall Super</Link>
+          </li>
+          <li className='font-semibold'>
+            <Link to=''>Assistant Hall Super</Link>
+          </li>
+        </ul>
       </li>
       <li className='font-semibold'>
-        <Link to=''>Campus</Link>{' '}
+        <Link to=''>About</Link>{' '}
       </li>
       <li className='font-semibold'>
         <Link to=''>Contact Us</Link>{' '}
+      </li>
+      <li className='font-semibold'>
+        <Link to=''>Login</Link>{' '}
       </li>
     </>
   );
