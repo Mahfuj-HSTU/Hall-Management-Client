@@ -8,15 +8,15 @@ const Header = () => {
   const menuItems = (
     <>
       {' '}
-      <li className='font-semibold dropdown dropdown-hover'>
+      <li className='font-semibold'>
         <Link to='/'>Home</Link>{' '}
       </li>
-      <li className='font-semibold dropdown dropdown-hover'>
-        <label tabIndex={0}>
+      <li className='font-semibold relative group'>
+        <button tabIndex={1}>
           Academic
           <RiArrowDropDownLine className='text-xl' />
-        </label>
-        <ul className='dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52'>
+        </button>
+        <ul className='absolute hidden group-hover:block mt-9 z-[1] menu p-2 shadow bg-base-100 rounded-box w-52'>
           <li className='font-semibold'>
             <Link to=''>Faculties & Department</Link>
           </li>
@@ -25,38 +25,26 @@ const Header = () => {
           </li>
         </ul>
       </li>
-      {/* <li className='font-semibold dropdown dropdown-hover'>
-        <label
-          tabIndex={0}
-          className='btn m-1'>
-          Hover
-        </label>
-        <ul
-          tabIndex={0}
-          className='dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52'>
-          <li>check</li>
-        </ul>
-      </li> */}
       <li className='font-semibold'>
         <Link to='/'>Admission</Link>{' '}
       </li>
-      <li className='font-semibold  dropdown dropdown-hover'>
+      <li className='font-semibold  relative group'>
         <label tabIndex={0}>
           Research & Training
           <RiArrowDropDownLine className='text-xl' />
         </label>
-        <ul className='dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52'>
+        <ul className='absolute hidden group-hover:block mt-9 z-[1] menu p-2 shadow bg-base-100 rounded-box w-52'>
           <li className='font-semibold'>
             <Link to=''>Institute of Reasearch & Training</Link>
           </li>
         </ul>
       </li>
-      <li className='font-semibold dropdown dropdown-hover'>
+      <li className='font-semibold relative group'>
         <label tabIndex={0}>
           Student Affairs
           <RiArrowDropDownLine className='text-xl' />
         </label>
-        <ul className='dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52'>
+        <ul className='absolute hidden group-hover:block mt-9 z-[1] menu p-2 shadow bg-base-100 rounded-box w-52'>
           <li className='font-semibold'>
             <Link to=''>Proctor Office</Link>{' '}
           </li>
@@ -71,12 +59,12 @@ const Header = () => {
       <li className='font-semibold'>
         <Link to='/'>Campus</Link>{' '}
       </li>
-      <li className='font-semibold dropdown dropdown-hover'>
+      <li className='font-semibold relative group'>
         <label tabIndex={0}>
           Notice Board
           <RiArrowDropDownLine className='text-xl' />
         </label>
-        <ul className='dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52'>
+        <ul className='absolute hidden group-hover:block mt-9 z-[1] menu p-2 shadow bg-base-100 rounded-box w-52'>
           <li className='font-semibold'>
             <Link to=''>All Notice</Link>
           </li>
@@ -98,7 +86,7 @@ const Header = () => {
           alt='hstu logo'
         />{' '}
         <span>
-          <h2 className='text-4xl font-semibold leading-relaxed	drop-shadow-lg'>
+          <h2 className='text-4xl font-semibold leading-relaxed drop-shadow-lg'>
             Hajje Mohammad Danesh Science and Technology University
           </h2>
           <h2 className='text-3xl font-semibold drop-shadow-lg'>
@@ -111,7 +99,7 @@ const Header = () => {
           alt='Mujib Borsho'
         />
       </div>
-      <div className='navbar justify-center h-16 bg-slate-300 mx-auto'>
+      <div className='navbar justify-center h-20 bg-slate-300 mx-auto'>
         <div className='navbar-start lg:hidden'>
           <div className='dropdown'>
             <label
@@ -133,15 +121,10 @@ const Header = () => {
             </label>
             <ul
               tabIndex={0}
-              className='menu menu-compact dropdown-content p-2 shadow bg-base-500 rounded-box w-52'>
+              className='menu menu-compact dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-56'>
               {menuItems}
             </ul>
           </div>
-          {/* <Link
-          to='/'
-          className='btn btn-ghost normal-case text-xl'>
-          HSTU
-        </Link> */}
         </div>
         <div className='navbar-center hidden lg:flex '>
           <ul className='menu menu-horizontal p-0'>{menuItems}</ul>

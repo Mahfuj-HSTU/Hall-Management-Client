@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Hall = ({ hall }) => {
+const HallCard = ({ hall }) => {
   console.log(hall);
-  const { name, img, id } = hall;
+  const { name, img } = hall;
   return (
     <Link
       to={`/${name}`}
@@ -24,4 +24,4 @@ const Hall = ({ hall }) => {
   );
 };
 
-export default Hall;
+export default HallCard;

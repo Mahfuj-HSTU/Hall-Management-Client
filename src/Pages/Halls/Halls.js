@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Hall from './Hall';
+import HallCard from './HallCard';
 
 const Halls = () => {
   const [Halls, setHalls] = useState([]);
@@ -16,9 +16,9 @@ const Halls = () => {
       <h2>All Halls</h2>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center gap-6'>
         {Halls.map((hall) => (
-          <Hall
+          <HallCard
             hall={hall}
-            key={hall.id}></Hall>
+            key={hall.id}></HallCard>
         ))}
       </div>
     </div>
