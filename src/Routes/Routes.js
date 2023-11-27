@@ -4,6 +4,7 @@ import Main from '../Layout/Main';
 import Home from '../Pages/Home/Home';
 import Halls from '../Pages/Halls/Halls';
 import HallDetails from '../Pages/Halls/HallDetails';
+import HallLayout from '../Layout/HallLayout';
 
 const router = createBrowserRouter([
   {
@@ -22,8 +23,14 @@ const router = createBrowserRouter([
   },
   {
     path: '/:name',
-    element: <HallDetails></HallDetails>,
-    loader: ({ params }) => fetch(`data.json/${params.name}`),
+    element: <HallLayout></HallLayout>,
+    children: [
+      {
+        path: '/:name',
+        element: <HallDetails></HallDetails>,
+        loader: ({ params }) => fetch(`data.json/${params.name}`),
+      },
+    ],
   },
   {
     path: '*',

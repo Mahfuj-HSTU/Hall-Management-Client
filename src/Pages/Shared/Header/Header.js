@@ -16,7 +16,7 @@ const Header = () => {
           Academic
           <RiArrowDropDownLine className='text-xl' />
         </button>
-        <ul className='absolute hidden group-hover:block mt-9 z-[1] menu p-2 shadow bg-base-100 rounded-box w-52'>
+        <ul className='absolute hidden group-hover:block mt-9 z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 divide-y divide-blue-300'>
           <li className='font-semibold'>
             <Link to=''>Faculties & Department</Link>
           </li>
@@ -33,7 +33,7 @@ const Header = () => {
           Research & Training
           <RiArrowDropDownLine className='text-xl' />
         </label>
-        <ul className='absolute hidden group-hover:block mt-9 z-[1] menu p-2 shadow bg-base-100 rounded-box w-52'>
+        <ul className='absolute hidden group-hover:block mt-9 z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 divide-y divide-blue-300'>
           <li className='font-semibold'>
             <Link to=''>Institute of Reasearch & Training</Link>
           </li>
@@ -44,7 +44,7 @@ const Header = () => {
           Student Affairs
           <RiArrowDropDownLine className='text-xl' />
         </label>
-        <ul className='absolute hidden group-hover:block mt-9 z-[1] menu p-2 shadow bg-base-100 rounded-box w-52'>
+        <ul className='absolute hidden group-hover:block mt-9 z-[1] menu shadow bg-base-100 rounded-box w-52 divide-y divide-blue-300'>
           <li className='font-semibold'>
             <Link to=''>Proctor Office</Link>{' '}
           </li>
@@ -64,7 +64,7 @@ const Header = () => {
           Notice Board
           <RiArrowDropDownLine className='text-xl' />
         </label>
-        <ul className='absolute hidden group-hover:block mt-9 z-[1] menu p-2 shadow bg-base-100 rounded-box w-52'>
+        <ul className='absolute hidden group-hover:block mt-9 z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 divide-y divide-blue-300'>
           <li className='font-semibold'>
             <Link to=''>All Notice</Link>
           </li>
@@ -81,25 +81,25 @@ const Header = () => {
     <div>
       <div className='flex justify-between lg:justify-evenly items-center'>
         <img
-          className='h-16 lg:h-32'
+          className='h-16 lg:h-28'
           src={hstu}
           alt='hstu logo'
         />{' '}
         <span>
-          <h2 className='lg:text-4xl md:text-2xl font-semibold leading-relaxed drop-shadow-lg'>
+          <h2 className='lg:text-3xl md:text-2xl font-semibold leading-relaxed drop-shadow-lg'>
             Hajje Mohammad Danesh Science and Technology University
           </h2>
-          <h2 className='lg:text-3xl md:text-xl font-semibold drop-shadow-lg md:pt-3'>
+          <h2 className='lg:text-2xl md:text-xl font-semibold drop-shadow-lg md:pt-3'>
             হাজী মোহাম্মদ দানেশ বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়
           </h2>
         </span>
         <img
-          className='h-16 lg:h-32'
+          className='h-16 lg:h-28'
           src={MujibBorsho}
           alt='Mujib Borsho'
         />
       </div>
-      <div className='navbar justify-center h-20 bg-slate-300 mx-auto'>
+      <div className='navbar justify-center h-16 bg-slate-300 mx-auto'>
         <div className='navbar-start lg:hidden'>
           <div className='dropdown'>
             <label
