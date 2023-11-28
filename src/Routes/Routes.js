@@ -5,6 +5,9 @@ import Home from '../Pages/Home/Home';
 import Halls from '../Pages/Halls/Halls';
 import HallDetails from '../Pages/Halls/HallDetails';
 import HallLayout from '../Layout/HallLayout';
+import ProfileLayout from '../Layout/ProfileLayout';
+import Profile from '../Pages/Profile/Profile';
+import Application from '../Pages/Profile/Application';
 
 const router = createBrowserRouter([
   {
@@ -29,6 +32,20 @@ const router = createBrowserRouter([
         path: '/:name',
         element: <HallDetails></HallDetails>,
         loader: ({ params }) => fetch(`data.json/${params.name}`),
+      },
+    ],
+  },
+  {
+    path: '/dashboard',
+    element: <ProfileLayout></ProfileLayout>,
+    children: [
+      {
+        path: '/dashboard',
+        element: <Profile></Profile>,
+      },
+      {
+        path: '/dashboard/applicatoin',
+        element: <Application></Application>,
       },
     ],
   },
