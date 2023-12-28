@@ -40,15 +40,21 @@ const Login = () => {
                 name='password'
                 id='password'
                 placeholder='password'
-                className='input input-bordered w-full max-w-xs mb-7'
+                className='input input-bordered w-full max-w-xs'
               />
+              <p className='pb-2 text-start pl-6 text-sm font-semibold'>
+                <Link
+                  to='/'
+                  className='link mb-7'>
+                  Forgot password?
+                </Link>
+              </p>
             </label>
 
             <label className='relative'>
-              <BsSendCheckFill className='pointer-events-none w-4 h-5 text-green-800 absolute right-28 mt-4' />
+              <BsSendCheckFill className='pointer-events-none w-4 h-4 text-green-800 absolute top-1/2 transform -translate-y-1/2 right-28' />
               <input
                 type='submit'
-                placeholder='test@gmail.com'
                 className='bg-teal-300 cursor-pointer font-semibold input input-bordered w-full max-w-xs mb-2'
               />
             </label>
