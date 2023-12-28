@@ -8,6 +8,7 @@ import HallLayout from '../Layout/HallLayout';
 import ProfileLayout from '../Layout/ProfileLayout';
 import Profile from '../Pages/Profile/Profile';
 import Application from '../Pages/Profile/Application';
+import Login from '../Pages/Registration/Login/Login';
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
         loader: ({ params }) => fetch(`data.json/${params.name}`),
       },
     ],
+  },
+  {
+    path: '/login',
+    element: <Login></Login>,
   },
   {
     path: '/dashboard',

@@ -7,7 +7,7 @@ const Message = () => {
       <h2 className='text-center text-2xl text-white bg-blue-700 font-semibold py-2'>
         Vice Chancellor's Message
       </h2>
-      <div className='p-6'>
+      <div className='p-6 px-10'>
         <span className='float-left pr-6 pb-2'>
           <img
             src={vc}

@@ -34,7 +34,7 @@ const HallHeader = () => {
       <li className='font-semibold'>
         <Link to=''>Contact Us</Link>{' '}
       </li>
-      <li className='font-semibold relative group'>
+      {/* <li className='font-semibold relative group'>
         <button tabIndex={1}>
           <IoPersonCircle className='text-2xl' />
         </button>
@@ -49,10 +49,10 @@ const HallHeader = () => {
             <Link to=''>Log Out</Link>
           </li>
         </ul>
-      </li>
-      {/* <li className='font-semibold'>
-        <Link to=''>Login</Link>{' '}
       </li> */}
+      <li className='font-semibold'>
+        <Link to='/login'>Login</Link>{' '}
+      </li>
     </>
   );
 

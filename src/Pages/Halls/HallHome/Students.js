@@ -41,7 +41,7 @@ const Students = () => {
                 className='card lg:w-[300px] w-[350px] text-white mb-3'>
                 <div className='card-body items-center'>
                   <h1 className=' card-title text-7xl'>12</h1>
-                  <h2 className=' text-xl'>Total appearing students </h2>
+                  <h2 className=' text-xl'>Total Present Students </h2>
                 </div>
               </div>
               <div

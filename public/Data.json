@@ -2,46 +2,91 @@
   {
     "id": "1",
     "name": " Bangabandhu Sheikh Mujibur Rahman Hall",
-    "img": "https://i.ibb.co/GdxPQzR/78467933-2719743334754976-8431410888157691904-n.jpg"
+    "img": "https://i.ibb.co/GdxPQzR/78467933-2719743334754976-8431410888157691904-n.jpg",
+    "message": "Hall super message",
+    "atstudent": "500",
+    "tseat": "150",
+    "prstudent": "150",
+    "avseat": "00"
   },
   {
     "id": "2",
     "name": " Dormitory-2",
-    "img": "https://i.ibb.co/Y8PtmL9/2017-07-25.jpg"
+    "img": "https://i.ibb.co/Y8PtmL9/2017-07-25.jpg",
+    "message": "Hall super message",
+    "atstudent": "500",
+    "tseat": "150",
+    "prstudent": "150",
+    "avseat": "00"
   },
   {
     "id": "3",
     "name": "Tajuddin Ahmad Hall",
-    "img": ""
+    "img": "",
+    "message": "Hall super message",
+    "atstudent": "500",
+    "tseat": "150",
+    "prstudent": "150",
+    "avseat": "00"
   },
   {
     "id": "4",
     "name": "Sheikh Russel Hall",
-    "img": ""
+    "img": "",
+    "message": "Hall super message",
+    "atstudent": "500",
+    "tseat": "150",
+    "prstudent": "150",
+    "avseat": "00"
   },
   {
     "id": "5",
     "name": "Ivy Rahman Hall",
-    "img": ""
+    "img": "",
+    "message": "Hall super message",
+    "atstudent": "500",
+    "tseat": "150",
+    "prstudent": "150",
+    "avseat": "00"
   },
   {
     "id": "6",
     "name": "Bangamata Sheikh Fazilatunnesa Mujib Hall",
-    "img": ""
+    "img": "",
+    "message": "Hall super message",
+    "atstudent": "500",
+    "tseat": "150",
+    "prstudent": "150",
+    "avseat": "00"
   },
   {
     "id": "7",
     "name": "Kobi Sufia Kamal Hall",
-    "img": ""
+    "img": "",
+    "message": "Hall super message",
+    "atstudent": "500",
+    "tseat": "150",
+    "prstudent": "150",
+    "avseat": "00"
   },
   {
     "id": "8",
     "name": "New Ladies Hall",
-    "img": ""
+    "img": "",
+    "message": "Hall super message",
+    "atstudent": "500",
+    "tseat": "150",
+    "prstudent": "150",
+    "avseat": "00"
   },
   {
     "id": "9",
     "name": "International Hall",
-    "img": ""
+    "img": "",
+    "message": "Hall super message",
+    "atstudent": "500",
+    "tseat": "150",
+    "prstudent": "150",
+    "avseat": "00"
   }
 ]

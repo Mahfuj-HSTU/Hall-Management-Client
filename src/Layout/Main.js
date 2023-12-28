@@ -8,10 +8,9 @@ const Main = () => {
   return (
     <div>
       <Header></Header>
-      <Banner></Banner>
-      <div className='max-w-screen-xl mx-auto'>
-        <Outlet></Outlet>
-      </div>
+      {/* <div className='max-w-screen-xl mx-auto'> */}
+      <Outlet></Outlet>
+      {/* </div> */}
       <Footer></Footer>
     </div>
   );
