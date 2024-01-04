@@ -4,6 +4,18 @@ import { BsSendCheckFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 
 const SignUp = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const sid = form.sid.value;
+    const hall = form.hall.value;
+    const email = form.email.value;
+    const password = form.password.value;
+
+    const data = { sid, hall, email, password };
+    console.log(data);
+  };
+
   return (
     <div
       className='hero min-h-screen'
@@ -13,7 +25,9 @@ const SignUp = () => {
       <div className='hero-overlay bg-opacity-30'></div>
       <div className='hero-content text-center text-neutral-content'>
         <div className='max-w-sm'>
-          <form className='bg-gray-100 bg-opacity-80 pt-5 pb-12 rounded-xl text-black'>
+          <form
+            onSubmit={handleSubmit}
+            className='bg-gray-100 bg-opacity-80 pt-5 pb-12 rounded-xl text-black'>
             <h1 className='mb-5 text-4xl font-bold py-2 text-blue-800'>
               Sign Up
             </h1>
@@ -23,12 +37,24 @@ const SignUp = () => {
               placeholder='Student ID'
               className='input input-bordered w-full max-w-xs mb-5'
             />
-            <input
-              type='text'
-              name='hname'
-              placeholder='Hall Name'
-              className='input input-bordered w-full max-w-xs mb-5'
-            />
+            <select
+              name='hall'
+              className='select select-bordered w-full max-w-xs mb-5'>
+              <option
+                disabled
+                selected>
+                Choose your hall
+              </option>
+              <option>Bangabandhu Sheikh Mujibur Rahman Hall</option>
+              <option>Dormitory-2</option>
+              <option>Tajuddin Ahmad Hall</option>
+              <option>Sheikh Russel Hall</option>
+              <option>Ivy Rahman Hall</option>
+              <option>Bangamata Sheikh Fazilatunnesa Mujib Hall</option>
+              <option>Kobi Sufia Kamal Hall</option>
+              <option>New Ladies Hall</option>
+              <option>International Hall</option>
+            </select>
             <input
               type='email'
               name='email'
@@ -47,7 +73,6 @@ const SignUp = () => {
               <BsSendCheckFill className='pointer-events-none w-4 h-5 text-green-800 absolute right-28 mt-4' />
               <input
                 type='submit'
-                placeholder='test@gmail.com'
                 className='bg-teal-300 cursor-pointer font-semibold input input-bordered w-full max-w-xs mb-2'
               />
             </label>

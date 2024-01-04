@@ -87,7 +87,7 @@ const Header = () => {
         />{' '}
         <span>
           <h2 className='lg:text-3xl md:text-2xl font-semibold leading-relaxed drop-shadow-lg'>
-            Hajje Mohammad Danesh Science and Technology University
+            Hajee Mohammad Danesh Science and Technology University
           </h2>
           <h2 className='lg:text-2xl md:text-xl font-semibold drop-shadow-lg md:pt-3'>
             হাজী মোহাম্মদ দানেশ বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়

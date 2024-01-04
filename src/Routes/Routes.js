@@ -6,10 +6,10 @@ import Halls from '../Pages/Halls/Halls';
 import HallDetails from '../Pages/Halls/HallDetails';
 import HallLayout from '../Layout/HallLayout';
 import ProfileLayout from '../Layout/ProfileLayout';
-import Profile from '../Pages/Profile/Profile';
-import Application from '../Pages/Profile/Application';
 import Login from '../Pages/Registration/Login/Login';
 import SignUp from '../Pages/Registration/SignUp/SignUp';
+import Profile from '../Pages/Dashboard/Profile';
+import Application from '../Pages/Dashboard/Application';
 
 const router = createBrowserRouter([
   {

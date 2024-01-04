@@ -42,7 +42,7 @@ const Login = () => {
                 placeholder='password'
                 className='input input-bordered w-full max-w-xs'
               />
-              <p className='pb-2 text-start pl-6 text-sm font-semibold'>
+              <p className='pb-4 text-start pl-6 text-xs font-semibold'>
                 <Link
                   to='/'
                   className='link mb-7'>

@@ -1,7 +1,7 @@
 import React from 'react';
-import Message from './HallHome/Message';
-import Students from './HallHome/Students';
 import HallBanner from './HallHome/HallBanner/HallBanner';
+import Message from './HallHome/Message/Message';
+import Students from './HallHome/Students/Students';
 
 const HallDetails = () => {
   return (
