@@ -2,6 +2,7 @@ import React from 'react';
 import signup from '../../../images/login1.jpg';
 import { BsSendCheckFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
+import { IoArrowBackCircleOutline } from 'react-icons/io5';
 
 const SignUp = () => {
   const handleSubmit = (event) => {
@@ -27,7 +28,14 @@ const SignUp = () => {
         <div className='max-w-sm'>
           <form
             onSubmit={handleSubmit}
-            className='bg-gray-100 bg-opacity-80 pt-5 pb-12 rounded-xl text-black'>
+            className='bg-gray-100 bg-opacity-80 pt-5 pb-12 rounded-xl text-black relative'>
+            <span className='text-start absolute top-4 left-2 '>
+              <Link
+                to='/'
+                className=''>
+                <IoArrowBackCircleOutline className='text-2xl ml-2 btn btn-circle btn-sm btn-outline border-none btn-primary' />
+              </Link>
+            </span>
             <h1 className='mb-5 text-4xl font-bold py-2 text-blue-800'>
               Sign Up
             </h1>
@@ -80,7 +88,7 @@ const SignUp = () => {
               Already have an accoung?{' '}
               <Link
                 to='/login'
-                className='link link-primary'>
+                className='link link-primary font-semibold'>
                 Sign In
               </Link>
             </p>

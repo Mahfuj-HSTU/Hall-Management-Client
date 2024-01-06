@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import banner from '../../images/hallbanner.jpg';
 
 const HallCard = ({ hall }) => {
   console.log(hall);
@@ -12,9 +13,9 @@ const HallCard = ({ hall }) => {
       <figure>
         <img
           className='h-52 w-full'
-          src={img}
+          src={img || banner}
           alt='hall images'
-        />
+        />{' '}
       </figure>
       <div className='card-body text-start'>
         <h2 className='card-title'>{name}</h2>

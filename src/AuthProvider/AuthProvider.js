@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from 'react';
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -8,8 +8,8 @@ import {
   signInWithPopup,
   sendEmailVerification,
   sendPasswordResetEmail,
-} from "firebase/auth";
-import app from "../../firebase/tourist.firebase";
+} from 'firebase/auth';
+import app from '../firebase/hall.firebase';
 
 export const AuthContext = createContext();
 const auth = getAuth(app);

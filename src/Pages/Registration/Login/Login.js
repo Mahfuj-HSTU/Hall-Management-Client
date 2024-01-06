@@ -3,6 +3,8 @@ import login from '../../../images/login.jpg';
 import { MdMarkEmailRead, MdLock } from 'react-icons/md';
 import { BsSendCheckFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
+import ForgatePassword from './ForgatePassword';
+import { IoArrowBackCircleOutline } from 'react-icons/io5';
 
 const Login = () => {
   return (
@@ -14,7 +16,14 @@ const Login = () => {
       <div className='hero-overlay bg-opacity-30'></div>
       <div className='hero-content text-center text-neutral-content'>
         <div className='max-w-[360px]'>
-          <form className='bg-indigo-400 bg-opacity-80 pt-5 pb-14 rounded-xl text-black'>
+          <form className='bg-indigo-300 bg-opacity-80 pt-5 pb-14 rounded-xl text-black relative'>
+            <span className='text-start absolute top-4 left-2 '>
+              <Link
+                to='/'
+                className=''>
+                <IoArrowBackCircleOutline className='text-2xl ml-2 btn btn-circle btn-sm btn-outline border-none btn-primary' />
+              </Link>
+            </span>
             <h1 className='mb-5 text-4xl font-bold py-2 text-blue-800'>
               LOGIN
             </h1>
@@ -42,12 +51,19 @@ const Login = () => {
                 placeholder='password'
                 className='input input-bordered w-full max-w-xs'
               />
-              <p className='pb-4 text-start pl-6 text-xs font-semibold'>
+              {/* <p className='pb-4 text-start pl-6 text-xs font-semibold'>
                 <Link
                   to='/'
                   className='link mb-7'>
                   Forgot password?
                 </Link>
+              </p> */}
+              <p className='pb-4 text-start pl-6 text-xs font-semibold'>
+                <label
+                  htmlFor='reset-modal'
+                  className='label-text-alt link link-hover'>
+                  Forgot password?
+                </label>
               </p>
             </label>
 
@@ -69,6 +85,7 @@ const Login = () => {
           </form>
         </div>
       </div>
+      <ForgatePassword />
     </div>
   );
 };
