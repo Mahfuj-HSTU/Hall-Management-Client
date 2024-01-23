@@ -27,13 +27,14 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: '/:name',
+    path: '/:id',
     element: <HallLayout></HallLayout>,
     children: [
       {
-        path: '/:name',
+        path: '/:id',
         element: <HallDetails></HallDetails>,
-        loader: ({ params }) => fetch(`data.json/${params.name}`),
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/hall/${params.id}`),
       },
     ],
   },

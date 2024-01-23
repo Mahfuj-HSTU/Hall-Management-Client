@@ -5,7 +5,7 @@ const Halls = () => {
   const [Halls, setHalls] = useState([]);
 
   useEffect(() => {
-    fetch('data.json')
+    fetch('http://localhost:5000/halls')
       .then((res) => res.json())
       .then((data) => setHalls(data));
   }, []);
