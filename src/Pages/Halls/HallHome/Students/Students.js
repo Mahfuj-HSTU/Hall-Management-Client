@@ -1,6 +1,7 @@
 import React from 'react';
 
-const Students = () => {
+const Students = ({ hall }) => {
+  const { atstudent, avseat, prstudent, tseat } = hall;
   return (
     <div>
       {' '}
@@ -24,7 +25,7 @@ const Students = () => {
                 data-aos='fade-up'
                 className='card grid lg:w-[300px] w-[350px] text-white mb-3'>
                 <div className='card-body items-center'>
-                  <h1 className=' card-title text-7xl'>12</h1>
+                  <h1 className=' card-title text-7xl'>{atstudent}</h1>
                   <h2 className=' text-xl'>Total Atached Students</h2>
                 </div>
               </div>
@@ -32,7 +33,7 @@ const Students = () => {
                 data-aos='fade-up'
                 className='card lg:w-[300px] w-[350px] text-white mb-3'>
                 <div className='card-body items-center'>
-                  <h1 className=' card-title text-7xl'>12</h1>
+                  <h1 className=' card-title text-7xl'>{tseat}</h1>
                   <h2 className=' text-xl'>Total Seat Capacity</h2>
                 </div>
               </div>
@@ -40,7 +41,7 @@ const Students = () => {
                 data-aos='fade-up'
                 className='card lg:w-[300px] w-[350px] text-white mb-3'>
                 <div className='card-body items-center'>
-                  <h1 className=' card-title text-7xl'>12</h1>
+                  <h1 className=' card-title text-7xl'>{prstudent}</h1>
                   <h2 className=' text-xl'>Total Present Students </h2>
                 </div>
               </div>
@@ -48,7 +49,7 @@ const Students = () => {
                 data-aos='fade-up'
                 className='card lg:w-[300px] w-[350px] text-white mb-1 lg:mb-3'>
                 <div className='card-body items-center'>
-                  <h1 className=' card-title text-7xl'>0</h1>
+                  <h1 className=' card-title text-7xl'>{avseat}</h1>
                   <h2 className=' text-xl'>Available Seat</h2>
                 </div>
               </div>

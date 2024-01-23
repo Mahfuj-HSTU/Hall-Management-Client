@@ -2,7 +2,7 @@ import React from 'react';
 import banner from '../../../../images/hallbanner.jpg';
 
 const HallBanner = ({ hall }) => {
-  const { name, img, message } = hall;
+  const { name, img } = hall;
   return (
     <div className='carousel w-full custom'>
       <div
