@@ -1,19 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import banner from '../../images/hallbanner.jpg';
 
-const Hall = ({ hall }) => {
-  console.log(hall);
-  const { name, img } = hall;
+const HallCard = ({ hall }) => {
+  // console.log(hall);
+  const { _id, name, img } = hall;
   return (
     <Link
-      to='/'
-      className='card w-96 bg-base-200 shadow-xl'>
+      to={`/${_id}`}
+      target='blank'
+      className='card w-96 bg-base-100 shadow-xl'>
       <figure>
         <img
           className='h-52 w-full'
-          src={img}
+          src={img || banner}
           alt='hall images'
-        />
+        />{' '}
       </figure>
       <div className='card-body text-start'>
         <h2 className='card-title'>{name}</h2>
@@ -23,4 +25,4 @@ const Hall = ({ hall }) => {
   );
 };
 
-export default Hall;
+export default HallCard;
