@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import HallCard from './HallCard';
+import { ServerLink } from '../../Hooks/useServerLink';
 
 const Halls = () => {
   const [Halls, setHalls] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/halls')
+    fetch(`${ServerLink}/api/halls`)
       .then((res) => res.json())
       .then((data) => setHalls(data));
   }, []);
