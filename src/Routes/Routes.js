@@ -10,6 +10,7 @@ import Login from '../Pages/Registration/Login/Login';
 import SignUp from '../Pages/Registration/SignUp/SignUp';
 import Profile from '../Pages/Dashboard/Profile';
 import Application from '../Pages/Dashboard/Application';
+import { ServerLink } from '../Hooks/useServerLink';
 
 const router = createBrowserRouter([
   {
@@ -33,8 +34,7 @@ const router = createBrowserRouter([
       {
         path: '/:id',
         element: <HallDetails></HallDetails>,
-        loader: ({ params }) =>
-          fetch(`http://localhost:5000/hall/${params.id}`),
+        loader: ({ params }) => fetch(`${ServerLink}/api/halls/${params.id}`),
       },
     ],
   },

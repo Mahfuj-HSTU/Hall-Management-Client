@@ -6,7 +6,7 @@ import { useLoaderData } from 'react-router-dom';
 
 const HallDetails = () => {
   const hall = useLoaderData();
-  console.log(hall);
+  // console.log(hall);
   return (
     <div>
       <HallBanner hall={hall}></HallBanner>

@@ -1,10 +1,28 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import signup from '../../../images/login1.jpg';
 import { BsSendCheckFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { IoArrowBackCircleOutline } from 'react-icons/io5';
+import { ServerLink } from '../../../Hooks/useServerLink';
+import { useQuery } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
+import { AuthContext } from '../../../AuthProvider/AuthProvider';
 
 const SignUp = () => {
+  const [error, setError] = useState('');
+  const { createUser } = useContext(AuthContext);
+  const { data: students = [], refetch } = useQuery({
+    queryKey: ['students'],
+    queryFn: () =>
+      fetch(`${ServerLink}/api/students`).then((res) => res.json()),
+  });
+  const { data: users = [] } = useQuery({
+    queryKey: ['users'],
+    queryFn: () => fetch(`${ServerLink}/api/users`).then((res) => res.json()),
+  });
+
+  // console.log(users);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const form = event.target;
@@ -12,9 +30,64 @@ const SignUp = () => {
     const hall = form.hall.value;
     const email = form.email.value;
     const password = form.password.value;
+    const role = 'student';
 
-    const data = { sid, hall, email, password };
-    console.log(data);
+    let userFound = false;
+
+    let registrationAllowed = true;
+
+    users.forEach((us) => {
+      if (us.sid === sid) {
+        registrationAllowed = false;
+      }
+    });
+
+    students.forEach((st) => {
+      if (st.sid === sid && st.hall === hall) {
+        userFound = true;
+
+        if (registrationAllowed) {
+          createUser(email, password)
+            .then((result) => {
+              saveUser({ sid, hall, email, role });
+              // const user = result.user;
+              // console.log(user);
+              form.reset();
+              refetch();
+              setError('');
+            })
+            .catch((error) => {
+              console.error(error);
+              setError(error.message);
+            });
+        }
+
+        const saveUser = (user) => {
+          fetch(`${ServerLink}/api/users`, {
+            method: 'POST',
+            headers: {
+              'content-type': 'application/json',
+            },
+            body: JSON.stringify(user),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              if (data.acknowledged) {
+                // console.log(data);
+                toast.success('Registration successful.');
+              }
+            });
+        };
+      }
+    });
+    if (!registrationAllowed) {
+      toast.error('Your SID registered. Please login');
+      userFound = true;
+    }
+
+    if (!userFound) {
+      toast.error('Your hall and SID don`t match.');
+    }
   };
 
   return (
@@ -40,12 +113,14 @@ const SignUp = () => {
               Sign Up
             </h1>
             <input
+              required
               type='number'
               name='sid'
               placeholder='Student ID'
               className='input input-bordered w-full max-w-xs mb-5'
             />
             <select
+              required
               name='hall'
               className='select select-bordered w-full max-w-xs mb-5'>
               <option
@@ -64,6 +139,7 @@ const SignUp = () => {
               <option>International Hall</option>
             </select>
             <input
+              required
               type='email'
               name='email'
               placeholder='test@gmail.com'
@@ -71,11 +147,15 @@ const SignUp = () => {
             />
 
             <input
+              required
               type='password'
               name='password'
               placeholder='password'
-              className='input input-bordered w-full max-w-xs mb-5'
+              className='input input-bordered w-full max-w-xs mb-3'
             />
+            <p className='text-red-600 font-semibold mb-2'>
+              {error.slice(22, 45)}
+            </p>
 
             <label className='relative'>
               <BsSendCheckFill className='pointer-events-none w-4 h-5 text-green-800 absolute right-28 mt-4' />
