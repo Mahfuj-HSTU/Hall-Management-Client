@@ -10,7 +10,7 @@ const ForgatePassword = () => {
     const form = event.target;
     const email = form.email.value;
 
-    console.log(email);
+    // console.log(email);
 
     resetPassword(email)
       .then(() => {

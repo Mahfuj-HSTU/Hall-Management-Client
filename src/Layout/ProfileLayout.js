@@ -52,7 +52,7 @@ const ProfileLayout = () => {
               />
             </Link>
             <li className='font-semibold'>
-              <Link to={`/dashboard/${hall._id}`}>Profile</Link>{' '}
+              <Link to={`/dashboard/${hall._id}/profile`}>Profile</Link>{' '}
             </li>
             <li className='font-semibold'>
               <Link to={`/dashboard/${hall._id}/applicatoin`}>

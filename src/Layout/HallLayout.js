@@ -5,7 +5,7 @@ import Footer from '../Pages/Shared/Footer/Footer';
 
 const HallLayout = () => {
   const hall = useLoaderData();
-  console.log(hall);
+  // console.log(hall);
   return (
     <div>
       <HallHeader hall={hall}></HallHeader>

@@ -8,9 +8,10 @@ import HallLayout from '../Layout/HallLayout';
 import ProfileLayout from '../Layout/ProfileLayout';
 import Login from '../Pages/Registration/Login/Login';
 import SignUp from '../Pages/Registration/SignUp/SignUp';
-import Profile from '../Pages/Dashboard/Profile';
-import Application from '../Pages/Dashboard/Application';
 import { ServerLink } from '../Hooks/useServerLink';
+import Profile from '../Pages/Dashboard/Profile/Profile';
+import Application from '../Pages/Dashboard/Application/Application';
+import Dashboard from '../Pages/Dashboard/Dashboard';
 
 const router = createBrowserRouter([
   {
@@ -56,6 +57,10 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/dashboard/:id',
+        element: <Dashboard></Dashboard>,
+      },
+      {
+        path: '/dashboard/:id/profile',
         element: <Profile></Profile>,
       },
       {
