@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react';
 
 const Profile = () => {
   return (
     <div class="bg-cyan-300 h-full">
-      {" "}
+      {' '}
       <div class="avatar">
         <div class="w-32 rounded-full mt-10">
           <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
