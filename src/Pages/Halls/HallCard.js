@@ -7,7 +7,7 @@ const HallCard = ({ hall }) => {
   const { _id, name, img } = hall;
   return (
     <Link
-      to={`/${_id}`}
+      to={`/hall/${_id}`}
       target='blank'
       className='card w-96 bg-base-100 shadow-xl'>
       <figure>
