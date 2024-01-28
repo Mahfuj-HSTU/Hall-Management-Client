@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { Link, createBrowserRouter } from 'react-router-dom';
 import error from '../images/images.png';
 import Main from '../Layout/Main';
 import Home from '../Pages/Home/Home';
@@ -28,23 +28,26 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: '/:id',
+    path: '/hall/:id',
     element: <HallLayout></HallLayout>,
+    loader: ({ params }) => fetch(`${ServerLink}/api/halls/${params.id}`),
     children: [
       {
-        path: '/:id',
+        path: '/hall/:id',
         element: <HallDetails></HallDetails>,
         loader: ({ params }) => fetch(`${ServerLink}/api/halls/${params.id}`),
       },
     ],
   },
   {
-    path: '/login',
+    path: '/hall/:id/login',
     element: <Login></Login>,
+    loader: ({ params }) => fetch(`${ServerLink}/api/halls/${params.id}`),
   },
   {
-    path: '/signup',
+    path: '/hall/:id/signup',
     element: <SignUp></SignUp>,
+    loader: ({ params }) => fetch(`${ServerLink}/api/halls/${params.id}`),
   },
   {
     path: '/dashboard',
@@ -64,11 +67,18 @@ const router = createBrowserRouter([
     path: '*',
     element: (
       <div className='flex justify-center mt-10'>
-        <img
-          src={error}
-          alt=''
-          width='500px'
-        />
+        <div className='flex-col'>
+          <img
+            src={error}
+            alt=''
+            width='500px'
+          />
+          <Link
+            to='/halls'
+            className='btn btn-primary btn-outline font-bold'>
+            Back to home
+          </Link>
+        </div>
       </div>
     ),
   },
