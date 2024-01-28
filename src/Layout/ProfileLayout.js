@@ -1,8 +1,9 @@
 import React from 'react';
 import hstu from '../images/HSTU_Logo.png';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useLoaderData } from 'react-router-dom';
 
 const ProfileLayout = () => {
+  const hall = useLoaderData();
   return (
     <div>
       <div className='drawer drawer-mobile lg:drawer-open'>
@@ -40,7 +41,7 @@ const ProfileLayout = () => {
           <ul className='menu p-4 w-80 min-h-full bg-base-200 text-base-content'>
             {/* Sidebar content here */}
             <Link
-              to='/'
+              to={`/hall/${hall._id}`}
               className='flex justify-center normal-case mb-5'>
               <img
                 className='h-14'
@@ -51,10 +52,12 @@ const ProfileLayout = () => {
               />
             </Link>
             <li className='font-semibold'>
-              <Link to='/dashboard'>Profile</Link>{' '}
+              <Link to={`/dashboard/${hall._id}`}>Profile</Link>{' '}
             </li>
             <li className='font-semibold'>
-              <Link to='/dashboard/applicatoin'>Applications</Link>{' '}
+              <Link to={`/dashboard/${hall._id}/applicatoin`}>
+                Applications
+              </Link>{' '}
             </li>
           </ul>
         </div>
