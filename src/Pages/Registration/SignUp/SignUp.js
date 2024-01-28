@@ -38,7 +38,7 @@ const SignUp = () => {
     const password = form.password.value;
     const role = 'student';
 
-    console.log(sid, hallName, email);
+    // console.log(sid, hallName, email);
 
     let userFound = false;
 
