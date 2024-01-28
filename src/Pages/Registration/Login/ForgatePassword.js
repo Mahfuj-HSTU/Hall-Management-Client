@@ -12,20 +12,20 @@ const ForgatePassword = () => {
 
     console.log(email);
 
-    // resetPassword(email)
-    //   .then(() => {
-    //     // const user = result.user;
-    //     // console.log(user);
-    //     toast.success('Password reset link was send, check your email.');
-    //     form.reset();
-    //   })
-    //   .catch((error) => {
-    //     console.error('error ', error);
-    //     toast.error(
-    //       'Your email is not registered! Please provide correct email.'
-    //     );
-    //     form.reset();
-    //   });
+    resetPassword(email)
+      .then(() => {
+        // const user = result.user;
+        // console.log(user);
+        toast.success('Password reset link was send, check your email.');
+        form.reset();
+      })
+      .catch((error) => {
+        console.error('error ', error);
+        toast.error(
+          'Your email is not registered! Please provide correct email.'
+        );
+        form.reset();
+      });
   };
 
   return (

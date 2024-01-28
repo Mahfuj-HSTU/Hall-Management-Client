@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom';
 import { RiArrowDropDownLine } from 'react-icons/ri';
 import { IoPersonCircle } from 'react-icons/io5';
 
-const HallHeader = () => {
+const HallHeader = ({ hall }) => {
   const menuItems = (
     <>
       {' '}
       <li className='font-semibold'>
-        <Link to=''>Home</Link>{' '}
+        <Link to={`/hall/${hall._id}`}>Home</Link>{' '}
       </li>
       <li className='font-semibold relative group'>
         <button tabIndex={1}>
@@ -18,21 +18,21 @@ const HallHeader = () => {
         </button>
         <ul className='absolute hidden group-hover:block mt-9 z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 divide-y divide-blue-300'>
           <li className='font-semibold'>
-            <Link to=''>Hall Super</Link>
+            <Link to='/hall'>Hall Super</Link>
           </li>
           <li className='font-semibold'>
-            <Link to=''>Assistant Hall Super</Link>
+            <Link to='/hall'>Assistant Hall Super</Link>
           </li>
         </ul>
       </li>
       <li className='font-semibold'>
-        <Link to=''>Notice</Link>{' '}
+        <Link to='/hall'>Notice</Link>{' '}
       </li>
       <li className='font-semibold'>
-        <Link to=''>Photo Gallery</Link>{' '}
+        <Link to='/hall'>Photo Gallery</Link>{' '}
       </li>
       <li className='font-semibold'>
-        <Link to=''>Contact Us</Link>{' '}
+        <Link to='/hall'>Contact Us</Link>{' '}
       </li>
       {/* <li className='font-semibold relative group'>
         <button tabIndex={1}>
@@ -51,7 +51,7 @@ const HallHeader = () => {
         </ul>
       </li> */}
       <li className='font-semibold'>
-        <Link to='/login'>Login</Link>{' '}
+        <Link to={`/hall/${hall._id}/login`}>Login</Link>{' '}
       </li>
     </>
   );
