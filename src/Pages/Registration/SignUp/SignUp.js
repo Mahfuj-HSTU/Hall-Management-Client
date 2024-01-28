@@ -62,7 +62,7 @@ const SignUp = () => {
               // console.log(user);
               form.reset();
               verifyEmail();
-              navigate('/login');
+              navigate(`/hall/${hall._id}/login`);
               refetch();
               setError('');
             })

@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import hstu from '../../../images/HSTU_Logo.png';
 import { Link } from 'react-router-dom';
 import { RiArrowDropDownLine } from 'react-icons/ri';
 import { IoPersonCircle } from 'react-icons/io5';
+import { AuthContext } from '../../../AuthProvider/AuthProvider';
 
 const HallHeader = ({ hall }) => {
+  const { user, logOut } = useContext(AuthContext);
+
+  const handleLogOut = () => {
+    logOut().then().catch();
+  };
+
   const menuItems = (
     <>
       {' '}
@@ -34,25 +41,30 @@ const HallHeader = ({ hall }) => {
       <li className='font-semibold'>
         <Link to='/hall'>Contact Us</Link>{' '}
       </li>
-      {/* <li className='font-semibold relative group'>
-        <button tabIndex={1}>
-          <IoPersonCircle className='text-2xl' />
-        </button>
-        <ul className='absolute lg:right-0 hidden group-hover:block mt-9 z-[1] menu p-2 shadow bg-base-100 rounded-box w-auto divide-y divide-blue-300'>
-          <li className='font-semibold'>
-            <Link to='/dashboard'>Profile</Link>
+      {user?.email ? (
+        <>
+          <li className='font-semibold relative group'>
+            <button tabIndex={1}>
+              <IoPersonCircle className='text-2xl' />
+            </button>
+            <ul className='absolute lg:right-0 hidden group-hover:block mt-9 z-[1] menu p-2 shadow bg-base-100 rounded-box w-auto divide-y divide-blue-300'>
+              <li className='font-semibold'>
+                <Link to={`/dashboard/${hall._id}`}>Profile</Link>
+              </li>
+              <li className='font-semibold'>
+                <Link to=''>Notifications</Link>
+              </li>
+              <li className='font-semibold'>
+                <button onClick={handleLogOut}>Log Out</button>
+              </li>
+            </ul>
           </li>
-          <li className='font-semibold'>
-            <Link to=''>Notifications</Link>
-          </li>
-          <li className='font-semibold'>
-            <Link to=''>Log Out</Link>
-          </li>
-        </ul>
-      </li> */}
-      <li className='font-semibold'>
-        <Link to={`/hall/${hall._id}/login`}>Login</Link>{' '}
-      </li>
+        </>
+      ) : (
+        <li className='font-semibold'>
+          <Link to={`/hall/${hall._id}/login`}>Login</Link>{' '}
+        </li>
+      )}
     </>
   );
 

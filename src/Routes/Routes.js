@@ -50,15 +50,16 @@ const router = createBrowserRouter([
     loader: ({ params }) => fetch(`${ServerLink}/api/halls/${params.id}`),
   },
   {
-    path: '/dashboard',
+    path: '/dashboard/:id',
     element: <ProfileLayout></ProfileLayout>,
+    loader: ({ params }) => fetch(`${ServerLink}/api/halls/${params.id}`),
     children: [
       {
-        path: '/dashboard',
+        path: '/dashboard/:id',
         element: <Profile></Profile>,
       },
       {
-        path: '/dashboard/applicatoin',
+        path: '/dashboard/:id/applicatoin',
         element: <Application></Application>,
       },
     ],

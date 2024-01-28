@@ -30,7 +30,7 @@ const Login = () => {
         form.reset();
         if (user.emailVerified) {
           toast.success('Successfully logged in!');
-          navigate('');
+          navigate(`/hall/${hall._id}`);
         } else {
           toast.error(
             'Your email is not verified, please verify your email first.'
