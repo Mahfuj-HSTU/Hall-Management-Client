@@ -2,7 +2,7 @@ import React from 'react';
 
 const Profile = () => {
   return (
-    <div class='bg-cyan-300 h-full'>
+    <div class='bg-cyan-300 h-full w-full'>
       {' '}
       <div class='avatar'>
         <div class='w-32 rounded-full mt-10'>
