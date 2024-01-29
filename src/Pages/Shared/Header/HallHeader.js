@@ -73,7 +73,7 @@ const HallHeader = ({ hall }) => {
       <div className='navbar-start flex-row-reverse	md:flex-row'>
         <div className='dropdown'>
           <label
-            tabIndex={0}
+            tabIndex={1}
             className='btn btn-ghost lg:hidden'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -90,8 +90,8 @@ const HallHeader = ({ hall }) => {
             </svg>
           </label>
           <u
-            tabIndex={0}
-            className='menu menu-compact dropdown-content p-2 shadow bg-base-500 rounded-box w-52'>
+            tabIndex={1}
+            className='menu menu-compact dropdown-content z-[1] p-2 shadow bg-slate-300 rounded-box w-52'>
             {menuItems}
           </u>
         </div>

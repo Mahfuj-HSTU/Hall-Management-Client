@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import HallCard from './HallCard';
 import { ServerLink } from '../../Hooks/useServerLink';
 import { useQuery } from '@tanstack/react-query';
