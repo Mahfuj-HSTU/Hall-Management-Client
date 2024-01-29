@@ -1,60 +1,155 @@
 import React from 'react';
+import { FaEdit } from 'react-icons/fa';
 
 const Profile = () => {
   return (
-    <div class='bg-cyan-300 h-full w-full'>
-      {' '}
-      <div class='avatar'>
-        <div class='w-32 rounded-full mt-10'>
-          <img src='https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg' />
+    <div className='flex-col flex gap-5 text-center md:text-left w-full mt-2 md:mx-5 pb-5 '>
+      <div className='flex justify-between'>
+        <h1 className='text-2xl font-semibold'>Profile</h1>
+        <div>
+          <label
+            htmlFor='details-modal'
+            className='text-lg cursor-pointer'>
+            <FaEdit></FaEdit>
+          </label>
         </div>
       </div>
-      <div class='text-center text-2xl'>Zubayer Saad</div>
-      <div class='flex flex-col lg:flex-row  mt-10 ml-5 mr-5'>
-        <div class='w-full'>
-          <div class='text-left w-full'>Student ID</div>
-          <div class='grid flex-grow w-full card h-12 bg-gray-100 rounded-md items-center text-left'>
-            1902067
+      <form className='mx-auto w-[90%]'>
+        <div className='flex flex-col md:flex-row gap-5'>
+          <div className='bg-gray-100 px-2 py-5 rounded-lg w-[92%]'>
+            <p className='pl-2 mb-1'>Name: </p>
+            <input
+              required
+              type='text'
+              name='name'
+              placeholder='Your name'
+              className='input input-bordered w-full max-w-xs mb-2'
+            />
+            <p className='pl-2 mb-1'>Student ID: </p>
+            <input
+              required
+              type='number'
+              name='sid'
+              placeholder='student id'
+              className='input input-bordered w-full max-w-xs mb-2'
+            />
+            <p className='pl-2 mb-1'>Department </p>
+            <input
+              required
+              type='text'
+              name='dept'
+              placeholder='ex: cse'
+              className='input input-bordered w-full max-w-xs mb-2'
+            />
+          </div>
+
+          <div className='bg-gray-100 px-2 py-5 rounded-lg w-[92%]'>
+            <p className='pl-2 mb-1'>Email </p>
+            <input
+              required
+              type='email'
+              name='email'
+              placeholder='ex: test@gmail.com'
+              className='input input-bordered w-full max-w-xs mb-2'
+            />
+            <p className='pl-2 mb-1'>Mobile </p>
+            <input
+              required
+              type='number'
+              name='mobile'
+              placeholder='ex: 01XXXXXX'
+              className='input input-bordered w-full max-w-xs mb-2'
+            />
+            <p className='pl-2 mb-1'>Blood Group </p>
+            <input
+              required
+              type='text'
+              name='blood'
+              placeholder='B+'
+              className='input input-bordered w-full max-w-xs mb-2'
+            />
+          </div>
+        </div>{' '}
+        <br />
+        <div className='flex flex-col md:flex-row gap-5 '>
+          <div className='bg-gray-100 px-2 py-5 rounded-lg w-[92%]'>
+            <p className='pl-2 mb-1'>Father Name </p>
+            <input
+              required
+              type='text'
+              name='fname'
+              placeholder='Father name'
+              className='input input-bordered w-full max-w-xs mb-2'
+            />
+            <p className='pl-2 mb-1'>Father Mobile </p>
+            <input
+              required
+              type='number'
+              name='fmobile'
+              placeholder='ex: 01XXXXXX'
+              className='input input-bordered w-full max-w-xs mb-2'
+            />
+            <p className='pl-2 mb-1'>Mother Name </p>
+            <input
+              required
+              type='text'
+              name='mname'
+              placeholder='Mother name'
+              className='input input-bordered w-full max-w-xs mb-2'
+            />
+            <p className='pl-2 mb-1'>Mother Mobile </p>
+            <input
+              required
+              type='number'
+              name='mmobile'
+              placeholder='ex: 01XXXXXX'
+              className='input input-bordered w-full max-w-xs mb-2'
+            />
+          </div>
+
+          <div className='bg-gray-100 px-2 py-5 rounded-lg w-[92%]'>
+            <p className='pl-2 mb-1'>Present Address </p>
+            <input
+              required
+              type='text'
+              name='present'
+              placeholder=''
+              className='input input-bordered w-full max-w-xs mb-2'
+            />
+            <p className='pl-2 mb-1'>Parmanent Address </p>
+            <input
+              required
+              type='text'
+              name='parmanent'
+              placeholder=''
+              className='input input-bordered w-full max-w-xs mb-2'
+            />
+            <p className='pl-2 mb-1'>National ID / Birth Certificate No </p>
+            <input
+              required
+              type='number'
+              name='nid'
+              placeholder='National ID / Birth Certificate No'
+              className='input input-bordered w-full max-w-xs mb-2'
+            />
+            <p className='pl-2 mb-1'>Photo </p>
+            <input
+              required
+              type='file'
+              name='img'
+              placeholder='National ID / Birth Certificate No'
+              className='input input-bordered w-full max-w-xs mb-2'
+            />
           </div>
         </div>
-        <div class='divider lg:divider-horizontal'></div>
-        <div class='w-full'>
-          <div class='text-left w-full'>Degree Name</div>
-          <div class='grid flex-grow w-full card h-12 bg-gray-100 rounded-md items-center text-left'>
-            CSE
-          </div>
+        <div className='text-center mt-5'>
+          <input
+            type='submit'
+            value='SAVE'
+            className='btn btn-success font-semibold input input-bordered px-12'
+          />
         </div>
-      </div>
-      <div class='flex flex-col lg:flex-row  mt-5 ml-5 mr-5'>
-        <div class='w-full'>
-          <div class='text-left w-full'>Hall Name</div>
-          <div class='grid flex-grow w-full card h-12 bg-gray-100 rounded-md items-center text-left'>
-            BSMRH
-          </div>
-        </div>
-        <div class='divider lg:divider-horizontal'></div>
-        <div class='w-full'>
-          <div class='text-left w-full'>Residental Status</div>
-          <div class='grid flex-grow w-full card h-12 bg-gray-100 rounded-md items-center text-left'>
-            NR
-          </div>
-        </div>
-      </div>
-      <div class='flex flex-col lg:flex-row  mt-5 ml-5 mr-5'>
-        <div class='w-full'>
-          <div class='text-left w-full'>Mobile No</div>
-          <div class='grid flex-grow w-full card h-12 bg-gray-100 rounded-md items-center text-left'>
-            01xxxxxxxxx
-          </div>
-        </div>
-        <div class='divider lg:divider-horizontal'></div>
-        <div class='w-full'>
-          <div class='text-left w-full'>Email</div>
-          <div class='grid flex-grow w-full card h-12 bg-gray-100 rounded-md items-center text-left'>
-            xxx@xxx.com
-          </div>
-        </div>
-      </div>
+      </form>
     </div>
   );
 };

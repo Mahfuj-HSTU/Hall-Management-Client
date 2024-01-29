@@ -28,7 +28,7 @@ const Header = () => {
       <li className='font-semibold'>
         <Link to='/'>Admission</Link>{' '}
       </li>
-      <li className='font-semibold  relative group'>
+      <li className='font-semibold relative group'>
         <label tabIndex={0}>
           Research & Training
           <RiArrowDropDownLine className='text-xl' />

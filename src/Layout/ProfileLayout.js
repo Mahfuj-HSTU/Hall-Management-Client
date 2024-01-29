@@ -6,7 +6,7 @@ const ProfileLayout = () => {
   const hall = useLoaderData();
   return (
     <div>
-      <div className='drawer drawer-mobile lg:drawer-open'>
+      <div className='drawer drawer-mobile lg:drawer-open relative'>
         <input
           id='my-drawer-2'
           type='checkbox'
@@ -14,7 +14,7 @@ const ProfileLayout = () => {
         />
         <label
           htmlFor='my-drawer-2'
-          className='btn btn-ghost lg:hidden'>
+          className='btn btn-ghost lg:hidden absolute top-3 left-4'>
           <svg
             xmlns='http://www.w3.org/2000/svg'
             className='h-5 w-5'
