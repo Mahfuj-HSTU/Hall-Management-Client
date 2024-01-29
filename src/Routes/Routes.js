@@ -11,7 +11,7 @@ import SignUp from '../Pages/Registration/SignUp/SignUp';
 import { ServerLink } from '../Hooks/useServerLink';
 import Dashboard from '../Pages/Dashboard/Dashboard';
 import Application from '../Pages/Dashboard/Student/Application/Application';
-import Profile from '../Pages/Dashboard/Student/Profile/Profile';
+import MyAccount from '../Pages/Dashboard/Student/Profile/MyAccount';
 
 const router = createBrowserRouter([
   {
@@ -61,7 +61,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/dashboard/:id/profile',
-        element: <Profile></Profile>,
+        element: <MyAccount></MyAccount>,
       },
       {
         path: '/dashboard/:id/applicatoin',
