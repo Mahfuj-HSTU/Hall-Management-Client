@@ -14,8 +14,6 @@ const ForgatePassword = () => {
 
     resetPassword(email)
       .then(() => {
-        // const user = result.user;
-        // console.log(user);
         toast.success('Password reset link was send, check your email.');
         form.reset();
       })

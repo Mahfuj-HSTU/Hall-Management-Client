@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import HallCard from './HallCard';
 import { ServerLink } from '../../Hooks/useServerLink';
+import { useQuery } from '@tanstack/react-query';
+import Loading from '../Shared/Loading/Loading';
 
 const Halls = () => {
-  const [Halls, setHalls] = useState([]);
-
-  useEffect(() => {
-    fetch(`${ServerLink}/api/halls`)
-      .then((res) => res.json())
-      .then((data) => setHalls(data));
-  }, []);
+  const { data: Halls = [], isLoading } = useQuery({
+    queryKey: ['halls'],
+    queryFn: () => fetch(`${ServerLink}/api/halls`).then((res) => res.json()),
+  });
   // console.log(Halls);
+
+  if (isLoading) {
+    <Loading></Loading>;
+  }
 
   return (
     <div className='max-w-screen-xl mx-auto mb-9'>
