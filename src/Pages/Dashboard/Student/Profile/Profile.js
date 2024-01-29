@@ -1,7 +1,24 @@
 import React from 'react';
 import { FaEdit } from 'react-icons/fa';
 
-const Profile = () => {
+const Profile = ({ student }) => {
+  const {
+    name,
+    sid,
+    dept,
+    hall,
+    email,
+    mobile,
+    fname,
+    fmobile,
+    mname,
+    mmobile,
+    present,
+    parmanent,
+    blood,
+    nid,
+  } = student;
+
   return (
     <div className='flex-col flex gap-5 text-center md:text-left w-full mt-2 md:mx-5 pb-5 '>
       <div className='flex justify-between'>
@@ -22,23 +39,33 @@ const Profile = () => {
               required
               type='text'
               name='name'
+              value={name}
               placeholder='Your name'
               className='input input-bordered w-full max-w-xs mb-2'
             />
             <p className='pl-2 mb-1'>Student ID: </p>
             <input
-              required
+              readOnly
               type='number'
               name='sid'
+              value={sid}
               placeholder='student id'
               className='input input-bordered w-full max-w-xs mb-2'
             />
             <p className='pl-2 mb-1'>Department </p>
             <input
-              required
+              readOnly
               type='text'
               name='dept'
+              value={dept}
               placeholder='ex: cse'
+              className='input input-bordered w-full max-w-xs mb-2'
+            />
+            <p className='pl-2 mb-1'>CGPA </p>
+            <input
+              readOnly
+              type='text'
+              value='3.50'
               className='input input-bordered w-full max-w-xs mb-2'
             />
           </div>
@@ -46,26 +73,33 @@ const Profile = () => {
           <div className='bg-gray-100 px-2 py-5 rounded-lg w-[92%]'>
             <p className='pl-2 mb-1'>Email </p>
             <input
-              required
               type='email'
               name='email'
+              value={email}
               placeholder='ex: test@gmail.com'
               className='input input-bordered w-full max-w-xs mb-2'
             />
             <p className='pl-2 mb-1'>Mobile </p>
             <input
-              required
               type='number'
               name='mobile'
+              value={mobile}
               placeholder='ex: 01XXXXXX'
               className='input input-bordered w-full max-w-xs mb-2'
             />
             <p className='pl-2 mb-1'>Blood Group </p>
             <input
-              required
               type='text'
               name='blood'
+              value={blood}
               placeholder='B+'
+              className='input input-bordered w-full max-w-xs mb-2'
+            />
+            <p className='pl-2 mb-1'>Hall </p>
+            <input
+              readOnly
+              type='text'
+              value={hall}
               className='input input-bordered w-full max-w-xs mb-2'
             />
           </div>
@@ -78,6 +112,7 @@ const Profile = () => {
               required
               type='text'
               name='fname'
+              value={fname}
               placeholder='Father name'
               className='input input-bordered w-full max-w-xs mb-2'
             />
@@ -86,22 +121,23 @@ const Profile = () => {
               required
               type='number'
               name='fmobile'
+              value={fmobile}
               placeholder='ex: 01XXXXXX'
               className='input input-bordered w-full max-w-xs mb-2'
             />
             <p className='pl-2 mb-1'>Mother Name </p>
             <input
-              required
               type='text'
               name='mname'
+              value={mname}
               placeholder='Mother name'
               className='input input-bordered w-full max-w-xs mb-2'
             />
             <p className='pl-2 mb-1'>Mother Mobile </p>
             <input
-              required
               type='number'
               name='mmobile'
+              value={mmobile}
               placeholder='ex: 01XXXXXX'
               className='input input-bordered w-full max-w-xs mb-2'
             />
@@ -110,31 +146,30 @@ const Profile = () => {
           <div className='bg-gray-100 px-2 py-5 rounded-lg w-[92%]'>
             <p className='pl-2 mb-1'>Present Address </p>
             <input
-              required
               type='text'
               name='present'
-              placeholder=''
+              value={present}
+              placeholder='present address'
               className='input input-bordered w-full max-w-xs mb-2'
             />
             <p className='pl-2 mb-1'>Parmanent Address </p>
             <input
-              required
               type='text'
               name='parmanent'
-              placeholder=''
+              value={parmanent}
+              placeholder='parmanent address'
               className='input input-bordered w-full max-w-xs mb-2'
             />
             <p className='pl-2 mb-1'>National ID / Birth Certificate No </p>
             <input
-              required
               type='number'
               name='nid'
+              value={nid}
               placeholder='National ID / Birth Certificate No'
               className='input input-bordered w-full max-w-xs mb-2'
             />
             <p className='pl-2 mb-1'>Photo </p>
             <input
-              required
               type='file'
               name='img'
               placeholder='National ID / Birth Certificate No'
