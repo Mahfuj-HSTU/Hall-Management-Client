@@ -10,8 +10,8 @@ import Login from '../Pages/Registration/Login/Login';
 import SignUp from '../Pages/Registration/SignUp/SignUp';
 import { ServerLink } from '../Hooks/useServerLink';
 import Dashboard from '../Pages/Dashboard/Dashboard';
-import Application from '../Pages/Dashboard/Student/Application/Application';
 import MyAccount from '../Pages/Dashboard/Student/Profile/MyAccount';
+import Application from '../Pages/Dashboard/Student/Application/Application';
 
 const router = createBrowserRouter([
   {
@@ -64,7 +64,7 @@ const router = createBrowserRouter([
         element: <MyAccount></MyAccount>,
       },
       {
-        path: '/dashboard/:id/applicatoin',
+        path: '/dashboard/:id/application',
         element: <Application></Application>,
       },
     ],

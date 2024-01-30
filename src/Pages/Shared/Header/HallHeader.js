@@ -49,7 +49,7 @@ const HallHeader = ({ hall }) => {
             </button>
             <ul className='absolute lg:right-0 hidden group-hover:block mt-9 z-[1] menu p-2 shadow bg-base-100 rounded-box w-auto divide-y divide-blue-300'>
               <li className='font-semibold'>
-                <Link to={`/dashboard/${hall._id}`}>Profile</Link>
+                <Link to={`/dashboard/${hall._id}`}>Dashboard</Link>
               </li>
               <li className='font-semibold'>
                 <Link to=''>Notifications</Link>
