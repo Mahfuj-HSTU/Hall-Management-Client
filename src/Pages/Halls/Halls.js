@@ -17,7 +17,7 @@ const Halls = () => {
 
   return (
     <div className='max-w-screen-xl mx-auto mb-9'>
-      <h2 className='text-start px-4 py-6 text-blue-900 text-lg'>
+      <h2 className='text-start px-4 py-6 text-blue-900 text-lg shadow-xl shadow-slate-300 mb-5 rounded-xl mx-3'>
         Students admitted to the faculties reside in or are attached to a hall
         of residence. The university has{' '}
         <span className='font-bold italic'>nine</span> halls of residence{' '}

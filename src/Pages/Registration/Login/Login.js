@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import loginImg from '../../../images/login.jpg';
 import { MdMarkEmailRead, MdLock } from 'react-icons/md';
 import { BsSendCheckFill } from 'react-icons/bs';
@@ -11,6 +11,7 @@ import { AuthContext } from '../../../AuthProvider/AuthProvider';
 const Login = () => {
   const hall = useLoaderData();
   const { login } = useContext(AuthContext);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
   // console.log(hall);
 
@@ -26,7 +27,7 @@ const Login = () => {
     login(email, password)
       .then((result) => {
         const user = result.user;
-        console.log(user);
+        // console.log(user);
         form.reset();
         if (user.emailVerified) {
           toast.success('Successfully logged in!');
@@ -40,6 +41,7 @@ const Login = () => {
       .catch((error) => {
         console.error('error ', error);
         toast.error('Register first to login');
+        setError(error.message);
         form.reset();
       });
   };
@@ -98,6 +100,9 @@ const Login = () => {
                   className='label-text-alt link link-hover'>
                   Forgot password?
                 </label>
+              </p>
+              <p className='text-red-600 font-semibold mb-2'>
+                {error?.slice(22, 45)}
               </p>
             </label>
 
