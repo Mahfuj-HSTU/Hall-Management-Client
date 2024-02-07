@@ -1,9 +1,32 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import hstu from '../images/HSTU_Logo.png';
 import { Link, Outlet, useLoaderData } from 'react-router-dom';
+import { fetchRole } from '../Hooks/Role/useRoleSlice';
+import { AuthContext } from '../AuthProvider/AuthProvider';
+import { useDispatch, useSelector } from 'react-redux';
+import Loading from '../Pages/Shared/Loading/Loading';
 
 const ProfileLayout = () => {
   const hall = useLoaderData();
+  const { user, loading } = useContext(AuthContext);
+  const details = useSelector((state) => state?.roleReducer.role);
+  const dispatch = useDispatch();
+  const role = details.role;
+  const superAdmin = 'superAdmin';
+  const admin = 'admin';
+  const student = 'student';
+
+  if (loading) {
+    <Loading></Loading>;
+  }
+
+  useEffect(() => {
+    user?.email && dispatch(fetchRole(user?.email));
+  }, [dispatch, user?.email]);
+
+  console.log(details);
+  console.log(role);
+
   return (
     <div>
       <div className='drawer drawer-mobile lg:drawer-open relative'>
@@ -51,17 +74,48 @@ const ProfileLayout = () => {
                 height='50px'
               />
             </Link>
-            <li className='font-semibold'>
-              <Link to={`/dashboard/${hall._id}`}>Dashboard</Link>{' '}
-            </li>
-            <li className='font-semibold'>
-              <Link to={`/dashboard/${hall._id}/profile`}>Profile</Link>{' '}
-            </li>
-            <li className='font-semibold'>
-              <Link to={`/dashboard/${hall._id}/application`}>
-                Applications
-              </Link>{' '}
-            </li>
+            {user?.email && (
+              <>
+                {role === superAdmin && <></>}
+                {role === admin && (
+                  <>
+                    <li className='font-semibold'>
+                      <Link to={`/dashboard/${hall._id}/admin`}>Dashboard</Link>{' '}
+                    </li>
+                    <li className='font-semibold'>
+                      <Link to={`/dashboard/${hall._id}/admin/profile`}>
+                        Profile
+                      </Link>{' '}
+                    </li>
+                    <li className='font-semibold'>
+                      <Link to={`/dashboard/${hall._id}/admin/application`}>
+                        Applications
+                      </Link>{' '}
+                    </li>
+                  </>
+                )}
+                {role === student && (
+                  <>
+                    {' '}
+                    <li className='font-semibold'>
+                      <Link to={`/dashboard/${hall._id}/student`}>
+                        Dashboard
+                      </Link>{' '}
+                    </li>
+                    <li className='font-semibold'>
+                      <Link to={`/dashboard/${hall._id}/student/profile`}>
+                        Profile
+                      </Link>{' '}
+                    </li>
+                    <li className='font-semibold'>
+                      <Link to={`/dashboard/${hall._id}/student/application`}>
+                        Applications
+                      </Link>{' '}
+                    </li>
+                  </>
+                )}
+              </>
+            )}
           </ul>
         </div>
       </div>
