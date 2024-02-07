@@ -9,9 +9,12 @@ import ProfileLayout from '../Layout/ProfileLayout';
 import Login from '../Pages/Registration/Login/Login';
 import SignUp from '../Pages/Registration/SignUp/SignUp';
 import { ServerLink } from '../Hooks/useServerLink';
-import Dashboard from '../Pages/Dashboard/Dashboard';
 import MyAccount from '../Pages/Dashboard/Student/Profile/MyAccount';
 import Application from '../Pages/Dashboard/Student/Application/Application';
+import StudentDashboard from '../Pages/Dashboard/Student/StudentDashboard';
+import AdminDashboard from '../Pages/Dashboard/Admin/AdminDashboard';
+import AdminRoute from './AdminRoute/AdminRoute';
+import StudentRoute from './StudentRoute/StudentRoute';
 
 const router = createBrowserRouter([
   {
@@ -50,21 +53,34 @@ const router = createBrowserRouter([
     element: <SignUp></SignUp>,
     loader: ({ params }) => fetch(`${ServerLink}/api/halls/${params.id}`),
   },
+
   {
     path: '/dashboard/:id',
     element: <ProfileLayout></ProfileLayout>,
     loader: ({ params }) => fetch(`${ServerLink}/api/halls/${params.id}`),
     children: [
       {
-        path: '/dashboard/:id',
-        element: <Dashboard></Dashboard>,
+        path: '/dashboard/:id/admin',
+        element: (
+          <AdminRoute>
+            <AdminDashboard></AdminDashboard>
+          </AdminRoute>
+        ),
       },
       {
-        path: '/dashboard/:id/profile',
+        path: '/dashboard/:id/student',
+        element: (
+          <StudentRoute>
+            <StudentDashboard></StudentDashboard>
+          </StudentRoute>
+        ),
+      },
+      {
+        path: '/dashboard/:id/student/profile',
         element: <MyAccount></MyAccount>,
       },
       {
-        path: '/dashboard/:id/application',
+        path: '/dashboard/:id/student/application',
         element: <Application></Application>,
       },
     ],

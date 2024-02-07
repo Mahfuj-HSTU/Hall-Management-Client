@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import Profile from './Profile';
 import { useQuery } from '@tanstack/react-query';
 import { ServerLink } from '../../../../Hooks/useServerLink';
@@ -23,6 +23,7 @@ const MyAccount = () => {
     queryFn: () =>
       fetch(`${ServerLink}/api/students/${us?.sid}`).then((res) => res.json()),
   });
+  console.log(student);
 
   if (isLoading) {
     <Loading />;
