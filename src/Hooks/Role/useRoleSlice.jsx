@@ -22,7 +22,7 @@ export const useRoleSlice = createSlice({
     builder.addCase(fetchRole.fulfilled, (state, action) => {
       state.isLoading = false;
       state.role = action.payload;
-      console.log(state.role);
+      // console.log(state.role);
       state.error = null;
     });
     builder.addCase(fetchRole.rejected, (state, action) => {

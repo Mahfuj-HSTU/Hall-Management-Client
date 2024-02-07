@@ -24,8 +24,8 @@ const ProfileLayout = () => {
     user?.email && dispatch(fetchRole(user?.email));
   }, [dispatch, user?.email]);
 
-  console.log(details);
-  console.log(role);
+  // console.log(details);
+  // console.log(role);
 
   return (
     <div>
