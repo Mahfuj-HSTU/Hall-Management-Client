@@ -15,6 +15,7 @@ import StudentDashboard from '../Pages/Dashboard/Student/StudentDashboard';
 import AdminDashboard from '../Pages/Dashboard/Admin/AdminDashboard';
 import AdminRoute from './AdminRoute/AdminRoute';
 import StudentRoute from './StudentRoute/StudentRoute';
+import PrivateRoute from './PrivateRoute/PrivateRoute';
 
 const router = createBrowserRouter([
   {
@@ -56,9 +57,14 @@ const router = createBrowserRouter([
 
   {
     path: '/dashboard/:id',
-    element: <ProfileLayout></ProfileLayout>,
+    element: (
+      <PrivateRoute>
+        <ProfileLayout></ProfileLayout>
+      </PrivateRoute>
+    ),
     loader: ({ params }) => fetch(`${ServerLink}/api/halls/${params.id}`),
     children: [
+      // admin routes
       {
         path: '/dashboard/:id/admin',
         element: (
@@ -67,6 +73,8 @@ const router = createBrowserRouter([
           </AdminRoute>
         ),
       },
+
+      // students routes
       {
         path: '/dashboard/:id/student',
         element: (
