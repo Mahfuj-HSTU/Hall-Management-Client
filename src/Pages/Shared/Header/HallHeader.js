@@ -1,15 +1,22 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import hstu from '../../../images/HSTU_Logo.png';
 import { Link } from 'react-router-dom';
 import { RiArrowDropDownLine } from 'react-icons/ri';
 import { IoPersonCircle } from 'react-icons/io5';
+import { AuthContext } from '../../../AuthProvider/AuthProvider';
 
-const HallHeader = () => {
+const HallHeader = ({ hall }) => {
+  const { user, logOut } = useContext(AuthContext);
+
+  const handleLogOut = () => {
+    logOut().then().catch();
+  };
+
   const menuItems = (
     <>
       {' '}
       <li className='font-semibold'>
-        <Link to=''>Home</Link>{' '}
+        <Link to={`/hall/${hall._id}`}>Home</Link>{' '}
       </li>
       <li className='font-semibold relative group'>
         <button tabIndex={1}>
@@ -18,41 +25,46 @@ const HallHeader = () => {
         </button>
         <ul className='absolute hidden group-hover:block mt-9 z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 divide-y divide-blue-300'>
           <li className='font-semibold'>
-            <Link to=''>Hall Super</Link>
+            <Link to='/hall'>Hall Super</Link>
           </li>
           <li className='font-semibold'>
-            <Link to=''>Assistant Hall Super</Link>
+            <Link to='/hall'>Assistant Hall Super</Link>
           </li>
         </ul>
       </li>
       <li className='font-semibold'>
-        <Link to=''>Notice</Link>{' '}
+        <Link to='/hall'>Notice</Link>{' '}
       </li>
       <li className='font-semibold'>
-        <Link to=''>Photo Gallery</Link>{' '}
+        <Link to='/hall'>Photo Gallery</Link>{' '}
       </li>
       <li className='font-semibold'>
-        <Link to=''>Contact Us</Link>{' '}
+        <Link to='/hall'>Contact Us</Link>{' '}
       </li>
-      {/* <li className='font-semibold relative group'>
-        <button tabIndex={1}>
-          <IoPersonCircle className='text-2xl' />
-        </button>
-        <ul className='absolute lg:right-0 hidden group-hover:block mt-9 z-[1] menu p-2 shadow bg-base-100 rounded-box w-auto divide-y divide-blue-300'>
-          <li className='font-semibold'>
-            <Link to='/dashboard'>Profile</Link>
+      {user?.email ? (
+        <>
+          <li className='font-semibold relative group'>
+            <button tabIndex={1}>
+              <IoPersonCircle className='text-2xl' />
+            </button>
+            <ul className='absolute lg:right-0 hidden group-hover:block mt-9 z-[1] menu p-2 shadow bg-base-100 rounded-box w-auto divide-y divide-blue-300'>
+              <li className='font-semibold'>
+                <Link to={`/dashboard/${hall._id}`}>Dashboard</Link>
+              </li>
+              <li className='font-semibold'>
+                <Link to=''>Notifications</Link>
+              </li>
+              <li className='font-semibold'>
+                <button onClick={handleLogOut}>Log Out</button>
+              </li>
+            </ul>
           </li>
-          <li className='font-semibold'>
-            <Link to=''>Notifications</Link>
-          </li>
-          <li className='font-semibold'>
-            <Link to=''>Log Out</Link>
-          </li>
-        </ul>
-      </li> */}
-      <li className='font-semibold'>
-        <Link to='/login'>Login</Link>{' '}
-      </li>
+        </>
+      ) : (
+        <li className='font-semibold'>
+          <Link to={`/hall/${hall._id}/login`}>Login</Link>{' '}
+        </li>
+      )}
     </>
   );
 
@@ -61,7 +73,7 @@ const HallHeader = () => {
       <div className='navbar-start flex-row-reverse	md:flex-row'>
         <div className='dropdown'>
           <label
-            tabIndex={0}
+            tabIndex={1}
             className='btn btn-ghost lg:hidden'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -78,8 +90,8 @@ const HallHeader = () => {
             </svg>
           </label>
           <u
-            tabIndex={0}
-            className='menu menu-compact dropdown-content p-2 shadow bg-base-500 rounded-box w-52'>
+            tabIndex={1}
+            className='menu menu-compact dropdown-content z-[1] p-2 shadow bg-slate-300 rounded-box w-52'>
             {menuItems}
           </u>
         </div>

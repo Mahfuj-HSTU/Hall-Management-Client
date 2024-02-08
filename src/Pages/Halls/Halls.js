@@ -1,19 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import HallCard from './HallCard';
+import { ServerLink } from '../../Hooks/useServerLink';
+import { useQuery } from '@tanstack/react-query';
+import Loading from '../Shared/Loading/Loading';
 
 const Halls = () => {
-  const [Halls, setHalls] = useState([]);
-
-  useEffect(() => {
-    fetch('http://localhost:5000/halls')
-      .then((res) => res.json())
-      .then((data) => setHalls(data));
-  }, []);
+  const { data: Halls = [], isLoading } = useQuery({
+    queryKey: ['halls'],
+    queryFn: () => fetch(`${ServerLink}/api/halls`).then((res) => res.json()),
+  });
   // console.log(Halls);
+
+  if (isLoading) {
+    <Loading></Loading>;
+  }
 
   return (
     <div className='max-w-screen-xl mx-auto mb-9'>
-      <h2 className='text-start px-4 py-6 text-blue-900 text-lg'>
+      <h2 className='text-start px-4 py-6 text-blue-900 text-lg shadow-xl shadow-slate-300 mb-5 rounded-xl mx-3'>
         Students admitted to the faculties reside in or are attached to a hall
         of residence. The university has{' '}
         <span className='font-bold italic'>nine</span> halls of residence{' '}

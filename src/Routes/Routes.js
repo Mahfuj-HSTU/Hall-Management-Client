@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { Link, createBrowserRouter } from 'react-router-dom';
 import error from '../images/images.png';
 import Main from '../Layout/Main';
 import Home from '../Pages/Home/Home';
@@ -8,8 +8,14 @@ import HallLayout from '../Layout/HallLayout';
 import ProfileLayout from '../Layout/ProfileLayout';
 import Login from '../Pages/Registration/Login/Login';
 import SignUp from '../Pages/Registration/SignUp/SignUp';
-import Profile from '../Pages/Dashboard/Profile';
-import Application from '../Pages/Dashboard/Application';
+import { ServerLink } from '../Hooks/useServerLink';
+import MyAccount from '../Pages/Dashboard/Student/Profile/MyAccount';
+import Application from '../Pages/Dashboard/Student/Application/Application';
+import StudentDashboard from '../Pages/Dashboard/Student/StudentDashboard';
+import AdminDashboard from '../Pages/Dashboard/Admin/AdminDashboard';
+import AdminRoute from './AdminRoute/AdminRoute';
+import StudentRoute from './StudentRoute/StudentRoute';
+import PrivateRoute from './PrivateRoute/PrivateRoute';
 
 const router = createBrowserRouter([
   {
@@ -27,35 +33,62 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: '/:id',
+    path: '/hall/:id',
     element: <HallLayout></HallLayout>,
+    loader: ({ params }) => fetch(`${ServerLink}/api/halls/${params.id}`),
     children: [
       {
-        path: '/:id',
+        path: '/hall/:id',
         element: <HallDetails></HallDetails>,
-        loader: ({ params }) =>
-          fetch(`http://localhost:5000/hall/${params.id}`),
+        loader: ({ params }) => fetch(`${ServerLink}/api/halls/${params.id}`),
       },
     ],
   },
   {
-    path: '/login',
+    path: '/hall/:id/login',
     element: <Login></Login>,
+    loader: ({ params }) => fetch(`${ServerLink}/api/halls/${params.id}`),
   },
   {
-    path: '/signup',
+    path: '/hall/:id/signup',
     element: <SignUp></SignUp>,
+    loader: ({ params }) => fetch(`${ServerLink}/api/halls/${params.id}`),
   },
+
   {
-    path: '/dashboard',
-    element: <ProfileLayout></ProfileLayout>,
+    path: '/dashboard/:id',
+    element: (
+      <PrivateRoute>
+        <ProfileLayout></ProfileLayout>
+      </PrivateRoute>
+    ),
+    loader: ({ params }) => fetch(`${ServerLink}/api/halls/${params.id}`),
     children: [
+      // admin routes
       {
-        path: '/dashboard',
-        element: <Profile></Profile>,
+        path: '/dashboard/:id/admin',
+        element: (
+          <AdminRoute>
+            <AdminDashboard></AdminDashboard>
+          </AdminRoute>
+        ),
+      },
+
+      // students routes
+      {
+        path: '/dashboard/:id/student',
+        element: (
+          <StudentRoute>
+            <StudentDashboard></StudentDashboard>
+          </StudentRoute>
+        ),
       },
       {
-        path: '/dashboard/applicatoin',
+        path: '/dashboard/:id/student/profile',
+        element: <MyAccount></MyAccount>,
+      },
+      {
+        path: '/dashboard/:id/student/application',
         element: <Application></Application>,
       },
     ],
@@ -64,11 +97,18 @@ const router = createBrowserRouter([
     path: '*',
     element: (
       <div className='flex justify-center mt-10'>
-        <img
-          src={error}
-          alt=''
-          width='500px'
-        />
+        <div className='flex-col'>
+          <img
+            src={error}
+            alt=''
+            width='500px'
+          />
+          <Link
+            to='/halls'
+            className='btn btn-primary btn-outline font-bold'>
+            Back to home
+          </Link>
+        </div>
       </div>
     ),
   },
