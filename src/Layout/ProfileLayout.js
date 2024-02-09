@@ -88,6 +88,11 @@ const ProfileLayout = () => {
                       </Link>{' '}
                     </li>
                     <li className='font-semibold'>
+                      <Link to={`/dashboard/${hall._id}/admin/students`}>
+                        All Students
+                      </Link>{' '}
+                    </li>
+                    <li className='font-semibold'>
                       <Link to={`/dashboard/${hall._id}/admin/application`}>
                         Applications
                       </Link>{' '}
