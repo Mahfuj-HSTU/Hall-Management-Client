@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchRole } from '../../../../Hooks/Role/useRoleSlice';
 import Loading from '../../../Shared/Loading/Loading';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
+import StudentDetails from './StudentDetails';
 
 const AllStudents = () => {
   const { user, loading } = useContext(AuthContext);
@@ -54,10 +55,10 @@ const AllStudents = () => {
   };
 
   return (
-    <div className='my-5'>
-      <div className='lg:flex lg:justify-between mb-5 p-4 pt-7 bg-slate-300 rounded-lg ml-4'>
+    <div className='md:my-5 mb-5'>
+      <div className='lg:flex lg:justify-between mb-5 p-4 pt-12 md:pt-6 lg:pt-5 bg-slate-300 rounded-lg md:ml-4'>
         <div className='lg:flex mlg:justify-between gap-9'>
-          <span className='flex justify-between gap-5'>
+          <span className='flex justify-between gap-5 mb-3'>
             <h2 className='text-4xl mb-4'>Student List</h2>
             <input
               className='lg:hidden block btn btn-primary rounded-xl w-20'
@@ -91,9 +92,9 @@ const AllStudents = () => {
           />
         </div>
       </div> */}
-      <table className='table table-compact w-full border-2 shadow-lg mx-4'>
+      <table className='table table-compact w-full border-2 shadow-lg md:mx-4 mx-0 overflow-x-scroll'>
         <thead className='text-center bg-slate-200 font-semibold'>
-          <tr>
+          <tr className='text-[17px]'>
             <th className='border-2 border-r-slate-300'>Name</th>
             <th className='border-2 border-r-slate-300'>Student Id</th>
             <th className='border-2 border-r-slate-300'>Department</th>
@@ -101,29 +102,32 @@ const AllStudents = () => {
           </tr>
         </thead>
         <tbody>
-          {searchUser.map((user) => (
-            <tr
-              key={user?._id}
-              className='border-2'>
-              <td className='border-2 font-semibold'>
-                <label
-                  htmlFor='my-modal'
-                  className='link link-primary'
-                  onClick={() => setSelected(user)}>
-                  {user.name}
-                </label>
-              </td>
-              <td className='border-2'>{user.sid}</td>
-              <td className='border-2'>{user.dept}</td>
-              <td className='border-2 text-center p-0'>
-                <button className='text-red-600 text-2xl'>
-                  <MdOutlineDeleteOutline />
-                </button>
-              </td>
-            </tr>
-          ))}
+          {searchUser
+            ?.sort((a, b) => a.sid - b.sid)
+            .map((user) => (
+              <tr
+                key={user?._id}
+                className='border-2'>
+                <td className='border-2 font-semibold'>
+                  <label
+                    htmlFor='my-modal'
+                    className='link link-primary'
+                    onClick={() => setSelected(user)}>
+                    {user.name}
+                  </label>
+                </td>
+                <td className='border-2'>{user.sid}</td>
+                <td className='border-2'>{user.dept}</td>
+                <td className='border-2 text-center p-0'>
+                  <button className='text-red-600 text-2xl'>
+                    <MdOutlineDeleteOutline />
+                  </button>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
+      {selected && <StudentDetails selected={selected}></StudentDetails>}
     </div>
   );
 };
