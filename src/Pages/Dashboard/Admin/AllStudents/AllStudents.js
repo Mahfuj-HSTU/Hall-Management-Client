@@ -25,7 +25,7 @@ const AllStudents = () => {
   }, [dispatch, user?.email]);
 
   // console.log(user, details);
-  const { data: students = [], isLoading } = useQuery({
+  const { data: students = [] } = useQuery({
     queryKey: ['students'],
     queryFn: () =>
       fetch(`${ServerLink}/api/students`).then((res) => res.json()),
@@ -45,6 +45,7 @@ const AllStudents = () => {
     ) {
       return true;
     }
+    return null;
   });
 
   console.log(searchUser);
@@ -79,22 +80,10 @@ const AllStudents = () => {
           value='Add student'
         />
       </div>
-      {/* <div className='bg-slate-200 mx-4 pt-5'>
-        <h2 className='text-3xl font-semibold'>Student List</h2>
-        <div className='text-center lg:text-left pb-5'>
-          <input
-            ref={inputRef}
-            id='searchName'
-            className='ml-4 p-2 rounded fs-4 mt-5 w-72 border-2'
-            type='text'
-            placeholder='Search'
-            onChange={handleSearch}
-          />
-        </div>
-      </div> */}
       <table className='table table-compact w-full border-2 shadow-lg md:mx-4 mx-0 overflow-x-scroll'>
         <thead className='text-center bg-slate-200 font-semibold'>
           <tr className='text-[17px]'>
+            <th className='border-2 border-r-slate-300'>SL No.</th>
             <th className='border-2 border-r-slate-300'>Name</th>
             <th className='border-2 border-r-slate-300'>Student Id</th>
             <th className='border-2 border-r-slate-300'>Department</th>
@@ -104,10 +93,11 @@ const AllStudents = () => {
         <tbody>
           {searchUser
             ?.sort((a, b) => a.sid - b.sid)
-            .map((user) => (
+            .map((user, i) => (
               <tr
                 key={user?._id}
                 className='border-2'>
+                <td className='border-2 text-center w-16'>{i + 1}</td>
                 <td className='border-2 font-semibold'>
                   <label
                     htmlFor='my-modal'

@@ -22,8 +22,9 @@ const AdminRoute = ({ children }) => {
 
   if (user && role === admin) {
     return children;
+  } else {
+    logOut().then().catch();
   }
-  logOut().then().catch();
 
   return (
     <Navigate
