@@ -16,6 +16,8 @@ import AdminDashboard from '../Pages/Dashboard/Admin/AdminDashboard';
 import AdminRoute from './AdminRoute/AdminRoute';
 import StudentRoute from './StudentRoute/StudentRoute';
 import PrivateRoute from './PrivateRoute/PrivateRoute';
+import AdminProfile from '../Pages/Dashboard/Admin/AdminProfile/AdminProfile';
+import AllStudents from '../Pages/Dashboard/Admin/AllStudents/AllStudents';
 
 const router = createBrowserRouter([
   {
@@ -70,6 +72,22 @@ const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <AdminDashboard></AdminDashboard>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: '/dashboard/:id/admin/profile',
+        element: (
+          <AdminRoute>
+            <AdminProfile></AdminProfile>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: '/dashboard/:id/admin/students',
+        element: (
+          <AdminRoute>
+            <AllStudents></AllStudents>
           </AdminRoute>
         ),
       },
