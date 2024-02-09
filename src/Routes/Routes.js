@@ -9,9 +9,15 @@ import ProfileLayout from '../Layout/ProfileLayout';
 import Login from '../Pages/Registration/Login/Login';
 import SignUp from '../Pages/Registration/SignUp/SignUp';
 import { ServerLink } from '../Hooks/useServerLink';
-import Dashboard from '../Pages/Dashboard/Dashboard';
 import MyAccount from '../Pages/Dashboard/Student/Profile/MyAccount';
 import Application from '../Pages/Dashboard/Student/Application/Application';
+import StudentDashboard from '../Pages/Dashboard/Student/StudentDashboard';
+import AdminDashboard from '../Pages/Dashboard/Admin/AdminDashboard';
+import AdminRoute from './AdminRoute/AdminRoute';
+import StudentRoute from './StudentRoute/StudentRoute';
+import PrivateRoute from './PrivateRoute/PrivateRoute';
+import AdminProfile from '../Pages/Dashboard/Admin/AdminProfile/AdminProfile';
+import AllStudents from '../Pages/Dashboard/Admin/AllStudents/AllStudents';
 
 const router = createBrowserRouter([
   {
@@ -50,21 +56,57 @@ const router = createBrowserRouter([
     element: <SignUp></SignUp>,
     loader: ({ params }) => fetch(`${ServerLink}/api/halls/${params.id}`),
   },
+
   {
     path: '/dashboard/:id',
-    element: <ProfileLayout></ProfileLayout>,
+    element: (
+      <PrivateRoute>
+        <ProfileLayout></ProfileLayout>
+      </PrivateRoute>
+    ),
     loader: ({ params }) => fetch(`${ServerLink}/api/halls/${params.id}`),
     children: [
+      // admin routes
       {
-        path: '/dashboard/:id',
-        element: <Dashboard></Dashboard>,
+        path: '/dashboard/:id/admin',
+        element: (
+          <AdminRoute>
+            <AdminDashboard></AdminDashboard>
+          </AdminRoute>
+        ),
       },
       {
-        path: '/dashboard/:id/profile',
+        path: '/dashboard/:id/admin/profile',
+        element: (
+          <AdminRoute>
+            <AdminProfile></AdminProfile>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: '/dashboard/:id/admin/students',
+        element: (
+          <AdminRoute>
+            <AllStudents></AllStudents>
+          </AdminRoute>
+        ),
+      },
+
+      // students routes
+      {
+        path: '/dashboard/:id/student',
+        element: (
+          <StudentRoute>
+            <StudentDashboard></StudentDashboard>
+          </StudentRoute>
+        ),
+      },
+      {
+        path: '/dashboard/:id/student/profile',
         element: <MyAccount></MyAccount>,
       },
       {
-        path: '/dashboard/:id/application',
+        path: '/dashboard/:id/student/application',
         element: <Application></Application>,
       },
     ],
