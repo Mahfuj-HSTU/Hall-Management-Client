@@ -49,6 +49,11 @@ const AuthProvider = ({ children }) => {
     return signOut(auth);
   };
 
+  // delete user
+  const deleteUser = () => {
+    return auth.currentUser.delete();
+  };
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       // console.log( currentUser );
@@ -70,6 +75,7 @@ const AuthProvider = ({ children }) => {
     login,
     logOut,
     resetPassword,
+    deleteUser,
   };
 
   return (

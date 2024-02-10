@@ -3,13 +3,13 @@ import toast from 'react-hot-toast';
 
 const Application = () => {
   const handleHallSeat = (user) => {
-    const agree = window.confirm(`Are you want to apply for hall seat?`);
+    const agree = window.confirm(`Do you want to apply for hall seat?`);
     if (agree) {
       toast.success('Apply successfull');
     }
   };
   const handleHallClearence = (user) => {
-    const agree = window.confirm(`Are you want to apply for hall clearence?`);
+    const agree = window.confirm(`Do you want to apply for hall clearence?`);
     if (agree) {
       toast.success('Apply successfull');
     }

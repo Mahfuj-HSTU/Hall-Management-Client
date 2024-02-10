@@ -7,9 +7,10 @@ import { fetchRole } from '../../../../Hooks/Role/useRoleSlice';
 import Loading from '../../../Shared/Loading/Loading';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import StudentDetails from './StudentDetails';
+import AddStudent from './AddStudent';
 
 const AllStudents = () => {
-  const { user, loading } = useContext(AuthContext);
+  const { user, loading, deleteUser } = useContext(AuthContext);
   const inputRef = useRef(null);
   const [search, setSearch] = useState('');
   const [selected, setSelected] = useState('');
@@ -32,15 +33,11 @@ const AllStudents = () => {
   });
   // console.log(students);
 
-  // const filteredUser = students?.filter(
-  //   (user) => user.hall === details.hallName
-  // );
-
   const searchUser = students?.filter((user) => {
     if (search === '' && user.hall === details.hallName) {
       return true;
     } else if (
-      user.sid.toString().includes(search.toString()) &&
+      user?.sid.toString().includes(search?.toString()) &&
       user.hall === details.hallName
     ) {
       return true;
@@ -48,11 +45,42 @@ const AllStudents = () => {
     return null;
   });
 
-  console.log(searchUser);
+  // console.log(user);
 
   const handleSearch = () => {
     const searchData = inputRef.current.value;
     setSearch(searchData);
+  };
+
+  const handleDelete = (usr) => {
+    // console.log(user);
+    const agree = window.confirm(
+      `Are you sure you want to delete: ${usr.name}`
+    );
+    // if (agree) {
+    //   deleteUser(user.uid)
+    //     .then(() => {
+    //       // User deleted successfully
+    //       alert('User deleted successfully.');
+    //     })
+    //     .catch((error) => {
+    //       // An error occurred while deleting the user
+    //       console.error('Error deleting user:', error);
+    //       alert('Error deleting user.');
+    //     });
+    // }
+    if (agree) {
+      fetch(`${ServerLink}/api/users/${usr.sid}`, {
+        method: 'DELETE',
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          // console.log( data )
+          if (data.deletedCount > 0) {
+            alert('user deleted successfully.');
+          }
+        });
+    }
   };
 
   return (
@@ -75,10 +103,16 @@ const AllStudents = () => {
             onChange={handleSearch}
           />
         </div>
-        <input
-          className='hidden lg:block btn btn-primary rounded-xl w-32'
+
+        <label
+          htmlFor='add-modal'
+          className='hidden btn btn-info rounded-xl w-32 lg:grid place-items-center'>
+          Add Student
+        </label>
+        {/* <input
+          className='hidden lg:block btn btn-primary rounded-xl w-32 '
           value='Add student'
-        />
+        /> */}
       </div>
       <table className='table table-compact w-full border-2 shadow-lg md:mx-4 mx-0 overflow-x-scroll'>
         <thead className='text-center bg-slate-200 font-semibold'>
@@ -109,7 +143,9 @@ const AllStudents = () => {
                 <td className='border-2'>{user.sid}</td>
                 <td className='border-2'>{user.dept}</td>
                 <td className='border-2 text-center p-0'>
-                  <button className='text-red-600 text-2xl'>
+                  <button
+                    onClick={() => handleDelete(user)}
+                    className='text-red-600 text-2xl'>
                     <MdOutlineDeleteOutline />
                   </button>
                 </td>
@@ -117,6 +153,7 @@ const AllStudents = () => {
             ))}
         </tbody>
       </table>
+      <AddStudent details={details} />
       {selected && <StudentDetails selected={selected}></StudentDetails>}
     </div>
   );

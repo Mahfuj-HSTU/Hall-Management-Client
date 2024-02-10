@@ -53,7 +53,8 @@ const StudentDetails = ({ selected }) => {
               </p>
               <p>
                 {' '}
-                <span className='font-semibold'>Mobile:</span> {mobile}
+                <span className='font-semibold'>Mobile:</span>{' '}
+                {mobile || '01XXXXXXX'}
               </p>
               <p>
                 {' '}
