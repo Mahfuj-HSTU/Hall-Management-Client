@@ -10,7 +10,7 @@ import StudentDetails from './StudentDetails';
 import AddStudent from './AddStudent';
 
 const AllStudents = () => {
-  const { user, loading, deleteUser } = useContext(AuthContext);
+  const { user, loading } = useContext(AuthContext);
   const inputRef = useRef(null);
   const [search, setSearch] = useState('');
   const [selected, setSelected] = useState('');
@@ -26,7 +26,7 @@ const AllStudents = () => {
   }, [dispatch, user?.email]);
 
   // console.log(user, details);
-  const { data: students = [] } = useQuery({
+  const { data: students = [], refetch } = useQuery({
     queryKey: ['students'],
     queryFn: () =>
       fetch(`${ServerLink}/api/students`).then((res) => res.json()),
@@ -55,27 +55,16 @@ const AllStudents = () => {
   const handleDelete = (usr) => {
     // console.log(user);
     const agree = window.confirm(
-      `Are you sure you want to delete: ${usr.name}`
+      `Are you sure? you want to delete: ${usr.name}`
     );
-    // if (agree) {
-    //   deleteUser(user.uid)
-    //     .then(() => {
-    //       // User deleted successfully
-    //       alert('User deleted successfully.');
-    //     })
-    //     .catch((error) => {
-    //       // An error occurred while deleting the user
-    //       console.error('Error deleting user:', error);
-    //       alert('Error deleting user.');
-    //     });
-    // }
     if (agree) {
+      refetch();
       fetch(`${ServerLink}/api/users/${usr.sid}`, {
         method: 'DELETE',
       })
         .then((res) => res.json())
         .then((data) => {
-          // console.log( data )
+          console.log(data);
           if (data.deletedCount > 0) {
             alert('user deleted successfully.');
           }
@@ -153,7 +142,10 @@ const AllStudents = () => {
             ))}
         </tbody>
       </table>
-      <AddStudent details={details} />
+      <AddStudent
+        details={details}
+        refetch={refetch}
+      />
       {selected && <StudentDetails selected={selected}></StudentDetails>}
     </div>
   );
