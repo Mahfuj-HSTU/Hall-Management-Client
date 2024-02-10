@@ -1,18 +1,44 @@
 import React from 'react';
 import { BsSendCheckFill } from 'react-icons/bs';
+import { ServerLink } from '../../../../Hooks/useServerLink';
+import toast from 'react-hot-toast';
 
-const AddStudent = ({ details }) => {
-  console.log(details);
+const AddStudent = ({ details, refetch }) => {
+  // console.log(details);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const form = event.target;
+    const name = form.name.value;
     const sid = form.sid.value;
     const hall = form.hall.value;
     const dept = form.dept.value;
 
-    const user = { sid, hall, dept };
-    console.log(user);
+    const user = { name, sid, hall, dept };
+    // console.log(user);
+    fetch(`${ServerLink}/api/students`, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          return res.json().then((data) => {
+            throw new Error(data.error || 'Failed to add a new student');
+          });
+        }
+        return res.json();
+      })
+      .then((data) => {
+        // Handle successful response
+        if (data.acknowledged) {
+          toast.success('Successfully added a new student');
+          form.reset();
+          refetch();
+        }
+      });
   };
 
   return (
@@ -37,6 +63,14 @@ const AddStudent = ({ details }) => {
                 className='rounded-xl text-blue-900 relative'>
                 <label className='font-semibold pl-1'>Student Id</label> <br />
                 <input
+                  type='text'
+                  name='name'
+                  placeholder='student name'
+                  className='input input-bordered w-full max-w-xs mb-3 mt-1'
+                />
+                <br />
+                <label className='font-semibold pl-1'>Student Id</label> <br />
+                <input
                   required
                   type='number'
                   name='sid'
@@ -47,6 +81,7 @@ const AddStudent = ({ details }) => {
                 <label className='font-semibold pl-1'>Hall Name</label> <br />
                 <input
                   required
+                  value={details.hallName}
                   type='text'
                   name='hall'
                   placeholder='hall name'
