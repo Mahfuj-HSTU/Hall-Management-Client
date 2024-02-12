@@ -8,7 +8,7 @@ import Loading from '../Pages/Shared/Loading/Loading';
 
 const ProfileLayout = () => {
   const hall = useLoaderData();
-  const { user, loading } = useContext(AuthContext);
+  const { user, loading, logOut } = useContext(AuthContext);
   const details = useSelector((state) => state?.roleReducer.role);
   const dispatch = useDispatch();
   const role = details.role;
@@ -19,6 +19,10 @@ const ProfileLayout = () => {
   if (loading) {
     <Loading></Loading>;
   }
+
+  const handleLogOut = () => {
+    logOut().then().catch();
+  };
 
   useEffect(() => {
     user?.email && dispatch(fetchRole(user?.email));
@@ -119,6 +123,9 @@ const ProfileLayout = () => {
                     </li>
                   </>
                 )}
+                <li className='font-semibold'>
+                  <button onClick={handleLogOut}>Log Out</button>
+                </li>
               </>
             )}
           </ul>

@@ -5,7 +5,6 @@ import Loading from '../../../Shared/Loading/Loading';
 import { fetchRole } from '../../../../Hooks/Role/useRoleSlice';
 import { ServerLink } from '../../../../Hooks/useServerLink';
 import { useQuery } from '@tanstack/react-query';
-import { MdOutlineDeleteOutline } from 'react-icons/md';
 import StudentDetails from '../AllStudents/StudentDetails';
 
 const Applications = () => {
@@ -30,14 +29,6 @@ const Applications = () => {
   });
 
   const filteredApplications = applications?.filter((user) => {
-    //  if (user.hall === details.hallName) {
-    //    return true;
-    //  } else if (
-    //    user?.sid.toString().includes(search?.toString()) &&
-    //    user.hall === details.hallName
-    //  ) {
-    //    return true;
-    //  }
     refetch();
     return user.hall === details.hallName;
   });
@@ -61,31 +52,30 @@ const Applications = () => {
           </tr>
         </thead>
         <tbody>
-          {filteredApplications.map((user, i) => (
-            <tr
-              key={user?._id}
-              className='border-2'>
-              <td className='border-2 text-center w-14'>{i + 1}</td>
-              <td className='border-2 font-semibold'>
-                <label
-                  htmlFor='my-modal'
-                  className='link link-primary'
-                  onClick={() => setSelected(user)}>
-                  {user.name}
-                </label>
-              </td>
-              <td className='border-2'>{user.sid}</td>
-              <td className='border-2'>{user.type}</td>
-              <td className='border-2'>{user.dept}</td>
-              <td className='border-2 text-center p-0'>
-                <button
-                  // onClick={() => handleDelete(user)}
-                  className='text-red-600 text-2xl'>
-                  <MdOutlineDeleteOutline />
-                </button>
-              </td>
-            </tr>
-          ))}
+          {filteredApplications
+            ?.sort((a, b) => a.sid - b.sid)
+            .map((user, i) => (
+              <tr
+                key={user?._id}
+                className='border-2'>
+                <td className='border-2 text-center w-14'>{i + 1}</td>
+                <td className='border-2 font-semibold w-60'>
+                  <label
+                    htmlFor='my-modal'
+                    className='link link-primary'
+                    onClick={() => setSelected(user)}>
+                    {user.name}
+                  </label>
+                </td>
+                <td className='border-2 w-40'>{user.sid}</td>
+                <td className='border-2 w-52'>{user.type}</td>
+                <td className='border-2 w-44'>{user.dept}</td>
+                <td className='border-2 text-center p-0 w-56'>
+                  <button className='btn btn-sm btn-success '>Accept</button>
+                  <button className='btn btn-sm btn-error ml-3'>Reject</button>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
       {selected && <StudentDetails selected={selected}></StudentDetails>}
