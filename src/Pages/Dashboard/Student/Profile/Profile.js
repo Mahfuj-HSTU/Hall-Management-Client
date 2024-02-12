@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { FaEdit } from 'react-icons/fa';
+import { ServerLink } from '../../../../Hooks/useServerLink';
+import toast from 'react-hot-toast';
 
 const Profile = ({ student }) => {
   const [status, setStatus] = useState(true);
@@ -47,6 +49,17 @@ const Profile = ({ student }) => {
       // img: form.img.value,
     };
     console.log(formData);
+    fetch(`${ServerLink}/api/students`, {
+      method: 'PUT',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((res) => res.json())
+      .then((event) => {
+        toast.success('updated successfully');
+      });
   };
 
   return (
@@ -55,9 +68,10 @@ const Profile = ({ student }) => {
         <h1 className='text-2xl font-semibold'>Profile</h1>
         <div>
           <label
+            disabled={status ? null : 'disabled'}
             onClick={handleStatus}
             htmlFor='details-modal'
-            className='text-lg cursor-pointer'>
+            className='text-lg cursor-pointer btn'>
             <FaEdit></FaEdit>
           </label>
         </div>
@@ -69,11 +83,11 @@ const Profile = ({ student }) => {
           <div className='bg-gray-200 px-2 py-5 rounded-lg w-[92%]'>
             <p className='pl-2 mb-1'>Name: </p>
             <input
-              // required
-              // disabled={status ? 'readOnly' : null}
+              required
+              disabled={status ? 'readOnly' : null}
               type='text'
               name='name'
-              value={name}
+              defaultValue={name}
               placeholder='Your name'
               className='input input-bordered w-full max-w-xs mb-2'
             />
@@ -82,7 +96,7 @@ const Profile = ({ student }) => {
               readOnly
               type='number'
               name='sid'
-              value={sid}
+              defaultValue={sid}
               placeholder='student id'
               className='input input-bordered w-full max-w-xs mb-2'
             />
@@ -91,7 +105,7 @@ const Profile = ({ student }) => {
               readOnly
               type='text'
               name='dept'
-              value={dept}
+              defaultValue={dept}
               placeholder='ex: cse'
               className='input input-bordered w-full max-w-xs mb-2'
             />
@@ -99,7 +113,7 @@ const Profile = ({ student }) => {
             <input
               readOnly
               type='text'
-              value='3.50'
+              defaultValue='3.50'
               className='input input-bordered w-full max-w-xs mb-2'
             />
           </div>
@@ -110,7 +124,7 @@ const Profile = ({ student }) => {
               readOnly={status}
               type='email'
               name='email'
-              value={email}
+              defaultValue={email}
               placeholder='ex: test@gmail.com'
               className='input input-bordered w-full max-w-xs mb-2'
             />
@@ -118,7 +132,7 @@ const Profile = ({ student }) => {
             <input
               type='number'
               name='mobile'
-              value={mobile}
+              defaultValue={mobile}
               placeholder='ex: 01XXXXXX'
               className='input input-bordered w-full max-w-xs mb-2'
             />
@@ -126,7 +140,7 @@ const Profile = ({ student }) => {
             <input
               type='text'
               name='blood'
-              value={blood}
+              defaultValue={blood}
               placeholder='B+'
               className='input input-bordered w-full max-w-xs mb-2'
             />
@@ -135,7 +149,7 @@ const Profile = ({ student }) => {
               readOnly
               type='text'
               name='hall'
-              value={hall}
+              defaultValue={hall}
               className='input input-bordered w-full max-w-xs mb-2'
             />
           </div>
@@ -148,7 +162,7 @@ const Profile = ({ student }) => {
               required
               type='text'
               name='fname'
-              value={fname}
+              defaultValue={fname}
               placeholder='Father name'
               className='input input-bordered w-full max-w-xs mb-2'
             />
@@ -157,7 +171,7 @@ const Profile = ({ student }) => {
               required
               type='number'
               name='fmobile'
-              value={fmobile}
+              defaultValue={fmobile}
               placeholder='ex: 01XXXXXX'
               className='input input-bordered w-full max-w-xs mb-2'
             />
@@ -165,7 +179,7 @@ const Profile = ({ student }) => {
             <input
               type='text'
               name='mname'
-              value={mname}
+              defaultValue={mname}
               placeholder='Mother name'
               className='input input-bordered w-full max-w-xs mb-2'
             />
@@ -173,7 +187,7 @@ const Profile = ({ student }) => {
             <input
               type='number'
               name='mmobile'
-              value={mmobile}
+              defaultValue={mmobile}
               placeholder='ex: 01XXXXXX'
               className='input input-bordered w-full max-w-xs mb-2'
             />
@@ -184,7 +198,7 @@ const Profile = ({ student }) => {
             <input
               type='text'
               name='present'
-              value={present}
+              defaultValue={present}
               placeholder='present address'
               className='input input-bordered w-full max-w-xs mb-2'
             />
@@ -192,7 +206,7 @@ const Profile = ({ student }) => {
             <input
               type='text'
               name='parmanent'
-              value={parmanent}
+              defaultValue={parmanent}
               placeholder='parmanent address'
               className='input input-bordered w-full max-w-xs mb-2'
             />
@@ -200,7 +214,7 @@ const Profile = ({ student }) => {
             <input
               type='number'
               name='nid'
-              value={nid}
+              defaultValue={nid}
               placeholder='National ID / Birth Certificate No'
               className='input input-bordered w-full max-w-xs mb-2'
             />
