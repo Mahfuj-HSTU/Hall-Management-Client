@@ -23,7 +23,7 @@ const MyAccount = () => {
     queryFn: () =>
       fetch(`${ServerLink}/api/students/${us?.sid}`).then((res) => res.json()),
   });
-  console.log(student);
+  // console.log(student);
 
   if (isLoading) {
     <Loading />;

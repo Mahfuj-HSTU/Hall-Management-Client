@@ -60,9 +60,9 @@ const router = createBrowserRouter([
   {
     path: '/dashboard/:id',
     element: (
-      <PrivateRoute>
+      // <PrivateRoute>
         <ProfileLayout></ProfileLayout>
-      </PrivateRoute>
+      // </PrivateRoute>
     ),
     loader: ({ params }) => fetch(`${ServerLink}/api/halls/${params.id}`),
     children: [
