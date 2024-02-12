@@ -3,8 +3,9 @@ import { FaEdit } from 'react-icons/fa';
 import { ServerLink } from '../../../../Hooks/useServerLink';
 import toast from 'react-hot-toast';
 
-const Profile = ({ student }) => {
+const Profile = ({ student, refetch }) => {
   const [status, setStatus] = useState(true);
+  const [pic, setPic] = useState();
   const {
     name,
     sid,
@@ -46,8 +47,9 @@ const Profile = ({ student }) => {
       present: form.present.value,
       parmanent: form.parmanent.value,
       nid: form.nid.value,
-      // img: form.img.value,
+      img: pic,
     };
+
     console.log(formData);
     fetch(`${ServerLink}/api/students`, {
       method: 'PUT',
@@ -59,7 +61,50 @@ const Profile = ({ student }) => {
       .then((res) => res.json())
       .then((event) => {
         toast.success('updated successfully');
+        refetch();
       });
+  };
+
+  const postDetails = (pics) => {
+    if (pics === undefined) {
+      toast({
+        title: 'Please Select an Image!',
+        status: 'warning',
+        duration: 5000,
+        isClosable: true,
+        position: 'bottom',
+      });
+      return;
+    }
+    console.log(pics);
+    if (pics.type === 'image/jpeg' || pics.type === 'image/png') {
+      const data = new FormData();
+      data.append('file', pics);
+      data.append('upload_preset', 'Hall Management');
+      data.append('cloud_name', 'dvtf0kosr');
+      fetch('https://api.cloudinary.com/v1_1/dvtf0kosr/image/upload', {
+        method: 'post',
+        body: data,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setPic(data.url.toString());
+          console.log(data.url.toString());
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      toast({
+        title: 'Please Select an Image!',
+        status: 'warning',
+        duration: 5000,
+        isClosable: true,
+        position: 'bottom',
+      });
+
+      return;
+    }
   };
 
   return (
@@ -84,7 +129,7 @@ const Profile = ({ student }) => {
             <p className='pl-2 mb-1'>Name: </p>
             <input
               required
-              disabled={status ? 'readOnly' : null}
+              readOnly={status ? 'readOnly' : null}
               type='text'
               name='name'
               defaultValue={name}
@@ -121,7 +166,7 @@ const Profile = ({ student }) => {
           <div className='bg-gray-200 px-2 py-5 rounded-lg w-[92%]'>
             <p className='pl-2 mb-1'>Email </p>
             <input
-              readOnly={status}
+              readOnly={status ? 'readOnly' : null}
               type='email'
               name='email'
               defaultValue={email}
@@ -130,6 +175,7 @@ const Profile = ({ student }) => {
             />
             <p className='pl-2 mb-1'>Mobile </p>
             <input
+              readOnly={status ? 'readOnly' : null}
               type='number'
               name='mobile'
               defaultValue={mobile}
@@ -138,6 +184,7 @@ const Profile = ({ student }) => {
             />
             <p className='pl-2 mb-1'>Blood Group </p>
             <input
+              readOnly={status ? 'readOnly' : null}
               type='text'
               name='blood'
               defaultValue={blood}
@@ -160,6 +207,7 @@ const Profile = ({ student }) => {
             <p className='pl-2 mb-1'>Father Name </p>
             <input
               required
+              readOnly={status ? 'readOnly' : null}
               type='text'
               name='fname'
               defaultValue={fname}
@@ -169,6 +217,7 @@ const Profile = ({ student }) => {
             <p className='pl-2 mb-1'>Father Mobile </p>
             <input
               required
+              readOnly={status ? 'readOnly' : null}
               type='number'
               name='fmobile'
               defaultValue={fmobile}
@@ -177,6 +226,7 @@ const Profile = ({ student }) => {
             />
             <p className='pl-2 mb-1'>Mother Name </p>
             <input
+              readOnly={status ? 'readOnly' : null}
               type='text'
               name='mname'
               defaultValue={mname}
@@ -185,6 +235,7 @@ const Profile = ({ student }) => {
             />
             <p className='pl-2 mb-1'>Mother Mobile </p>
             <input
+              readOnly={status ? 'readOnly' : null}
               type='number'
               name='mmobile'
               defaultValue={mmobile}
@@ -196,6 +247,7 @@ const Profile = ({ student }) => {
           <div className='bg-gray-200 px-2 py-5 rounded-lg w-[92%]'>
             <p className='pl-2 mb-1'>Present Address </p>
             <input
+              readOnly={status ? 'readOnly' : null}
               type='text'
               name='present'
               defaultValue={present}
@@ -204,6 +256,7 @@ const Profile = ({ student }) => {
             />
             <p className='pl-2 mb-1'>Parmanent Address </p>
             <input
+              readOnly={status ? 'readOnly' : null}
               type='text'
               name='parmanent'
               defaultValue={parmanent}
@@ -212,6 +265,7 @@ const Profile = ({ student }) => {
             />
             <p className='pl-2 mb-1'>National ID / Birth Certificate No </p>
             <input
+              readOnly={status ? 'readOnly' : null}
               type='number'
               name='nid'
               defaultValue={nid}
@@ -220,8 +274,10 @@ const Profile = ({ student }) => {
             />
             <p className='pl-2 mb-1'>Photo </p>
             <input
+              readOnly={status ? 'readOnly' : null}
               type='file'
               name='img'
+              onChange={(e) => postDetails(e.target.files[0])}
               placeholder='National ID / Birth Certificate No'
               className='input input-bordered w-full max-w-xs mb-2'
             />
@@ -229,7 +285,7 @@ const Profile = ({ student }) => {
         </div>
         <div className='text-center mt-5'>
           <input
-            disabled={status ? 'disabled' : null}
+            readOnly={status ? 'disabled' : null}
             type='submit'
             value='SAVE'
             className='btn btn-success font-semibold input input-bordered px-12'
