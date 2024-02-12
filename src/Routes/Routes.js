@@ -18,6 +18,7 @@ import StudentRoute from './StudentRoute/StudentRoute';
 import PrivateRoute from './PrivateRoute/PrivateRoute';
 import AdminProfile from '../Pages/Dashboard/Admin/AdminProfile/AdminProfile';
 import AllStudents from '../Pages/Dashboard/Admin/AllStudents/AllStudents';
+import Applications from '../Pages/Dashboard/Admin/Applications/Applications';
 
 const router = createBrowserRouter([
   {
@@ -60,9 +61,9 @@ const router = createBrowserRouter([
   {
     path: '/dashboard/:id',
     element: (
-      // <PrivateRoute>
+      <PrivateRoute>
         <ProfileLayout></ProfileLayout>
-      // </PrivateRoute>
+      </PrivateRoute>
     ),
     loader: ({ params }) => fetch(`${ServerLink}/api/halls/${params.id}`),
     children: [
@@ -88,6 +89,14 @@ const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <AllStudents></AllStudents>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: '/dashboard/:id/admin/application',
+        element: (
+          <AdminRoute>
+            <Applications></Applications>
           </AdminRoute>
         ),
       },
