@@ -57,7 +57,10 @@ const MyAccount = () => {
             {/* profile section  */}
 
             <div className='flex flex-col md:flex-row justify-start mt-5 bg-white rounded-lg'>
-              <Profile student={student} />
+              <Profile
+                student={student}
+                refetch={refetch}
+              />
             </div>
           </div>
         </div>
