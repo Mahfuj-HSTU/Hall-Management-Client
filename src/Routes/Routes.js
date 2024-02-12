@@ -95,9 +95,9 @@ const router = createBrowserRouter([
       {
         path: '/dashboard/:id/admin/application',
         element: (
-          <AdminRoute>
-            <Applications></Applications>
-          </AdminRoute>
+          // <AdminRoute>
+          <Applications></Applications>
+          // </AdminRoute>
         ),
       },
 
