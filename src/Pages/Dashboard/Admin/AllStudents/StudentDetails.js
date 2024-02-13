@@ -13,6 +13,7 @@ const StudentDetails = ({ selected }) => {
     mmobile,
     present,
     parmanent,
+    cgpa,
   } = selected;
   return (
     <div>
@@ -45,6 +46,10 @@ const StudentDetails = ({ selected }) => {
               <p>
                 {' '}
                 <span className='font-semibold'>Department:</span> {dept}
+              </p>
+              <p>
+                {' '}
+                <span className='font-semibold'>CGPA:</span> {cgpa}
               </p>
               <p>
                 {' '}

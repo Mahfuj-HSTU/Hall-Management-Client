@@ -36,7 +36,8 @@ const Application = () => {
         res.json()
       ),
   });
-  console.log(applications);
+  // console.log(applications);
+
   const hallSeat = applications?.find((item) => item.type === 'HallSeat');
   const hallClearence = applications?.find(
     (item) => item.type === 'HallClearence'
@@ -131,47 +132,59 @@ const Application = () => {
             </div>
           </span>
           <div>
-            <h2 className='text-3xl mb-5 mt-16'>Application progess</h2>
+            <h2 className='text-3xl mb-7 mt-20 font-semibold'>
+              Application progess
+            </h2>
             <div className='md:flex md:justify-between gap-28'>
               <span>
                 <h2 className='text-2xl my-5'>Hall Seat Application</h2>
-                <ul className='steps steps-vertical lg:steps-horizontal'>
-                  <li
-                    className={`step mx-5 ${
-                      hallSeat?.status === ('pending' || 'accept') &&
-                      'step-primary'
-                    }`}>
-                    Received
-                  </li>
-                  <li
-                    className={`step ${
-                      hallSeat?.status === ('pending' || 'accept') &&
-                      'step-primary'
-                    }`}>
-                    Pending
-                  </li>
-                  {/* <li className='step'>Accept</li> */}
-                  <li
-                    className={`step ${
-                      hallSeat?.status === 'accept' && 'step-primary'
-                    }`}>
-                    Accept
-                  </li>
-                </ul>
+                {!hallSeat ? (
+                  <h2 className='text-2xl my-5 text-red-500'>
+                    You did not apply
+                  </h2>
+                ) : (
+                  <ul className='steps steps-vertical lg:steps-horizontal'>
+                    <li
+                      className={`step mx-5 ${
+                        (hallSeat?.status === 'pending' ||
+                          hallSeat?.status === 'accept') &&
+                        'step-primary'
+                      }`}>
+                      Received
+                    </li>
+                    <li
+                      className={`step ${
+                        (hallSeat?.status === 'pending' ||
+                          hallSeat?.status === 'accept') &&
+                        'step-primary'
+                      }`}>
+                      Pending
+                    </li>
+                    {/* <li className='step'>Accept</li> */}
+                    <li
+                      className={`step ${
+                        hallSeat?.status === 'accept' && 'step-primary'
+                      }`}>
+                      Accept
+                    </li>
+                  </ul>
+                )}
               </span>
               <span>
                 <h2 className='text-2xl my-5'>Hall Clearence Application</h2>
                 <ul className='steps steps-vertical lg:steps-horizontal'>
                   <li
                     className={`step mx-5 ${
-                      hallClearence?.status === ('pending' || 'accept') &&
+                      (hallClearence?.status === 'pending' ||
+                        hallClearence?.status === 'accept') &&
                       'step-primary'
                     }`}>
                     Received
                   </li>
                   <li
                     className={`step ${
-                      hallClearence?.status === ('pending' || 'accept') &&
+                      (hallClearence?.status === 'pending' ||
+                        hallClearence?.status === 'accept') &&
                       'step-primary'
                     }`}>
                     Pending
