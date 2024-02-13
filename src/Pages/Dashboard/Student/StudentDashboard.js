@@ -24,6 +24,15 @@ const StudentDashboard = () => {
       fetch(`${ServerLink}/api/students/${us?.sid}`).then((res) => res.json()),
   });
   // console.log(student);
+  const { data: application = {} } = useQuery({
+    queryKey: ['application'],
+    queryFn: () =>
+      fetch(`${ServerLink}/api/applications/${us?.sid}`).then((res) =>
+        res.json()
+      ),
+  });
+  console.log(application);
+
 
   if (isLoading) {
     <Loading />;
@@ -35,10 +44,10 @@ const StudentDashboard = () => {
       {isLoading ? (
         <span className="loading loading-spinner text-primary"></span>
       ) : (
-        <div className="mx-auto bg-cyan-200 rounded-lg my-3 max-w-[1100px] ml-3">
-          <div className="flex flex-col p-5">
-            {/* <div className="flex bg-white items-center mt-16 rounded-lg"> */}
-            <div className="m-5 bg-white shadow-lg rounded-lg -mt-10">
+        <div className=" flex flex-col text-center md:text-left  mt-2 md:mx-5 bg-gray-100   ">
+          <div className="flex flex-row md:flex-row  gap-5 p-5">
+            <div className="w-full  shadow-inherit rounded-lg bg-white drop-shadow-lg p-3">
+              <h2 className="text-2xl font-semibold">Your Profile</h2>
               <img
                 className="w-40 h-44 p-2 rounded-lg"
                 src={student.img}
@@ -50,61 +59,22 @@ const StudentDashboard = () => {
               <span>
                 <p>Dept: {student.dept} </p>
               </span>
-              <div className="p-2 rounded-lg text-left -mt-4"></div>
             </div>
-            {/* </div> */}
-            {/* profile section  */}
-
-            <div className="flex flex-col md:flex-row justify-start mt-5 bg-white rounded-lg">
-              {/* <div className="flex-col flex gap-5 text-center md:text-left w-full mt-2 md:mx-5 pb-5 "> */}
-              <div className="modal-box w-full">
-                <h2 className="text-2xl font-semibold">Student Details</h2>
-                <div className="card w-full">
-                  <h2 className="card-title">Name:</h2>
-                  <p>
-                    {' '}
-                    <span className="font-semibold">Student ID:</span>
-                  </p>
-                  <p>
-                    {' '}
-                    <span className="font-semibold">Department:</span>
-                  </p>
-                  <p>
-                    {' '}
-                    <span className="font-semibold">Email:</span>{' '}
-                  </p>
-                  <p>
-                    {' '}
-                    <span className="font-semibold">Mobile:</span>{' '}
-                  </p>
-                  <p>
-                    {' '}
-                    <span className="font-semibold">Father Name:</span>
-                  </p>
-                  <p>
-                    {' '}
-                    <span className="font-semibold">Father Mobile:</span>
-                  </p>
-                  <p>
-                    {' '}
-                    <span className="font-semibold">Mother Name:</span>
-                  </p>
-                  <p>
-                    {' '}
-                    <span className="font-semibold">Mother Mobile:</span>
-                  </p>
-                  <p>
-                    {' '}
-                    <span className="font-semibold">Present Address:</span>{' '}
-                  </p>
-                  <p>
-                    {' '}
-                    <span className="font-semibold">
-                      Parmanent Address:
-                    </span>{' '}
-                  </p>
-                </div>
-              </div>{' '}
+            <div className="w-full  shadow-inherit rounded-lg bg-white drop-shadow-lg p-3">
+              <h2 className="text-2xl font-semibold">Applications</h2>
+              <p>Applied for {application.type} </p>
+            </div>
+          </div>
+          <div className="flex flex-row md:flex-row  gap-5 p-5">
+            <div className="w-full  shadow-inherit rounded-lg bg-white drop-shadow-lg p-3">
+              <h2 className="text-2xl font-semibold">Contacts</h2>
+              <p>Mobile: {student.mobile}</p>
+              <p>Email : {student.email}</p>
+            </div>
+            <div className="w-full  shadow-inherit rounded-lg bg-white drop-shadow-lg p-3">
+              <h2 className="text-2xl font-semibold">Address</h2>
+              <p>Present address : {student.present}</p>
+              <p>Parmanent address : {student.parmanent}</p>
             </div>
           </div>
         </div>
