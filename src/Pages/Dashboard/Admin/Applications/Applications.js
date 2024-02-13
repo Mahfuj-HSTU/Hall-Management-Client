@@ -6,6 +6,7 @@ import { fetchRole } from '../../../../Hooks/Role/useRoleSlice';
 import { ServerLink } from '../../../../Hooks/useServerLink';
 import { useQuery } from '@tanstack/react-query';
 import StudentDetails from '../AllStudents/StudentDetails';
+import toast from 'react-hot-toast';
 
 const Applications = () => {
   const { user, loading } = useContext(AuthContext);
@@ -33,7 +34,26 @@ const Applications = () => {
     return user.hall === details.hallName;
   });
 
-  console.log(filteredApplications);
+  // console.log(filteredApplications);
+  const handleAccept = (event) => {
+    const info = {
+      ...event,
+      status: 'accept',
+    };
+    // console.log(info);
+    fetch(`${ServerLink}/api/applications`, {
+      method: 'PUT',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(info),
+    })
+      .then((res) => res.json())
+      .then((event) => {
+        toast.success('updated successfully');
+        refetch();
+      });
+  };
 
   return (
     <div className='mt-5'>
@@ -71,7 +91,11 @@ const Applications = () => {
                 <td className='border-2 w-52'>{user.type}</td>
                 <td className='border-2 w-44'>{user.dept}</td>
                 <td className='border-2 text-center p-0 w-56'>
-                  <button className='btn btn-sm btn-success '>Accept</button>
+                  <button
+                    onClick={() => handleAccept(user)}
+                    className='btn btn-sm btn-success '>
+                    Accept
+                  </button>
                   <button className='btn btn-sm btn-error ml-3'>Reject</button>
                 </td>
               </tr>
