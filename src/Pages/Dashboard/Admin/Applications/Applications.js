@@ -31,7 +31,7 @@ const Applications = () => {
 
   const filteredApplications = applications?.filter((user) => {
     refetch();
-    return user.hall === details.hallName;
+    return user.hall === details.hallName && user.status === 'pending';
   });
 
   // console.log(filteredApplications);
@@ -41,7 +41,7 @@ const Applications = () => {
       status: 'accept',
     };
     // console.log(info);
-    fetch(`${ServerLink}/api/applications`, {
+    fetch(`${ServerLink}/api/applications/${event._id}`, {
       method: 'PUT',
       headers: {
         'content-type': 'application/json',
