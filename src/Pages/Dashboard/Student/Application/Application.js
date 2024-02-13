@@ -28,7 +28,27 @@ const Application = () => {
         res.json()
       ),
   });
-  console.log(student);
+  // console.log(student);
+  const { data: applications = [] } = useQuery({
+    queryKey: ['applications'],
+    queryFn: () =>
+      fetch(`${ServerLink}/api/applications/${details.sid}`).then((res) =>
+        res.json()
+      ),
+  });
+  console.log(applications);
+  const hallSeat = applications?.find((item) => item.type === 'HallSeat');
+  const hallClearence = applications?.find(
+    (item) => item.type === 'HallClearence'
+  );
+
+  // if (object) {
+  //   // Object found, do something with it
+  //   console.log(object);
+  // } else {
+  //   // Object not found
+  //   console.log('No object found with the specified condition.');
+  // }
 
   const handleHallSeat = () => {
     const agree = window.confirm(`Do you want to apply for hall seat?`);
@@ -112,12 +132,60 @@ const Application = () => {
           </span>
           <div>
             <h2 className='text-3xl mb-5 mt-16'>Application progess</h2>
-            <ul className='steps steps-vertical lg:steps-horizontal'>
-              <li className='step step-primary'>Received</li>
-              <li className='step step-primary'>Checking</li>
-              <li className='step'>Purchase</li>
-              <li className='step'>Receive Product</li>
-            </ul>
+            <div className='md:flex md:justify-between gap-28'>
+              <span>
+                <h2 className='text-2xl my-5'>Hall Seat Application</h2>
+                <ul className='steps steps-vertical lg:steps-horizontal'>
+                  <li
+                    className={`step mx-5 ${
+                      hallSeat?.status === ('pending' || 'accept') &&
+                      'step-primary'
+                    }`}>
+                    Received
+                  </li>
+                  <li
+                    className={`step ${
+                      hallSeat?.status === ('pending' || 'accept') &&
+                      'step-primary'
+                    }`}>
+                    Pending
+                  </li>
+                  {/* <li className='step'>Accept</li> */}
+                  <li
+                    className={`step ${
+                      hallSeat?.status === 'accept' && 'step-primary'
+                    }`}>
+                    Accept
+                  </li>
+                </ul>
+              </span>
+              <span>
+                <h2 className='text-2xl my-5'>Hall Clearence Application</h2>
+                <ul className='steps steps-vertical lg:steps-horizontal'>
+                  <li
+                    className={`step mx-5 ${
+                      hallClearence?.status === ('pending' || 'accept') &&
+                      'step-primary'
+                    }`}>
+                    Received
+                  </li>
+                  <li
+                    className={`step ${
+                      hallClearence?.status === ('pending' || 'accept') &&
+                      'step-primary'
+                    }`}>
+                    Pending
+                  </li>
+                  {/* <li className='step'>Accept</li> */}
+                  <li
+                    className={`step ${
+                      hallClearence?.status === 'accept' && 'step-primary'
+                    }`}>
+                    Accept
+                  </li>
+                </ul>
+              </span>
+            </div>
           </div>
         </div>
       )}
