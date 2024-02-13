@@ -45,7 +45,19 @@ const AllStudents = () => {
     return null;
   });
 
-  // console.log(user);
+  const sortedUser = searchUser.sort((a, b) => {
+    const aSidPrefix = Math.floor(a.sid / 100000);
+    const bSidPrefix = Math.floor(b.sid / 100000);
+    // console.log(aSidPrefix, bSidPrefix);
+
+    // if (aSidPrefix === bSidPrefix) {
+    return b.cgpa - a.cgpa;
+    // }
+
+    // return aSidPrefix - bSidPrefix;
+  });
+
+  console.log(sortedUser);
 
   const handleSearch = () => {
     const searchData = inputRef.current.value;
@@ -67,6 +79,7 @@ const AllStudents = () => {
           console.log(data);
           if (data.deletedCount > 0) {
             alert('user deleted successfully.');
+            refetch();
           }
         });
     }
