@@ -10,6 +10,7 @@ const Profile = ({ student, refetch }) => {
     name,
     sid,
     dept,
+    cgpa,
     hall,
     email,
     mobile,
@@ -126,7 +127,7 @@ const Profile = ({ student, refetch }) => {
         className='mx-auto w-[90%]'>
         <div className='flex flex-col md:flex-row gap-5'>
           <div className='bg-gray-200 px-2 py-5 rounded-lg w-[92%]'>
-            <p className='pl-2 mb-1'>Name: </p>
+            <p className='pl-2 mb-1 font-semibold'>Name: </p>
             <input
               required
               readOnly={status ? 'readOnly' : null}
@@ -136,7 +137,7 @@ const Profile = ({ student, refetch }) => {
               placeholder='Your name'
               className='input input-bordered w-full max-w-xs mb-2'
             />
-            <p className='pl-2 mb-1'>Student ID: </p>
+            <p className='pl-2 mb-1 font-semibold'>Student ID: </p>
             <input
               readOnly
               type='number'
@@ -145,7 +146,7 @@ const Profile = ({ student, refetch }) => {
               placeholder='student id'
               className='input input-bordered w-full max-w-xs mb-2'
             />
-            <p className='pl-2 mb-1'>Department </p>
+            <p className='pl-2 mb-1 font-semibold'>Department </p>
             <input
               readOnly
               type='text'
@@ -154,17 +155,18 @@ const Profile = ({ student, refetch }) => {
               placeholder='ex: cse'
               className='input input-bordered w-full max-w-xs mb-2'
             />
-            <p className='pl-2 mb-1'>CGPA </p>
+            <p className='pl-2 mb-1 font-semibold'>CGPA </p>
             <input
               readOnly
               type='text'
-              defaultValue='3.50'
+              name='cgpa'
+              defaultValue={cgpa}
               className='input input-bordered w-full max-w-xs mb-2'
             />
           </div>
 
           <div className='bg-gray-200 px-2 py-5 rounded-lg w-[92%]'>
-            <p className='pl-2 mb-1'>Email </p>
+            <p className='pl-2 mb-1 font-semibold'>Email </p>
             <input
               readOnly={status ? 'readOnly' : null}
               type='email'
@@ -173,7 +175,7 @@ const Profile = ({ student, refetch }) => {
               placeholder='ex: test@gmail.com'
               className='input input-bordered w-full max-w-xs mb-2'
             />
-            <p className='pl-2 mb-1'>Mobile </p>
+            <p className='pl-2 mb-1 font-semibold'>Mobile </p>
             <input
               readOnly={status ? 'readOnly' : null}
               type='number'
@@ -182,7 +184,7 @@ const Profile = ({ student, refetch }) => {
               placeholder='ex: 01XXXXXX'
               className='input input-bordered w-full max-w-xs mb-2'
             />
-            <p className='pl-2 mb-1'>Blood Group </p>
+            <p className='pl-2 mb-1 font-semibold'>Blood Group </p>
             <input
               readOnly={status ? 'readOnly' : null}
               type='text'
@@ -191,7 +193,7 @@ const Profile = ({ student, refetch }) => {
               placeholder='B+'
               className='input input-bordered w-full max-w-xs mb-2'
             />
-            <p className='pl-2 mb-1'>Hall </p>
+            <p className='pl-2 mb-1 font-semibold'>Hall </p>
             <input
               readOnly
               type='text'
@@ -204,7 +206,7 @@ const Profile = ({ student, refetch }) => {
         <br />
         <div className='flex flex-col md:flex-row gap-5 '>
           <div className='bg-gray-200 px-2 py-5 rounded-lg w-[92%]'>
-            <p className='pl-2 mb-1'>Father Name </p>
+            <p className='pl-2 mb-1 font-semibold'>Father Name </p>
             <input
               required
               readOnly={status ? 'readOnly' : null}
@@ -214,7 +216,7 @@ const Profile = ({ student, refetch }) => {
               placeholder='Father name'
               className='input input-bordered w-full max-w-xs mb-2'
             />
-            <p className='pl-2 mb-1'>Father Mobile </p>
+            <p className='pl-2 mb-1 font-semibold'>Father Mobile </p>
             <input
               required
               readOnly={status ? 'readOnly' : null}
@@ -224,7 +226,7 @@ const Profile = ({ student, refetch }) => {
               placeholder='ex: 01XXXXXX'
               className='input input-bordered w-full max-w-xs mb-2'
             />
-            <p className='pl-2 mb-1'>Mother Name </p>
+            <p className='pl-2 mb-1 font-semibold'>Mother Name </p>
             <input
               readOnly={status ? 'readOnly' : null}
               type='text'
@@ -233,7 +235,7 @@ const Profile = ({ student, refetch }) => {
               placeholder='Mother name'
               className='input input-bordered w-full max-w-xs mb-2'
             />
-            <p className='pl-2 mb-1'>Mother Mobile </p>
+            <p className='pl-2 mb-1 font-semibold'>Mother Mobile </p>
             <input
               readOnly={status ? 'readOnly' : null}
               type='number'
@@ -245,7 +247,7 @@ const Profile = ({ student, refetch }) => {
           </div>
 
           <div className='bg-gray-200 px-2 py-5 rounded-lg w-[92%]'>
-            <p className='pl-2 mb-1'>Present Address </p>
+            <p className='pl-2 mb-1 font-semibold'>Present Address </p>
             <input
               readOnly={status ? 'readOnly' : null}
               type='text'
@@ -254,7 +256,7 @@ const Profile = ({ student, refetch }) => {
               placeholder='present address'
               className='input input-bordered w-full max-w-xs mb-2'
             />
-            <p className='pl-2 mb-1'>Parmanent Address </p>
+            <p className='pl-2 mb-1 font-semibold'>Parmanent Address </p>
             <input
               readOnly={status ? 'readOnly' : null}
               type='text'
@@ -263,7 +265,9 @@ const Profile = ({ student, refetch }) => {
               placeholder='parmanent address'
               className='input input-bordered w-full max-w-xs mb-2'
             />
-            <p className='pl-2 mb-1'>National ID / Birth Certificate No </p>
+            <p className='pl-2 mb-1 font-semibold'>
+              National ID / Birth Certificate No{' '}
+            </p>
             <input
               readOnly={status ? 'readOnly' : null}
               type='number'
@@ -272,7 +276,7 @@ const Profile = ({ student, refetch }) => {
               placeholder='National ID / Birth Certificate No'
               className='input input-bordered w-full max-w-xs mb-2'
             />
-            <p className='pl-2 mb-1'>Photo </p>
+            <p className='pl-2 mb-1 font-semibold'>Photo </p>
             <input
               readOnly={status ? 'readOnly' : null}
               type='file'
@@ -285,7 +289,7 @@ const Profile = ({ student, refetch }) => {
         </div>
         <div className='text-center mt-5'>
           <input
-            readOnly={status ? 'disabled' : null}
+            disabled={status ? 'disabled' : null}
             type='submit'
             value='SAVE'
             className='btn btn-success font-semibold input input-bordered px-12'
