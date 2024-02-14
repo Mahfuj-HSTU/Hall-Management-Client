@@ -43,14 +43,6 @@ const Application = () => {
     (item) => item.type === 'HallClearence'
   );
 
-  // if (object) {
-  //   // Object found, do something with it
-  //   console.log(object);
-  // } else {
-  //   // Object not found
-  //   console.log('No object found with the specified condition.');
-  // }
-
   const handleHallSeat = () => {
     const agree = window.confirm(`Do you want to apply for hall seat?`);
     const info = {
@@ -143,60 +135,83 @@ const Application = () => {
                     You did not apply
                   </h2>
                 ) : (
-                  <ul className='steps steps-vertical lg:steps-horizontal'>
-                    <li
-                      className={`step mx-5 ${
-                        (hallSeat?.status === 'pending' ||
-                          hallSeat?.status === 'accept') &&
-                        'step-primary'
-                      }`}>
-                      Received
-                    </li>
-                    <li
-                      className={`step ${
-                        (hallSeat?.status === 'pending' ||
-                          hallSeat?.status === 'accept') &&
-                        'step-primary'
-                      }`}>
-                      Pending
-                    </li>
-                    {/* <li className='step'>Accept</li> */}
-                    <li
-                      className={`step ${
-                        hallSeat?.status === 'accept' && 'step-primary'
-                      }`}>
-                      Accept
-                    </li>
-                  </ul>
+                  <>
+                    {hallSeat.status === 'reject' ? (
+                      <h2 className='text-2xl my-5 text-red-500'>
+                        Your application is rejected. Please try again later
+                      </h2>
+                    ) : (
+                      <ul className='steps steps-vertical lg:steps-horizontal'>
+                        <li
+                          className={`step mx-5 ${
+                            (hallSeat?.status === 'pending' ||
+                              hallSeat?.status === 'accept') &&
+                            'step-primary'
+                          }`}>
+                          Received
+                        </li>
+                        <li
+                          className={`step ${
+                            (hallSeat?.status === 'pending' ||
+                              hallSeat?.status === 'accept') &&
+                            'step-primary'
+                          }`}>
+                          Pending
+                        </li>
+                        {/* <li className='step'>Accept</li> */}
+                        <li
+                          className={`step ${
+                            hallSeat?.status === 'accept' && 'step-primary'
+                          }`}>
+                          Accept
+                        </li>
+                      </ul>
+                    )}
+                  </>
                 )}
               </span>
               <span>
                 <h2 className='text-2xl my-5'>Hall Clearence Application</h2>
-                <ul className='steps steps-vertical lg:steps-horizontal'>
-                  <li
-                    className={`step mx-5 ${
-                      (hallClearence?.status === 'pending' ||
-                        hallClearence?.status === 'accept') &&
-                      'step-primary'
-                    }`}>
-                    Received
-                  </li>
-                  <li
-                    className={`step ${
-                      (hallClearence?.status === 'pending' ||
-                        hallClearence?.status === 'accept') &&
-                      'step-primary'
-                    }`}>
-                    Pending
-                  </li>
-                  {/* <li className='step'>Accept</li> */}
-                  <li
-                    className={`step ${
-                      hallClearence?.status === 'accept' && 'step-primary'
-                    }`}>
-                    Accept
-                  </li>
-                </ul>
+                {!hallClearence ? (
+                  <h2 className='text-2xl my-5 text-red-500'>
+                    You did not apply
+                  </h2>
+                ) : (
+                  <>
+                    {hallClearence.status === 'reject' ? (
+                      <h2 className='text-2xl my-5 text-red-500'>
+                        Your application is rejected. <br /> Please try again
+                        later
+                      </h2>
+                    ) : (
+                      <ul className='steps steps-vertical lg:steps-horizontal'>
+                        <li
+                          className={`step mx-5 ${
+                            (hallClearence?.status === 'pending' ||
+                              hallClearence?.status === 'accept') &&
+                            'step-primary'
+                          }`}>
+                          Received
+                        </li>
+                        <li
+                          className={`step ${
+                            (hallClearence?.status === 'pending' ||
+                              hallClearence?.status === 'accept') &&
+                            'step-primary'
+                          }`}>
+                          Pending
+                        </li>
+                        {/* <li className='step'>Accept</li> */}
+                        <li
+                          className={`step ${
+                            hallClearence?.status === 'accept' && 'step-primary'
+                          }`}>
+                          Accept
+                        </li>
+                      </ul>
+                    )}
+                  </>
+                )}
               </span>
             </div>
           </div>
