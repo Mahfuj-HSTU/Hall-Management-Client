@@ -45,20 +45,6 @@ const AllStudents = () => {
     return null;
   });
 
-  const sortedUser = searchUser.sort((a, b) => {
-    const aSidPrefix = Math.floor(a.sid / 100000);
-    const bSidPrefix = Math.floor(b.sid / 100000);
-    // console.log(aSidPrefix, bSidPrefix);
-
-    // if (aSidPrefix === bSidPrefix) {
-    return b.cgpa - a.cgpa;
-    // }
-
-    // return aSidPrefix - bSidPrefix;
-  });
-
-  console.log(sortedUser);
-
   const handleSearch = () => {
     const searchData = inputRef.current.value;
     setSearch(searchData);
@@ -88,7 +74,7 @@ const AllStudents = () => {
   return (
     <div className='md:my-5 mb-5'>
       <div className='lg:flex lg:justify-between mb-5 p-4 pt-12 md:pt-6 lg:pt-5 bg-slate-300 rounded-lg md:ml-4'>
-        <div className='lg:flex mlg:justify-between gap-9'>
+        <div className='lg:flex lg:justify-between gap-9'>
           <span className='flex justify-between gap-5 mb-3'>
             <h2 className='text-4xl mb-4'>Student List</h2>
             <input
