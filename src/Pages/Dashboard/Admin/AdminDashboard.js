@@ -60,11 +60,11 @@ const AdminDashboard = () => {
       {isLoading ? (
         <span className="loading loading-spinner text-primary"></span>
       ) : (
-        <div className=" flex flex-col text-center md:text-left  mt-2 md:mx-5 bg-gray-100   ">
+        <div className=" flex flex-col text-center md:text-left  mt-8 md:mx-5 bg-gray-100   ">
           <div className="w-full  shadow-inherit rounded-lg bg-white drop-shadow-lg p-3 text-center items-center justify-center">
             <div class="avatar">
               <div class="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                <img src={student.img} />
+                <img src={student.img} alt="img"/>
               </div>
             </div>
             <h1 className="text-3xl font-semibold">{student.name}</h1>
