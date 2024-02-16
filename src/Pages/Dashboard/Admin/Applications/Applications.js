@@ -78,19 +78,41 @@ const Applications = () => {
       ...event,
       status: 'accept',
     };
-    // console.log(info);
-    fetch(`${ServerLink}/api/applications/${event._id}`, {
-      method: 'PUT',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify(info),
-    })
-      .then((res) => res.json())
-      .then((event) => {
-        toast.success('Application Accepted');
-        refetch();
-      });
+    if (event.type === 'HallClearence') {
+      const agree = window.confirm(
+        `${event.name}'s payment status is ${event?.pinfo}. Do you want to accept?`
+      );
+      if (agree) {
+        // console.log(info);
+        fetch(`${ServerLink}/api/applications/${event._id}`, {
+          method: 'PUT',
+          headers: {
+            'content-type': 'application/json',
+          },
+          body: JSON.stringify(info),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            toast.success('Application Accepted');
+            refetch();
+          });
+      }
+    } else {
+      fetch(`${ServerLink}/api/applications/${event._id}`, {
+        method: 'PUT',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify(info),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          toast.success('Application Accepted');
+          refetch();
+        });
+    }
   };
   const handleReject = (event) => {
     const info = {
