@@ -26,7 +26,11 @@ const AllStudents = () => {
   }, [dispatch, user?.email]);
 
   // console.log(user, details);
-  const { data: students = [], refetch } = useQuery({
+  const {
+    data: students = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ['students'],
     queryFn: () =>
       fetch(`${ServerLink}/api/students`).then((res) => res.json()),
@@ -102,45 +106,49 @@ const AllStudents = () => {
           value='Add student'
         /> */}
       </div>
-      <table className='table table-compact w-full border-2 shadow-lg md:mx-4 mx-0 overflow-x-scroll'>
-        <thead className='text-center bg-slate-200 font-semibold'>
-          <tr className='text-[17px]'>
-            <th className='border-2 border-r-slate-300'>SL No.</th>
-            <th className='border-2 border-r-slate-300'>Name</th>
-            <th className='border-2 border-r-slate-300'>Student Id</th>
-            <th className='border-2 border-r-slate-300'>Department</th>
-            <th className='border-2'>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {searchUser
-            ?.sort((a, b) => a.sid - b.sid)
-            .map((user, i) => (
-              <tr
-                key={user?._id}
-                className='border-2'>
-                <td className='border-2 text-center w-16'>{i + 1}</td>
-                <td className='border-2 font-semibold'>
-                  <label
-                    htmlFor='my-modal'
-                    className='link link-primary'
-                    onClick={() => setSelected(user)}>
-                    {user.name}
-                  </label>
-                </td>
-                <td className='border-2'>{user.sid}</td>
-                <td className='border-2'>{user.dept}</td>
-                <td className='border-2 text-center p-0'>
-                  <button
-                    onClick={() => handleDelete(user)}
-                    className='text-red-600 text-2xl'>
-                    <MdOutlineDeleteOutline />
-                  </button>
-                </td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
+      {isLoading ? (
+        <span className='loading loading-spinner text-primary'></span>
+      ) : (
+        <table className='table table-compact w-full border-2 shadow-lg md:mx-4 mx-0 overflow-x-scroll'>
+          <thead className='text-center bg-slate-200 font-semibold'>
+            <tr className='text-[17px]'>
+              <th className='border-2 border-r-slate-300'>SL No.</th>
+              <th className='border-2 border-r-slate-300'>Name</th>
+              <th className='border-2 border-r-slate-300'>Student Id</th>
+              <th className='border-2 border-r-slate-300'>Department</th>
+              <th className='border-2'>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {searchUser
+              ?.sort((a, b) => a.sid - b.sid)
+              .map((user, i) => (
+                <tr
+                  key={user?._id}
+                  className='border-2'>
+                  <td className='border-2 text-center w-16'>{i + 1}</td>
+                  <td className='border-2 font-semibold'>
+                    <label
+                      htmlFor='my-modal'
+                      className='link link-primary'
+                      onClick={() => setSelected(user)}>
+                      {user.name}
+                    </label>
+                  </td>
+                  <td className='border-2'>{user.sid}</td>
+                  <td className='border-2'>{user.dept}</td>
+                  <td className='border-2 text-center p-0'>
+                    <button
+                      onClick={() => handleDelete(user)}
+                      className='text-red-600 text-2xl'>
+                      <MdOutlineDeleteOutline />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+      )}
       <AddStudent
         details={details}
         refetch={refetch}

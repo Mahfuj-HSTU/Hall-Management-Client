@@ -6,6 +6,7 @@ import { AuthContext } from '../../../../AuthProvider/AuthProvider';
 import { useDispatch, useSelector } from 'react-redux';
 import Loading from '../../../Shared/Loading/Loading';
 import { fetchRole } from '../../../../Hooks/Role/useRoleSlice';
+import HallClearence from './HallClearence';
 
 const Application = () => {
   const { user, loading } = useContext(AuthContext);
@@ -21,7 +22,7 @@ const Application = () => {
   }, [dispatch, user?.email]);
 
   // console.log(user, details);
-  const { data: student = [] } = useQuery({
+  const { data: student = [], refetch } = useQuery({
     queryKey: ['students'],
     queryFn: () =>
       fetch(`${ServerLink}/api/students/${details.sid}`).then((res) =>
@@ -60,9 +61,11 @@ const Application = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          if (data.acknowledged) {
+          console.log(data);
+          if (data.acknowledged || data.message === 'Application updated.') {
             console.log(data);
             toast.success('Applied successfully');
+            refetch();
           }
         });
     }
@@ -71,31 +74,6 @@ const Application = () => {
     // handleHallSeat();
     window.setTimeout(handleHallSeat(), 6000);
     // window.setTimeout(handleHallClearence(), 6000);
-  };
-
-  const handleHallClearence = () => {
-    const agree = window.confirm(`Do you want to apply for hall clearence?`);
-    const info = {
-      ...student,
-      status: 'pending',
-      type: 'HallClearence',
-    };
-    if (agree) {
-      fetch(`${ServerLink}/api/applications`, {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-        },
-        body: JSON.stringify(info),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.acknowledged) {
-            console.log(data);
-            toast.success('Applied successfully');
-          }
-        });
-    }
   };
 
   return (
@@ -116,11 +94,12 @@ const Application = () => {
             </div>
             <div className='shadow-xl shadow-slate-300 rounded-xl p-5'>
               <h2 className='text-3xl mb-5'>Apply for Hall Clearence</h2>
-              <button
-                onClick={handleHallClearence}
+              <label
+                htmlFor='hall-clearence-modal'
+                // onClick={handleHallClearence}
                 className='btn btn-success px-6'>
                 Apply
-              </button>
+              </label>
             </div>
           </span>
           <div>
@@ -213,6 +192,10 @@ const Application = () => {
                   </>
                 )}
               </span>
+              <HallClearence
+                student={student}
+                refetch={refetch}
+              />
             </div>
           </div>
         </div>
