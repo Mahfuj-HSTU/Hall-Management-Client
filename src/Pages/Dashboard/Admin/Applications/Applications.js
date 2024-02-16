@@ -24,7 +24,11 @@ const Applications = () => {
   }, [dispatch, user?.email]);
 
   // console.log(user, details);
-  const { data: applications = [], refetch } = useQuery({
+  const {
+    data: applications = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ['applications'],
     queryFn: () =>
       fetch(`${ServerLink}/api/applications`).then((res) => res.json()),
@@ -35,6 +39,8 @@ const Applications = () => {
     setSelectedValue(selectedValue);
     // console.log(selectedValue);
   };
+
+  // console.log(applications);
 
   const filteredApplications = applications?.filter((user) => {
     if (
@@ -66,24 +72,47 @@ const Applications = () => {
   });
 
   // console.log(filteredApplications);
+
   const handleAccept = (event) => {
     const info = {
       ...event,
       status: 'accept',
     };
-    // console.log(info);
-    fetch(`${ServerLink}/api/applications/${event._id}`, {
-      method: 'PUT',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify(info),
-    })
-      .then((res) => res.json())
-      .then((event) => {
-        toast.success('Application Accepted');
-        refetch();
-      });
+    if (event.type === 'HallClearence') {
+      const agree = window.confirm(
+        `${event.name}'s payment status is ${event?.pinfo}. Do you want to accept?`
+      );
+      if (agree) {
+        // console.log(info);
+        fetch(`${ServerLink}/api/applications/${event._id}`, {
+          method: 'PUT',
+          headers: {
+            'content-type': 'application/json',
+          },
+          body: JSON.stringify(info),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            toast.success('Application Accepted');
+            refetch();
+          });
+      }
+    } else {
+      fetch(`${ServerLink}/api/applications/${event._id}`, {
+        method: 'PUT',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify(info),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          toast.success('Application Accepted');
+          refetch();
+        });
+    }
   };
   const handleReject = (event) => {
     const info = {
@@ -122,52 +151,57 @@ const Applications = () => {
           <option value='hallClearence'>Hall Clearence</option>
         </select>
       </div>
-      <table className='table table-compact w-full border-2 shadow-lg md:mx-4 mx-0 overflow-x-scroll'>
-        <thead className='text-center bg-slate-200 font-semibold'>
-          <tr className='text-[17px]'>
-            <th className='border-2 border-r-slate-300'>SL No.</th>
-            <th className='border-2 border-r-slate-300 px-0'>Name</th>
-            <th className='border-2 border-r-slate-300 px-0'>Student Id</th>
-            <th className='border-2 border-r-slate-300 px-0'>
-              Application for
-            </th>
-            <th className='border-2 border-r-slate-300 px-0'>Department</th>
-            <th className='border-2'>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {sortedApplication.map((user, i) => (
-            <tr
-              key={user?._id}
-              className='border-2'>
-              <td className='border-2 text-center w-14'>{i + 1}</td>
-              <td className='border-2 font-semibold w-60'>
-                <label
-                  htmlFor='my-modal'
-                  className='link link-primary'
-                  onClick={() => setSelected(user)}>
-                  {user.name}
-                </label>
-              </td>
-              <td className='border-2 w-40'>{user.sid}</td>
-              <td className='border-2 w-52'>{user.type}</td>
-              <td className='border-2 w-44'>{user.dept}</td>
-              <td className='border-2 text-center p-0 w-56'>
-                <button
-                  onClick={() => handleAccept(user)}
-                  className='btn btn-sm btn-success '>
-                  Accept
-                </button>
-                <button
-                  onClick={() => handleReject(user)}
-                  className='btn btn-sm btn-error ml-3'>
-                  Reject
-                </button>
-              </td>
+      {isLoading ? (
+        <span className='loading loading-spinner text-primary'></span>
+      ) : (
+        <table className='table table-compact w-full border-2 shadow-lg md:mx-4 mx-0 overflow-x-scroll'>
+          <thead className='text-center bg-slate-200 font-semibold'>
+            <tr className='text-[17px]'>
+              <th className='border-2 border-r-slate-300'>SL No.</th>
+              <th className='border-2 border-r-slate-300 px-0'>Name</th>
+              <th className='border-2 border-r-slate-300 px-0'>Student Id</th>
+              <th className='border-2 border-r-slate-300 px-0'>
+                Application for
+              </th>
+              <th className='border-2 border-r-slate-300 px-0'>Department</th>
+              <th className='border-2'>Action</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+
+          <tbody>
+            {sortedApplication.map((user, i) => (
+              <tr
+                key={user?._id}
+                className='border-2'>
+                <td className='border-2 text-center w-14'>{i + 1}</td>
+                <td className='border-2 font-semibold w-60'>
+                  <label
+                    htmlFor='my-modal'
+                    className='link link-primary'
+                    onClick={() => setSelected(user)}>
+                    {user.name}
+                  </label>
+                </td>
+                <td className='border-2 w-40'>{user.sid}</td>
+                <td className='border-2 w-52'>{user.type}</td>
+                <td className='border-2 w-44'>{user.dept}</td>
+                <td className='border-2 text-center p-0 w-56'>
+                  <button
+                    onClick={() => handleAccept(user)}
+                    className='btn btn-sm btn-success '>
+                    Accept
+                  </button>
+                  <button
+                    onClick={() => handleReject(user)}
+                    className='btn btn-sm btn-error ml-3'>
+                    Reject
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
       {selected && <StudentDetails selected={selected}></StudentDetails>}
     </div>
   );
