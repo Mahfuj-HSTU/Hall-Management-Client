@@ -61,7 +61,8 @@ const AddStudent = ({ details, refetch }) => {
               <form
                 onSubmit={handleSubmit}
                 className='rounded-xl text-blue-900 relative'>
-                <label className='font-semibold pl-1'>Student Id</label> <br />
+                <label className='font-semibold pl-1'>Student Name</label>{' '}
+                <br />
                 <input
                   type='text'
                   name='name'
@@ -71,7 +72,6 @@ const AddStudent = ({ details, refetch }) => {
                 <br />
                 <label className='font-semibold pl-1'>Student Id</label> <br />
                 <input
-                  required
                   type='number'
                   name='sid'
                   placeholder='190...'
@@ -80,7 +80,6 @@ const AddStudent = ({ details, refetch }) => {
                 <br />
                 <label className='font-semibold pl-1'>Hall Name</label> <br />
                 <input
-                  required
                   value={details.hallName}
                   type='text'
                   name='hall'
@@ -90,7 +89,6 @@ const AddStudent = ({ details, refetch }) => {
                 <br />
                 <label className='font-semibold pl-1'>Department</label> <br />
                 <input
-                  required
                   type='text'
                   name='dept'
                   placeholder='department name'

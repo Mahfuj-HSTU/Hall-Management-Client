@@ -7,11 +7,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import Loading from '../../../Shared/Loading/Loading';
 import { fetchRole } from '../../../../Hooks/Role/useRoleSlice';
 import HallClearence from './HallClearence';
+import { getDateOnly } from '../../../../Hooks/getDateOnly';
 
 const Application = () => {
   const { user, loading } = useContext(AuthContext);
   const details = useSelector((state) => state?.roleReducer.role);
   const dispatch = useDispatch();
+
+  const date = Date();
+  console.log(getDateOnly(date));
 
   if (loading) {
     <Loading></Loading>;

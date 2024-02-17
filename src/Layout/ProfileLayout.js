@@ -101,6 +101,11 @@ const ProfileLayout = () => {
                         Applications
                       </Link>{' '}
                     </li>
+                    <li className='font-semibold'>
+                      <Link to={`/dashboard/${hall._id}/admin/add-notice`}>
+                        Create Notice
+                      </Link>{' '}
+                    </li>
                   </>
                 )}
                 {role === student && (
