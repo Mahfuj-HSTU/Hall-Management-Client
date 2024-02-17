@@ -14,8 +14,8 @@ const Application = () => {
   const details = useSelector((state) => state?.roleReducer.role);
   const dispatch = useDispatch();
 
-  const date = Date();
-  console.log(getDateOnly(date));
+  const date = new Date();
+  // console.log(getDateOnly(date));
 
   if (loading) {
     <Loading></Loading>;
@@ -42,6 +42,18 @@ const Application = () => {
       ),
   });
   // console.log(applications);
+  const { data: notices = [] } = useQuery({
+    queryKey: ['notices'],
+    queryFn: () => fetch(`${ServerLink}/api/notice`).then((res) => res.json()),
+  });
+
+  const filteredNotice = notices?.find(
+    (item) => item.hall === details.hallName
+  );
+
+  // if (filteredNotice?.date > getDateOnly(date)) {
+  //   console.log('check');
+  // }
 
   const hallSeat = applications?.find((item) => item.type === 'HallSeat');
   const hallClearence = applications?.find(
@@ -89,12 +101,20 @@ const Application = () => {
           <span className='grid grid-cols-2 w-full gap-9'>
             <div className='shadow-xl shadow-slate-400 rounded-xl p-5'>
               <h2 className='text-3xl mb-5'>Apply for a Hall Seat</h2>
-              <button
-                disabled={student.sid ? null : 'disabled'}
-                onClick={fff}
-                className='btn btn-success px-6'>
-                Apply
-              </button>
+              {filteredNotice?.date > getDateOnly(date) ? (
+                <button
+                  disabled={
+                    filteredNotice?.date > getDateOnly(date) ? null : 'disabled'
+                  }
+                  onClick={fff}
+                  className='btn btn-success px-6'>
+                  Apply
+                </button>
+              ) : (
+                <h2 className='text-2xl my-5 text-red-500'>
+                  Applications will start soon
+                </h2>
+              )}
             </div>
             <div className='shadow-xl shadow-slate-300 rounded-xl p-5'>
               <h2 className='text-3xl mb-5'>Apply for Hall Clearence</h2>
