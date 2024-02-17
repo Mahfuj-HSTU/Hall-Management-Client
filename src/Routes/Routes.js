@@ -20,6 +20,7 @@ import AdminProfile from '../Pages/Dashboard/Admin/AdminProfile/AdminProfile';
 import AllStudents from '../Pages/Dashboard/Admin/AllStudents/AllStudents';
 import Applications from '../Pages/Dashboard/Admin/Applications/Applications';
 import AddNotice from '../Pages/Dashboard/Admin/Notice/AddNotice';
+import Notice from '../Pages/Halls/Notice/Notice';
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
         path: '/hall/:id',
         element: <HallDetails></HallDetails>,
         loader: ({ params }) => fetch(`${ServerLink}/api/halls/${params.id}`),
+      },
+      {
+        path: '/hall/:id/notice',
+        element: <Notice></Notice>,
       },
     ],
   },
