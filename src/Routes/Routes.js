@@ -19,6 +19,7 @@ import PrivateRoute from './PrivateRoute/PrivateRoute';
 import AdminProfile from '../Pages/Dashboard/Admin/AdminProfile/AdminProfile';
 import AllStudents from '../Pages/Dashboard/Admin/AllStudents/AllStudents';
 import Applications from '../Pages/Dashboard/Admin/Applications/Applications';
+import AddNotice from '../Pages/Dashboard/Admin/Notice/AddNotice';
 
 const router = createBrowserRouter([
   {
@@ -99,6 +100,10 @@ const router = createBrowserRouter([
           <Applications></Applications>
           // </AdminRoute>
         ),
+      },
+      {
+        path: '/dashboard/:id/admin/add-notice',
+        element: <AddNotice></AddNotice>,
       },
 
       // students routes
