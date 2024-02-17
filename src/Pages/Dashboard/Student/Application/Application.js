@@ -48,7 +48,7 @@ const Application = () => {
   });
 
   const filteredNotice = notices?.find(
-    (item) => item.hall === details.hallName
+    (item) => item.hall === details.hallName && item.type === 'HallSeat'
   );
 
   // if (filteredNotice?.date > getDateOnly(date)) {
@@ -101,19 +101,29 @@ const Application = () => {
           <span className='grid grid-cols-2 w-full gap-9'>
             <div className='shadow-xl shadow-slate-400 rounded-xl p-5'>
               <h2 className='text-3xl mb-5'>Apply for a Hall Seat</h2>
-              {filteredNotice?.date > getDateOnly(date) ? (
-                <button
-                  disabled={
-                    filteredNotice?.date > getDateOnly(date) ? null : 'disabled'
-                  }
-                  onClick={fff}
-                  className='btn btn-success px-6'>
-                  Apply
-                </button>
-              ) : (
+              {!filteredNotice ? (
                 <h2 className='text-2xl my-5 text-red-500'>
                   Applications will start soon
                 </h2>
+              ) : (
+                <>
+                  {filteredNotice?.date > getDateOnly(date) ? (
+                    <button
+                      disabled={
+                        filteredNotice?.date > getDateOnly(date)
+                          ? null
+                          : 'disabled'
+                      }
+                      onClick={fff}
+                      className='btn btn-success px-6'>
+                      Apply
+                    </button>
+                  ) : (
+                    <h2 className='text-2xl my-5 text-red-500'>
+                      Applications date is over.
+                    </h2>
+                  )}
+                </>
               )}
             </div>
             <div className='shadow-xl shadow-slate-300 rounded-xl p-5'>
@@ -141,7 +151,9 @@ const Application = () => {
                   <>
                     {hallSeat.status === 'reject' ? (
                       <h2 className='text-2xl my-5 text-red-500'>
-                        Your application is rejected. Please try again later
+                        Your application is rejected. No more seats <br /> are
+                        available right now. <br />
+                        Please try again later
                       </h2>
                     ) : (
                       <ul className='steps steps-vertical lg:steps-horizontal'>

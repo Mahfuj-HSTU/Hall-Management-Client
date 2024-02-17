@@ -39,6 +39,7 @@ const AddNotice = () => {
       ...formData,
       hall: details.hallName,
     };
+    // console.log(info);
     fetch(`${ServerLink}/api/notice`, {
       method: 'POST',
       headers: {
@@ -48,7 +49,7 @@ const AddNotice = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        // Handle successful response
+        event.target.reset();
         if (data.acknowledged) {
           toast.success('Successfully added a new notice');
           event.target.reset();
@@ -90,6 +91,24 @@ const AddNotice = () => {
                 className='input input-bordered'
                 required
               />
+            </div>
+            <div className='form-control'>
+              <label className='label'>
+                <span className='label-text font-semibold'>Notice Type</span>
+              </label>
+              <select
+                onChange={handleChange}
+                required
+                name='type'
+                className='select select-bordered w-full max-w-md'>
+                <option
+                  disabled
+                  selected>
+                  Choose notice type
+                </option>
+                <option value='general'>General</option>
+                <option value='HallSeat'>Hall Seat</option>
+              </select>
             </div>
             <div className='form-control'>
               <label className='label'>

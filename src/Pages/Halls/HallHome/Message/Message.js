@@ -34,19 +34,19 @@ const Message = ({ hall }) => {
           in August 20, 2011. FMH is the first female accommodation of HSTU
           campus, with a vision to provide a safe and comfortable living
           environment that enhances the academic success and achievements of the
-          students. Living in a residential hall is one thing that students
-          should not miss during their university days as halls are not only
-          places of accommodation but also important platforms to grow and learn
-          together outside the classrooms. The residence life experience in FMH
-          hall is designed to support the students through their academic career
-          as you learn about themselves and about living in a community with
-          others. This is a valuable part of our educational experience, and we
-          work hard to maintain an environment that fosters social
+          students. <br /> Living in a residential hall is one thing that
+          students should not miss during their university days as halls are not
+          only places of accommodation but also important platforms to grow and
+          learn together outside the classrooms. The residence life experience
+          in FMH hall is designed to support the students through their academic
+          career as you learn about themselves and about living in a community
+          with others. This is a valuable part of our educational experience,
+          and we work hard to maintain an environment that fosters social
           inclusiveness, responsibility, self-governance and accountability,
           academic achievement, community development, and personal fulfilment.
           Currently, 2881 students are attached to this hall, while 621 are
           living in-house, including 35 international students from Somalia,
-          Nepal, and Bhutan. Residents from various national and cultural
+          Nepal, and Bhutan. <br /> Residents from various national and cultural
           backgrounds embrace the opportunity for new experiences, ideas, and
           even the challenges to learn living together and yet, independently.
           One three-storied and two new five-storied building with furnished
