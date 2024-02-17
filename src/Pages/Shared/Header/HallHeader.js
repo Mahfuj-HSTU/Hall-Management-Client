@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { RiArrowDropDownLine } from 'react-icons/ri';
 import { IoPersonCircle } from 'react-icons/io5';
 import { AuthContext } from '../../../AuthProvider/AuthProvider';
+import { useQuery } from '@tanstack/react-query';
+import { ServerLink } from '../../../Hooks/useServerLink';
 
 const HallHeader = ({ hall }) => {
   const { user, logOut } = useContext(AuthContext);
@@ -11,6 +13,13 @@ const HallHeader = ({ hall }) => {
   const handleLogOut = () => {
     logOut().then().catch();
   };
+
+  const { data: notices = [] } = useQuery({
+    queryKey: ['notices'],
+    queryFn: () => fetch(`${ServerLink}/api/notice`).then((res) => res.json()),
+  });
+  const filteredNotice = notices?.filter((item) => item.hall === hall?.name);
+  // console.log(filteredNotice);
 
   const menuItems = (
     <>
@@ -32,14 +41,35 @@ const HallHeader = ({ hall }) => {
           </li>
         </ul>
       </li>
-      <li className='font-semibold'>
-        <Link to='/hall'>Notice</Link>{' '}
+      {/* <li className='font-semibold'>
+        <Link to={`/hall/${hall._id}/notice`}>Notice</Link>{' '}
+      </li> */}
+      <li className='font-semibold relative group'>
+        <button tabIndex={1}>
+          Notice
+          <RiArrowDropDownLine className='text-xl' />
+        </button>
+        <ul className='absolute hidden group-hover:block mt-9 z-[1] menu p-2 shadow bg-base-100 rounded-box w-72 divide-y divide-blue-300'>
+          {filteredNotice?.map((notice) => (
+            <li className='collapse collapse-arrow bg-base-200'>
+              <input
+                type='radio'
+                name='my-accordion-2'
+                checked='checked'
+              />
+              <p className='collapse-title font-medium'>{notice?.title}</p>
+              <p className='collapse-content'>
+                {notice?.description.slice(0, 35)}
+              </p>
+            </li>
+          ))}
+        </ul>
       </li>
       <li className='font-semibold'>
-        <Link to='/hall'>Photo Gallery</Link>{' '}
+        <Link to={`/hall/${hall._id}`}>Photo Gallery</Link>{' '}
       </li>
       <li className='font-semibold'>
-        <Link to='/hall'>Contact Us</Link>{' '}
+        <Link to={`/hall/${hall._id}`}>Contact Us</Link>{' '}
       </li>
       {user?.email ? (
         <>
