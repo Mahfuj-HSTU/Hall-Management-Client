@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { ServerLink } from '../../../../Hooks/useServerLink';
-import { useQuery } from '@tanstack/react-query';
 import { AuthContext } from '../../../../AuthProvider/AuthProvider';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchRole } from '../../../../Hooks/Role/useRoleSlice';
@@ -8,6 +7,7 @@ import Loading from '../../../Shared/Loading/Loading';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import StudentDetails from './StudentDetails';
 import AddStudent from './AddStudent';
+import { useGetStudentsQuery } from '../../../../features/api/studentApi';
 
 const AllStudents = () => {
   const { user, loading } = useContext(AuthContext);
@@ -16,6 +16,7 @@ const AllStudents = () => {
   const [selected, setSelected] = useState('');
   const details = useSelector((state) => state?.roleReducer.role);
   const dispatch = useDispatch();
+  const { data: students, isLoading, refetch } = useGetStudentsQuery();
 
   if (loading) {
     <Loading></Loading>;
@@ -24,18 +25,6 @@ const AllStudents = () => {
   useEffect(() => {
     user?.email && dispatch(fetchRole(user?.email));
   }, [dispatch, user?.email]);
-
-  // console.log(user, details);
-  const {
-    data: students = [],
-    isLoading,
-    refetch,
-  } = useQuery({
-    queryKey: ['students'],
-    queryFn: () =>
-      fetch(`${ServerLink}/api/students`).then((res) => res.json()),
-  });
-  // console.log(students);
 
   const searchUser = students?.filter((user) => {
     if (search === '' && user.hall === details.hallName) {
