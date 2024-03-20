@@ -1,15 +1,12 @@
 import React from 'react';
 import HallCard from './HallCard';
-import { ServerLink } from '../../Hooks/useServerLink';
-import { useQuery } from '@tanstack/react-query';
 import Loading from '../Shared/Loading/Loading';
+import { useGetHallsQuery } from '../../features/api/hallApi';
 
 const Halls = () => {
-  const { data: Halls = [], isLoading } = useQuery({
-    queryKey: ['halls'],
-    queryFn: () => fetch(`${ServerLink}/api/halls`).then((res) => res.json()),
-  });
-  // console.log(Halls);
+  const { data, isLoading } = useGetHallsQuery();
+  // console.log(data);
+  const Halls = data;
 
   if (isLoading) {
     <Loading></Loading>;
@@ -29,7 +26,7 @@ const Halls = () => {
         of a dormitory is controlled by a Hall President and his/her assistants.
       </h2>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center gap-6'>
-        {Halls.map((hall) => (
+        {Halls?.map((hall) => (
           <HallCard
             isLoading={isLoading}
             hall={hall}
