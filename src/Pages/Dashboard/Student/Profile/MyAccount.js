@@ -1,38 +1,42 @@
 import React, { useContext } from 'react';
 import Profile from './Profile';
-import { useQuery } from '@tanstack/react-query';
-import { ServerLink } from '../../../../Hooks/useServerLink';
 import { AuthContext } from '../../../../AuthProvider/AuthProvider';
 import Loading from '../../../Shared/Loading/Loading';
+import { useGetUserQuery } from '../../../../features/api/userApi';
+import { useGetStudentQuery } from '../../../../features/api/studentApi';
 
 const MyAccount = () => {
   const { user } = useContext(AuthContext);
-  const { data: us = {} } = useQuery({
-    queryKey: ['user'],
-    queryFn: () =>
-      fetch(`${ServerLink}/api/users/${user?.email}`).then((res) => res.json()),
-  });
-  // console.log(us);
-
   const {
-    data: student = {},
-    isLoading,
+    data: userData,
+    isLoading: userIsLoading,
+    isError: userIsError,
+  } = useGetUserQuery(user?.email);
+  const {
+    data: student,
+    isLoading: studentIsLoading,
+    isError: studentIsError,
     refetch,
-  } = useQuery({
-    queryKey: ['student'],
-    queryFn: () =>
-      fetch(`${ServerLink}/api/students/${us?.sid}`).then((res) => res.json()),
-  });
-  // console.log(student);
+  } = useGetStudentQuery(userData?.sid);
 
-  if (isLoading) {
+  if (userIsLoading || studentIsLoading) {
     <Loading />;
-    refetch();
   }
 
+  if (userIsError || studentIsError) {
+    return <div>Error to fetching data.</div>;
+  }
+
+  if (!userData) {
+    return <div>User not found.</div>;
+  }
+
+  if (!student) {
+    return <div>Student not found.</div>;
+  }
   return (
     <div>
-      {isLoading ? (
+      {studentIsLoading ? (
         <span className='loading loading-spinner text-primary'></span>
       ) : (
         <div className='mx-auto bg-cyan-200 rounded-lg my-3 max-w-[1100px] ml-3'>
@@ -41,16 +45,18 @@ const MyAccount = () => {
               <div className='m-5 bg-white shadow-lg rounded-lg -mt-10'>
                 <img
                   className='w-40 h-44 p-2 rounded-lg'
-                  src={student.img}
+                  src={student?.img}
                   alt='user img'
                 />
               </div>
               <div className='p-2 rounded-lg text-left -mt-4'>
-                <h1 className='text-3xl font-semibold'>Name: {student.name}</h1>
-                <span>ID: {student.sid}</span>
+                <h1 className='text-3xl font-semibold'>
+                  Name: {student?.name}
+                </h1>
+                <span>ID: {student?.sid}</span>
                 <br />
                 <span>
-                  <p>Dept: {student.dept} </p>
+                  <p>Dept: {student?.dept} </p>
                 </span>
               </div>
             </div>
