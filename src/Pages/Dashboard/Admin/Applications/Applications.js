@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import Loading from '../../../Shared/Loading/Loading';
 import { fetchRole } from '../../../../Hooks/Role/useRoleSlice';
 import { ServerLink } from '../../../../Hooks/useServerLink';
-import { useQuery } from '@tanstack/react-query';
 import StudentDetails from '../AllStudents/StudentDetails';
 import toast from 'react-hot-toast';
+import { useGetApplicationsQuery } from '../../../../features/api/applicationApi';
 
 const Applications = () => {
   const { user, loading } = useContext(AuthContext);
@@ -23,24 +23,16 @@ const Applications = () => {
     user?.email && dispatch(fetchRole(user?.email));
   }, [dispatch, user?.email]);
 
-  // console.log(user, details);
-  const {
-    data: applications = [],
-    isLoading,
-    refetch,
-  } = useQuery({
-    queryKey: ['applications'],
-    queryFn: () =>
-      fetch(`${ServerLink}/api/applications`).then((res) => res.json()),
-  });
+  const { data: applications, refetch, isLoading } = useGetApplicationsQuery();
+  if (isLoading) {
+    <Loading />;
+  }
 
   const handleApplication = (event) => {
     const selectedValue = event.target.value;
     setSelectedValue(selectedValue);
     // console.log(selectedValue);
   };
-
-  // console.log(applications);
 
   const filteredApplications = applications?.filter((user) => {
     if (
@@ -59,7 +51,7 @@ const Applications = () => {
     return null;
   });
 
-  const sortedApplication = filteredApplications.sort((a, b) => {
+  const sortedApplication = filteredApplications?.sort((a, b) => {
     const aSidPrefix = Math.floor(a.sid / 100000);
     const bSidPrefix = Math.floor(b.sid / 100000);
     // console.log(aSidPrefix, bSidPrefix);

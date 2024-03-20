@@ -20,7 +20,19 @@ export const studentApi = createApi({
       }),
       providesTags: ['Students'],
     }),
+    addStudent: builder.mutation({
+      query: (data) => ({
+        url: '/api/students',
+        method: 'post',
+        body: data,
+      }),
+      invalidatesTags: ['Students'],
+    }),
   }),
 });
 
-export const { useGetStudentsQuery, useGetStudentDetailsQuery } = studentApi;
+export const {
+  useGetStudentsQuery,
+  useGetStudentDetailsQuery,
+  useAddStudentMutation,
+} = studentApi;
