@@ -8,7 +8,13 @@ export const studentApi = createApi({
   }),
   tagTypes: ['Students'],
   endpoints: (builder) => ({
-    getStudent: builder.query({
+    getStudents: builder.query({
+      query: (id) => ({
+        url: `/api/students`,
+      }),
+      providesTags: ['Students'],
+    }),
+    getStudentDetails: builder.query({
       query: (id) => ({
         url: `/api/students/${id}`,
       }),
@@ -17,4 +23,4 @@ export const studentApi = createApi({
   }),
 });
 
-export const { useGetStudentQuery } = studentApi;
+export const { useGetStudentsQuery, useGetStudentDetailsQuery } = studentApi;
