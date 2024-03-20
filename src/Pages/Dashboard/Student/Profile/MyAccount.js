@@ -3,7 +3,7 @@ import Profile from './Profile';
 import { AuthContext } from '../../../../AuthProvider/AuthProvider';
 import Loading from '../../../Shared/Loading/Loading';
 import { useGetUserQuery } from '../../../../features/api/userApi';
-import { useGetStudentQuery } from '../../../../features/api/studentApi';
+import { useGetStudentDetailsQuery } from '../../../../features/api/studentApi';
 
 const MyAccount = () => {
   const { user } = useContext(AuthContext);
@@ -17,7 +17,7 @@ const MyAccount = () => {
     isLoading: studentIsLoading,
     isError: studentIsError,
     refetch,
-  } = useGetStudentQuery(userData?.sid);
+  } = useGetStudentDetailsQuery(userData?.sid);
 
   if (userIsLoading || studentIsLoading) {
     <Loading />;

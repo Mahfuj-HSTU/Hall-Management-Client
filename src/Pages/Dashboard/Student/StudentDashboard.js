@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { AuthContext } from '../../../AuthProvider/AuthProvider';
 import Loading from '../../Shared/Loading/Loading';
 import { useGetUserQuery } from '../../../features/api/userApi';
-import { useGetStudentQuery } from '../../../features/api/studentApi';
+import { useGetStudentDetailsQuery } from '../../../features/api/studentApi';
 
 const StudentDashboard = () => {
   const { user } = useContext(AuthContext);
@@ -15,7 +15,7 @@ const StudentDashboard = () => {
     data: student,
     isLoading: studentIsLoading,
     isError: studentIsError,
-  } = useGetStudentQuery(userData?.sid);
+  } = useGetStudentDetailsQuery(userData?.sid);
 
   if (userIsLoading || studentIsLoading) {
     <Loading />;

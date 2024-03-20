@@ -1,59 +1,58 @@
 import toast from 'react-hot-toast';
-import React, { useContext, useEffect } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import React, { useContext } from 'react';
 import { ServerLink } from '../../../../Hooks/useServerLink';
 import { AuthContext } from '../../../../AuthProvider/AuthProvider';
-import { useDispatch, useSelector } from 'react-redux';
 import Loading from '../../../Shared/Loading/Loading';
-import { fetchRole } from '../../../../Hooks/Role/useRoleSlice';
 import HallClearence from './HallClearence';
 import { getDateOnly } from '../../../../Hooks/getDateOnly';
+import { useGetStudentDetailsQuery } from '../../../../features/api/studentApi';
+import { useGetApplicationQuery } from '../../../../features/api/applicationApi';
+import { useGetUserQuery } from '../../../../features/api/userApi';
+import { useGetNoticeQuery } from '../../../../features/api/noticeApi';
 
 const Application = () => {
   const { user, loading } = useContext(AuthContext);
-  const details = useSelector((state) => state?.roleReducer.role);
-  const dispatch = useDispatch();
-
   const date = new Date();
-  // console.log(getDateOnly(date));
 
   if (loading) {
     <Loading></Loading>;
   }
-
-  useEffect(() => {
-    user?.email && dispatch(fetchRole(user?.email));
-  }, [dispatch, user?.email]);
-
-  // console.log(user, details);
-  const { data: student = [], refetch } = useQuery({
-    queryKey: ['students'],
-    queryFn: () =>
-      fetch(`${ServerLink}/api/students/${details.sid}`).then((res) =>
-        res.json()
-      ),
-  });
+  const {
+    data: userData,
+    isLoading: userIsLoading,
+    isError: userIsError,
+  } = useGetUserQuery(user?.email);
+  const {
+    data: student,
+    isLoading: studentIsLoading,
+    isError: studentIsError,
+    refetch,
+  } = useGetStudentDetailsQuery(userData?.sid);
   // console.log(student);
-  const { data: applications = [] } = useQuery({
-    queryKey: ['applications'],
-    queryFn: () =>
-      fetch(`${ServerLink}/api/applications/${details.sid}`).then((res) =>
-        res.json()
-      ),
-  });
+
+  const { data: applications } = useGetApplicationQuery(userData?.sid);
   // console.log(applications);
-  const { data: notices = [] } = useQuery({
-    queryKey: ['notices'],
-    queryFn: () => fetch(`${ServerLink}/api/notice`).then((res) => res.json()),
-  });
+  const { data: notices } = useGetNoticeQuery();
+
+  if (userIsLoading || studentIsLoading) {
+    <Loading />;
+  }
+
+  if (userIsError || studentIsError) {
+    return <div>Error to fetching data.</div>;
+  }
+
+  if (!userData) {
+    return <div>User not found.</div>;
+  }
+
+  if (!student) {
+    return <div>Student not found.</div>;
+  }
 
   const filteredNotice = notices?.find(
-    (item) => item.hall === details.hallName && item.type === 'HallSeat'
+    (item) => item.hall === userData.hallName && item.type === 'HallSeat'
   );
-
-  // if (filteredNotice?.date > getDateOnly(date)) {
-  //   console.log('check');
-  // }
 
   const hallSeat = applications?.find((item) => item.type === 'HallSeat');
   const hallClearence = applications?.find(
@@ -94,7 +93,7 @@ const Application = () => {
 
   return (
     <div className='mt-16'>
-      {!student.sid ? (
+      {studentIsLoading ? (
         <Loading />
       ) : (
         <div className='grid place-items-center h-full mx-5'>
