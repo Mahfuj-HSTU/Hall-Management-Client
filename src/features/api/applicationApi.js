@@ -8,6 +8,12 @@ export const applicationApi = createApi({
   }),
   tagTypes: ['Application'],
   endpoints: (builder) => ({
+    getApplications: builder.query({
+      query: () => ({
+        url: `/api/applications`,
+      }),
+      providesTags: ['Application'],
+    }),
     getApplication: builder.query({
       query: (id) => ({
         url: `/api/applications/${id}`,
@@ -17,4 +23,5 @@ export const applicationApi = createApi({
   }),
 });
 
-export const { useGetApplicationQuery } = applicationApi;
+export const { useGetApplicationQuery, useGetApplicationsQuery } =
+  applicationApi;

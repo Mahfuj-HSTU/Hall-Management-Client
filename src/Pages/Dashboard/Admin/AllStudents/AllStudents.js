@@ -1,37 +1,54 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { ServerLink } from '../../../../Hooks/useServerLink';
 import { AuthContext } from '../../../../AuthProvider/AuthProvider';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchRole } from '../../../../Hooks/Role/useRoleSlice';
 import Loading from '../../../Shared/Loading/Loading';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import StudentDetails from './StudentDetails';
 import AddStudent from './AddStudent';
 import { useGetStudentsQuery } from '../../../../features/api/studentApi';
+import { useGetUserQuery } from '../../../../features/api/userApi';
 
 const AllStudents = () => {
   const { user, loading } = useContext(AuthContext);
   const inputRef = useRef(null);
   const [search, setSearch] = useState('');
   const [selected, setSelected] = useState('');
-  const details = useSelector((state) => state?.roleReducer.role);
-  const dispatch = useDispatch();
-  const { data: students, isLoading, refetch } = useGetStudentsQuery();
 
-  if (loading) {
-    <Loading></Loading>;
+  const {
+    data: students,
+    isLoading: studentIsLoading,
+    isError: studentIsError,
+    refetch,
+  } = useGetStudentsQuery();
+
+  const {
+    data: userData,
+    isLoading: userIsLoading,
+    isError: userIsError,
+  } = useGetUserQuery(user?.email);
+
+  if (userIsLoading || studentIsLoading || loading) {
+    <Loading />;
   }
 
-  useEffect(() => {
-    user?.email && dispatch(fetchRole(user?.email));
-  }, [dispatch, user?.email]);
+  if (userIsError || studentIsError) {
+    return <div>Error to fetching data.</div>;
+  }
+
+  if (!userData) {
+    return <div>User not found.</div>;
+  }
+
+  if (!students) {
+    return <div>Student not found.</div>;
+  }
 
   const searchUser = students?.filter((user) => {
-    if (search === '' && user.hall === details.hallName) {
+    if (search === '' && user.hall === userData?.hallName) {
       return true;
     } else if (
       user?.sid.toString().includes(search?.toString()) &&
-      user.hall === details.hallName
+      user.hall === userData.hallName
     ) {
       return true;
     }
@@ -90,56 +107,48 @@ const AllStudents = () => {
           className='hidden btn btn-info rounded-xl w-32 lg:grid place-items-center'>
           Add Student
         </label>
-        {/* <input
-          className='hidden lg:block btn btn-primary rounded-xl w-32 '
-          value='Add student'
-        /> */}
       </div>
-      {isLoading ? (
-        <span className='loading loading-spinner text-primary'></span>
-      ) : (
-        <table className='table table-compact w-full border-2 shadow-lg md:mx-4 mx-0 overflow-x-scroll'>
-          <thead className='text-center bg-slate-200 font-semibold'>
-            <tr className='text-[17px]'>
-              <th className='border-2 border-r-slate-300'>SL No.</th>
-              <th className='border-2 border-r-slate-300'>Name</th>
-              <th className='border-2 border-r-slate-300'>Student Id</th>
-              <th className='border-2 border-r-slate-300'>Department</th>
-              <th className='border-2'>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {searchUser
-              ?.sort((a, b) => a.sid - b.sid)
-              .map((user, i) => (
-                <tr
-                  key={user?._id}
-                  className='border-2'>
-                  <td className='border-2 text-center w-16'>{i + 1}</td>
-                  <td className='border-2 font-semibold'>
-                    <label
-                      htmlFor='my-modal'
-                      className='link link-primary'
-                      onClick={() => setSelected(user)}>
-                      {user.name}
-                    </label>
-                  </td>
-                  <td className='border-2'>{user.sid}</td>
-                  <td className='border-2'>{user.dept}</td>
-                  <td className='border-2 text-center p-0'>
-                    <button
-                      onClick={() => handleDelete(user)}
-                      className='text-red-600 text-2xl'>
-                      <MdOutlineDeleteOutline />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
-      )}
+      <table className='table table-compact w-full border-2 shadow-lg md:mx-4 mx-0 overflow-x-scroll'>
+        <thead className='text-center bg-slate-200 font-semibold'>
+          <tr className='text-[17px]'>
+            <th className='border-2 border-r-slate-300'>SL No.</th>
+            <th className='border-2 border-r-slate-300'>Name</th>
+            <th className='border-2 border-r-slate-300'>Student Id</th>
+            <th className='border-2 border-r-slate-300'>Department</th>
+            <th className='border-2'>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {searchUser
+            ?.sort((a, b) => a.sid - b.sid)
+            .map((user, i) => (
+              <tr
+                key={user?._id}
+                className='border-2'>
+                <td className='border-2 text-center w-16'>{i + 1}</td>
+                <td className='border-2 font-semibold'>
+                  <label
+                    htmlFor='my-modal'
+                    className='link link-primary'
+                    onClick={() => setSelected(user)}>
+                    {user.name}
+                  </label>
+                </td>
+                <td className='border-2'>{user.sid}</td>
+                <td className='border-2'>{user.dept}</td>
+                <td className='border-2 text-center p-0'>
+                  <button
+                    onClick={() => handleDelete(user)}
+                    className='text-red-600 text-2xl'>
+                    <MdOutlineDeleteOutline />
+                  </button>
+                </td>
+              </tr>
+            ))}
+        </tbody>
+      </table>
       <AddStudent
-        details={details}
+        details={userData}
         refetch={refetch}
       />
       {selected && <StudentDetails selected={selected}></StudentDetails>}

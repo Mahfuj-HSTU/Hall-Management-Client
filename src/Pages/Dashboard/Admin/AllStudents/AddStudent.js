@@ -1,12 +1,23 @@
 import React from 'react';
 import { BsSendCheckFill } from 'react-icons/bs';
-import { ServerLink } from '../../../../Hooks/useServerLink';
 import toast from 'react-hot-toast';
+import { useAddStudentMutation } from '../../../../features/api/studentApi';
 
 const AddStudent = ({ details, refetch }) => {
-  // console.log(details);
+  const [addStudent, { isLoading, isError, isSuccess }] =
+    useAddStudentMutation();
 
-  const handleSubmit = (event) => {
+  if (isLoading) {
+    toast.loading('posting...', { id: 'addStudent' });
+  }
+  if (isSuccess) {
+    toast.success('Successfully added a new student ', { id: 'addStudent' });
+  }
+  if (isError) {
+    toast.error('Failed to add a new student ', { id: 'addStudent' });
+  }
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const form = event.target;
     const name = form.name.value;
@@ -15,30 +26,8 @@ const AddStudent = ({ details, refetch }) => {
     const dept = form.dept.value;
 
     const user = { name, sid, hall, dept };
-    // console.log(user);
-    fetch(`${ServerLink}/api/students`, {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify(user),
-    })
-      .then((res) => {
-        if (!res.ok) {
-          return res.json().then((data) => {
-            throw new Error(data.error || 'Failed to add a new student');
-          });
-        }
-        return res.json();
-      })
-      .then((data) => {
-        // Handle successful response
-        if (data.acknowledged) {
-          toast.success('Successfully added a new student');
-          form.reset();
-          refetch();
-        }
-      });
+    addStudent(user);
+    form.reset();
   };
 
   return (
