@@ -1,6 +1,5 @@
 import React from 'react';
 import HallCard from './HallCard';
-import Loading from '../Shared/Loading/Loading';
 import { useGetHallsQuery } from '../../features/api/hallApi';
 
 const Halls = () => {
@@ -9,7 +8,7 @@ const Halls = () => {
   const Halls = data;
 
   if (isLoading) {
-    <Loading></Loading>;
+    return <span className='loading loading-spinner text-primary'></span>;
   }
 
   return (

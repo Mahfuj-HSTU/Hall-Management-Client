@@ -3,8 +3,8 @@ import useRoleSlice from '../Hooks/Role/useRoleSlice';
 import { hallApi } from '../features/api/hallApi';
 import { userApi } from '../features/api/userApi';
 import { studentApi } from '../features/api/studentApi';
-import { applicationApi } from '../features/api/applicationApi';
 import { noticeApi } from '../features/api/noticeApi';
+import { applicationApi } from '../features/api/applicationApi';
 
 export const store = configureStore({
   reducer: {

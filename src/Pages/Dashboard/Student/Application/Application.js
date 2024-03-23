@@ -1,12 +1,14 @@
 import toast from 'react-hot-toast';
-import React, { useContext } from 'react';
-import { ServerLink } from '../../../../Hooks/useServerLink';
+import React, { useContext, useEffect } from 'react';
 import { AuthContext } from '../../../../AuthProvider/AuthProvider';
 import Loading from '../../../Shared/Loading/Loading';
 import HallClearence from './HallClearence';
 import { getDateOnly } from '../../../../Hooks/getDateOnly';
 import { useGetStudentDetailsQuery } from '../../../../features/api/studentApi';
-import { useGetApplicationQuery } from '../../../../features/api/applicationApi';
+import {
+  useAddApplicationMutation,
+  useGetApplicationQuery,
+} from '../../../../features/api/applicationApi';
 import { useGetUserQuery } from '../../../../features/api/userApi';
 import { useGetNoticeQuery } from '../../../../features/api/noticeApi';
 
@@ -33,19 +35,23 @@ const Application = () => {
   const { data: applications } = useGetApplicationQuery(userData?.sid);
   // console.log(applications);
   const { data: notices } = useGetNoticeQuery();
+  const [addApplication, { isSuccess }] = useAddApplicationMutation();
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success('Applied successfully');
+    }
+  }, [isSuccess]);
 
   if (userIsLoading || studentIsLoading) {
     <Loading />;
   }
-
   if (userIsError || studentIsError) {
     return <div>Error to fetching data.</div>;
   }
-
   if (!userData) {
     return <div>User not found.</div>;
   }
-
   if (!student) {
     return <div>Student not found.</div>;
   }
@@ -67,28 +73,8 @@ const Application = () => {
       type: 'HallSeat',
     };
     if (agree) {
-      fetch(`${ServerLink}/api/applications`, {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-        },
-        body: JSON.stringify(info),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          if (data.acknowledged || data.message === 'Application updated.') {
-            console.log(data);
-            toast.success('Applied successfully');
-            refetch();
-          }
-        });
+      addApplication(info);
     }
-  };
-  const fff = () => {
-    // handleHallSeat();
-    window.setTimeout(handleHallSeat(), 6000);
-    // window.setTimeout(handleHallClearence(), 6000);
   };
 
   return (
@@ -113,7 +99,7 @@ const Application = () => {
                           ? null
                           : 'disabled'
                       }
-                      onClick={fff}
+                      onClick={handleHallSeat}
                       className='btn btn-success px-6'>
                       Apply
                     </button>

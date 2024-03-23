@@ -129,8 +129,7 @@ const Profile = ({ student, refetch }) => {
           <div className='bg-gray-200 px-2 py-5 rounded-lg w-[92%]'>
             <p className='pl-2 mb-1 font-semibold'>Name: </p>
             <input
-              required
-              readOnly={status ? 'readOnly' : null}
+              readOnly
               type='text'
               name='name'
               defaultValue={name}
@@ -209,7 +208,7 @@ const Profile = ({ student, refetch }) => {
             <p className='pl-2 mb-1 font-semibold'>Father Name </p>
             <input
               required
-              readOnly={status ? 'readOnly' : null}
+              readOnly={status || fname ? 'readOnly' : null}
               type='text'
               name='fname'
               defaultValue={fname}
@@ -219,7 +218,7 @@ const Profile = ({ student, refetch }) => {
             <p className='pl-2 mb-1 font-semibold'>Father Mobile </p>
             <input
               required
-              readOnly={status ? 'readOnly' : null}
+              readOnly={status || fmobile ? 'readOnly' : null}
               type='number'
               name='fmobile'
               defaultValue={fmobile}
@@ -228,7 +227,7 @@ const Profile = ({ student, refetch }) => {
             />
             <p className='pl-2 mb-1 font-semibold'>Mother Name </p>
             <input
-              readOnly={status ? 'readOnly' : null}
+              readOnly={status || mname ? 'readOnly' : null}
               type='text'
               name='mname'
               defaultValue={mname}
@@ -237,7 +236,7 @@ const Profile = ({ student, refetch }) => {
             />
             <p className='pl-2 mb-1 font-semibold'>Mother Mobile </p>
             <input
-              readOnly={status ? 'readOnly' : null}
+              readOnly={status || mmobile ? 'readOnly' : null}
               type='number'
               name='mmobile'
               defaultValue={mmobile}
