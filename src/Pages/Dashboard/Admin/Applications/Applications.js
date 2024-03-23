@@ -3,10 +3,12 @@ import { AuthContext } from '../../../../AuthProvider/AuthProvider';
 import { useDispatch, useSelector } from 'react-redux';
 import Loading from '../../../Shared/Loading/Loading';
 import { fetchRole } from '../../../../Hooks/Role/useRoleSlice';
-import { ServerLink } from '../../../../Hooks/useServerLink';
 import StudentDetails from '../AllStudents/StudentDetails';
 import toast from 'react-hot-toast';
-import { useGetApplicationsQuery } from '../../../../features/api/applicationApi';
+import {
+  useGetApplicationsQuery,
+  useUpdateApplicationMutation,
+} from '../../../../features/api/applicationApi';
 
 const Applications = () => {
   const { user, loading } = useContext(AuthContext);
@@ -24,9 +26,15 @@ const Applications = () => {
   }, [dispatch, user?.email]);
 
   const { data: applications, refetch, isLoading } = useGetApplicationsQuery();
+  const [updateApplication, { isSuccess }] = useUpdateApplicationMutation();
   if (isLoading) {
     <Loading />;
   }
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success('Application Action Performed');
+    }
+  }, [isSuccess]);
 
   const handleApplication = (event) => {
     const selectedValue = event.target.value;
@@ -75,35 +83,12 @@ const Applications = () => {
         `${event.name}'s payment status is ${event?.pinfo}. Do you want to accept?`
       );
       if (agree) {
-        // console.log(info);
-        fetch(`${ServerLink}/api/applications/${event._id}`, {
-          method: 'PUT',
-          headers: {
-            'content-type': 'application/json',
-          },
-          body: JSON.stringify(info),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            console.log(data);
-            toast.success('Application Accepted');
-            refetch();
-          });
+        updateApplication(info);
+        refetch();
       }
     } else {
-      fetch(`${ServerLink}/api/applications/${event._id}`, {
-        method: 'PUT',
-        headers: {
-          'content-type': 'application/json',
-        },
-        body: JSON.stringify(info),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          toast.success('Application Accepted');
-          refetch();
-        });
+      updateApplication(info);
+      refetch();
     }
   };
   const handleReject = (event) => {
@@ -111,19 +96,7 @@ const Applications = () => {
       ...event,
       status: 'reject',
     };
-    // console.log(info);
-    fetch(`${ServerLink}/api/applications/${event._id}`, {
-      method: 'PUT',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify(info),
-    })
-      .then((res) => res.json())
-      .then((event) => {
-        toast.error('Application Rejected');
-        refetch();
-      });
+    updateApplication(info);
   };
 
   return (
