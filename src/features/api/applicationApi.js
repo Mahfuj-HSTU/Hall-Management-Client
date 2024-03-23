@@ -20,8 +20,34 @@ export const applicationApi = createApi({
       }),
       providesTags: ['Application'],
     }),
+    addApplication: builder.mutation({
+      query: (data) => ({
+        url: '/api/applications',
+        method: 'post',
+        body: JSON.stringify(data),
+        headers: {
+          'content-type': 'application/json',
+        },
+      }),
+      invalidatesTags: ['Application'],
+    }),
+    updateApplication: builder.mutation({
+      query: (data) => ({
+        url: `/api/applications/${data?._id}`,
+        method: 'put',
+        body: JSON.stringify(data),
+        headers: {
+          'content-type': 'application/json',
+        },
+      }),
+      invalidatesTags: ['Application'],
+    }),
   }),
 });
 
-export const { useGetApplicationQuery, useGetApplicationsQuery } =
-  applicationApi;
+export const {
+  useGetApplicationQuery,
+  useGetApplicationsQuery,
+  useAddApplicationMutation,
+  useUpdateApplicationMutation,
+} = applicationApi;

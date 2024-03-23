@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BsSendCheckFill } from 'react-icons/bs';
-import { ServerLink } from '../../../../Hooks/useServerLink';
 import toast from 'react-hot-toast';
+import { useAddApplicationMutation } from '../../../../features/api/applicationApi';
 
 const HallClearence = ({ student, refetch }) => {
+  const [addApplication, { isSuccess }] = useAddApplicationMutation();
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success('Applied successfully');
+    }
+  }, [isSuccess]);
   const handleHallClearence = (event) => {
     event.preventDefault();
     const agree = window.confirm(`Do you want to apply for hall clearence?`);
@@ -14,23 +21,7 @@ const HallClearence = ({ student, refetch }) => {
       pinfo: 'paid',
     };
     if (agree) {
-      // console.log(info);
-      fetch(`${ServerLink}/api/applications`, {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-        },
-        body: JSON.stringify(info),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.acknowledged || data.message === 'Application updated.') {
-            console.log(data);
-            toast.success('Applied successfully');
-            event.target.reset();
-            refetch();
-          }
-        });
+      addApplication(info);
     }
   };
 
