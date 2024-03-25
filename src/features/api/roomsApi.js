@@ -14,7 +14,18 @@ export const roomApi = createApi({
       }),
       providesTags: ['Rooms'],
     }),
+    updateRoom: builder.mutation({
+      query: (data) => ({
+        url: '/api/rooms',
+        method: 'put',
+        body: JSON.stringify(data),
+        headers: {
+          'content-type': 'application/json',
+        },
+      }),
+      invalidatesTags: ['Rooms'],
+    }),
   }),
 });
 
-export const { useGetRoomsQuery } = roomApi;
+export const { useGetRoomsQuery, useUpdateRoomMutation } = roomApi;

@@ -34,7 +34,7 @@ const Application = () => {
 
   const { data: applications } = useGetApplicationQuery(userData?.sid);
   // console.log(applications);
-  const { data: notices } = useGetNoticeQuery();
+  const { data: notices, isLoading: noticeIsLoading } = useGetNoticeQuery();
   const [addApplication, { isSuccess }] = useAddApplicationMutation();
 
   useEffect(() => {
@@ -43,7 +43,7 @@ const Application = () => {
     }
   }, [isSuccess]);
 
-  if (userIsLoading || studentIsLoading) {
+  if (userIsLoading || studentIsLoading || noticeIsLoading) {
     <Loading />;
   }
   if (userIsError || studentIsError) {

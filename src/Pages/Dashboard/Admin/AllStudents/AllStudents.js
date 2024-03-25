@@ -115,6 +115,7 @@ const AllStudents = () => {
             <th className='border-2 border-r-slate-300'>Name</th>
             <th className='border-2 border-r-slate-300'>Student Id</th>
             <th className='border-2 border-r-slate-300'>Department</th>
+            <th className='border-2 border-r-slate-300'>R. Status</th>
             <th className='border-2'>Action</th>
           </tr>
         </thead>
@@ -126,7 +127,7 @@ const AllStudents = () => {
                 key={user?._id}
                 className='border-2'>
                 <td className='border-2 text-center w-16'>{i + 1}</td>
-                <td className='border-2 font-semibold'>
+                <td className='border-2 font-semibold w-[300px]'>
                   <label
                     htmlFor='my-modal'
                     className='link link-primary'
@@ -134,8 +135,11 @@ const AllStudents = () => {
                     {user.name}
                   </label>
                 </td>
-                <td className='border-2'>{user.sid}</td>
-                <td className='border-2'>{user.dept}</td>
+                <td className='border-2 text-center'>{user.sid}</td>
+                <td className='border-2 w-80'>{user.dept}</td>
+                <td className='border-2 text-center'>
+                  {user?.room || 'Non-Residential'}
+                </td>
                 <td className='border-2 text-center p-0'>
                   <button
                     onClick={() => handleDelete(user)}

@@ -1,19 +1,56 @@
-import React from 'react';
-import { useGetRoomsQuery } from '../../../../features/api/roomsApi';
+import React, { useEffect, useState } from 'react';
+import {
+  useGetRoomsQuery,
+  useUpdateRoomMutation,
+} from '../../../../features/api/roomsApi';
 import Loading from '../../../Shared/Loading/Loading';
+import { useUpdateStudentMutation } from '../../../../features/api/studentApi';
+import toast from 'react-hot-toast';
+import { useUpdateApplicationMutation } from '../../../../features/api/applicationApi';
 
 const RoomAllocation = ({ selected, user }) => {
+  const [selectedRadio, setSelectedRadio] = useState(null);
   const { data: rooms, isLoading } = useGetRoomsQuery();
+  const [updateStudent, { isSuccess }] = useUpdateStudentMutation();
+  const [updateRoom] = useUpdateRoomMutation();
+  const [updateApplication] = useUpdateApplicationMutation();
+
   if (isLoading) {
     <Loading />;
   }
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success('Room Allocated');
+    }
+  }, [isSuccess]);
+
   const filteredRoom = rooms?.filter((usr) => {
     if (usr.hall === user.hallName && usr.ids.length < 4) {
       return true;
     }
     return null;
   });
-  console.log(filteredRoom);
+  // console.log(filteredRoom);
+
+  const handleSubmit = () => {
+    const application = {
+      ...selected,
+      status: 'accept',
+    };
+    const info = {
+      ...selected,
+      room: selectedRadio,
+    };
+    const room = {
+      room: selectedRadio,
+      hall: selected.hall,
+      ids: [selected.sid],
+    };
+    // console.log(room);
+    updateApplication(application);
+    updateStudent(info);
+    updateRoom(room);
+  };
 
   return (
     <div>
@@ -48,8 +85,15 @@ const RoomAllocation = ({ selected, user }) => {
                     .map((room) => (
                       <tr
                         key={room?._id}
-                        className='border-2'>
-                        <td className='border-2 text-lg text-center'>
+                        className='border-1'>
+                        <td className='border-2 text-lg flex place-items-center'>
+                          <input
+                            type='radio'
+                            name='radio-3'
+                            className='radio radio-success mr-5'
+                            value={room.room}
+                            checked={selectedRadio === room.room}
+                          />
                           {room.room}
                         </td>
                         <td className='border-2 py-1'>
@@ -68,7 +112,9 @@ const RoomAllocation = ({ selected, user }) => {
                           </p>
                         </td>
                         <td className='border-2 text-center p-0'>
-                          <button className='btn btn-info px-6 btn-sm'>
+                          <button
+                            onClick={() => setSelectedRadio(room.room)}
+                            className='btn btn-info px-6 btn-sm'>
                             Select
                           </button>
                         </td>
@@ -78,6 +124,12 @@ const RoomAllocation = ({ selected, user }) => {
               </table>
             </div>
           </div>
+          <label
+            htmlFor='room-allocation-modal'
+            onClick={handleSubmit}
+            className='btn btn-info px-9'>
+            submit
+          </label>
         </div>
       </div>
     </div>
