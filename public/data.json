@@ -90,3 +90,11 @@
     "avseat": "50"
   }
 ]
+
+// {
+//     "title": "Hall seat notice",
+//     "description": "Some seats are vacant in our hall. New students will be picked up. Those who are interested in getting up are asked to apply",
+//     "date": "2024-02-25",
+//     "hall": "Bangabandhu Sheikh Mujibur Rahman Hall",
+//     "type":"HallSeat"
+//   }
