@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaEdit } from 'react-icons/fa';
-import { ServerLink } from '../../../../Hooks/useServerLink';
 import toast from 'react-hot-toast';
+import { useUpdateStudentMutation } from '../../../../features/api/studentApi';
 
 const Profile = ({ student, refetch }) => {
   const [status, setStatus] = useState(true);
+  const [updateStudent, { isSuccess }] = useUpdateStudentMutation();
   const [pic, setPic] = useState();
   const {
     name,
@@ -28,6 +29,11 @@ const Profile = ({ student, refetch }) => {
     setStatus((prevStatus) => !prevStatus);
   };
   // console.log(status);
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success('Updated successfully');
+    }
+  }, [isSuccess]);
 
   const handleSubmit = (event) => {
     handleStatus();
@@ -50,20 +56,7 @@ const Profile = ({ student, refetch }) => {
       nid: form.nid.value,
       img: pic,
     };
-
-    console.log(formData);
-    fetch(`${ServerLink}/api/students`, {
-      method: 'PUT',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((res) => res.json())
-      .then((event) => {
-        toast.success('updated successfully');
-        refetch();
-      });
+    updateStudent(formData);
   };
 
   const postDetails = (pics) => {
@@ -77,7 +70,7 @@ const Profile = ({ student, refetch }) => {
       });
       return;
     }
-    console.log(pics);
+    // console.log(pics);
     if (pics.type === 'image/jpeg' || pics.type === 'image/png') {
       const data = new FormData();
       data.append('file', pics);

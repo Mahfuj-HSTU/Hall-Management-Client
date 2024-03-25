@@ -24,9 +24,20 @@ export const studentApi = createApi({
       query: (data) => ({
         url: '/api/students',
         method: 'post',
-        body: data,
+        body: JSON.stringify(data),
         headers: {
-          'Content-type': 'application/json;',
+          'content-type': 'application/json;',
+        },
+      }),
+      invalidatesTags: ['Students'],
+    }),
+    updateStudent: builder.mutation({
+      query: (data) => ({
+        url: '/api/students',
+        method: 'put',
+        body: JSON.stringify(data),
+        headers: {
+          'content-type': 'application/json',
         },
       }),
       invalidatesTags: ['Students'],
@@ -38,4 +49,5 @@ export const {
   useGetStudentsQuery,
   useGetStudentDetailsQuery,
   useAddStudentMutation,
+  useUpdateStudentMutation,
 } = studentApi;

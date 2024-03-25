@@ -3,8 +3,9 @@ import useRoleSlice from '../Hooks/Role/useRoleSlice';
 import { hallApi } from '../features/api/hallApi';
 import { userApi } from '../features/api/userApi';
 import { studentApi } from '../features/api/studentApi';
-import { noticeApi } from '../features/api/noticeApi';
 import { applicationApi } from '../features/api/applicationApi';
+import { roomApi } from '../features/api/roomsApi';
+import { noticeApi } from '../features/api/noticeApi';
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     [studentApi.reducerPath]: studentApi.reducer,
     [applicationApi.reducerPath]: applicationApi.reducer,
     [noticeApi.reducerPath]: noticeApi.reducer,
+    [roomApi.reducerPath]: roomApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
@@ -21,5 +23,6 @@ export const store = configureStore({
       .concat(userApi.middleware)
       .concat(studentApi.middleware)
       .concat(applicationApi.middleware)
-      .concat(noticeApi.middleware),
+      .concat(noticeApi.middleware)
+      .concat(roomApi.middleware),
 });

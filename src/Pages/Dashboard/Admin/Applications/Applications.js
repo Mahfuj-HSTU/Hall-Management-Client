@@ -9,6 +9,7 @@ import {
   useGetApplicationsQuery,
   useUpdateApplicationMutation,
 } from '../../../../features/api/applicationApi';
+import RoomAllocation from './RoomAllocation';
 
 const Applications = () => {
   const { user, loading } = useContext(AuthContext);
@@ -151,11 +152,20 @@ const Applications = () => {
                 <td className='border-2 w-52'>{user.type}</td>
                 <td className='border-2 w-44'>{user.dept}</td>
                 <td className='border-2 text-center p-0 w-56'>
-                  <button
-                    onClick={() => handleAccept(user)}
-                    className='btn btn-sm btn-success '>
-                    Accept
-                  </button>
+                  {user?.type === 'HallClearence' ? (
+                    <button
+                      onClick={() => handleAccept(user)}
+                      className='btn btn-sm btn-success '>
+                      Accept
+                    </button>
+                  ) : (
+                    <label
+                      onClick={() => setSelected(user)}
+                      htmlFor='room-allocation-modal'
+                      className='btn btn-sm btn-success'>
+                      Accept
+                    </label>
+                  )}
                   <button
                     onClick={() => handleReject(user)}
                     className='btn btn-sm btn-error ml-3'>
@@ -167,7 +177,15 @@ const Applications = () => {
           </tbody>
         </table>
       )}
-      {selected && <StudentDetails selected={selected}></StudentDetails>}
+      {selected && (
+        <>
+          <StudentDetails selected={selected}></StudentDetails>
+          <RoomAllocation
+            selected={selected}
+            user={details}
+          />
+        </>
+      )}
     </div>
   );
 };
