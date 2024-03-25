@@ -48,11 +48,25 @@ const StudentDashboard = () => {
                 />
               </div>
             </div>
-            <h1 className='text-3xl font-semibold'>{student.name}</h1>
-            <span>ID: {student.sid}</span>
-            <br />
-            <span>
-              <p>{student.dept} </p>
+            <span className=''>
+              <h1 className='text-3xl font-semibold'>{student.name}</h1>
+              <p>
+                <span className='font-semibold'>ID:</span> {student.sid}
+              </p>
+              <p>
+                <span className='font-semibold'>Department:</span>{' '}
+                {student.dept}{' '}
+              </p>
+              <p>
+                {student.room ? (
+                  <>
+                    <span className='font-semibold'>Room No:</span>{' '}
+                    {student.room}
+                  </>
+                ) : (
+                  'Non-Residential'
+                )}{' '}
+              </p>
             </span>
           </div>{' '}
           <div className='flex flex-row md:flex-row  gap-5 p-5'>
