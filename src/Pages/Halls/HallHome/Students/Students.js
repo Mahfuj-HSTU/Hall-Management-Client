@@ -1,7 +1,37 @@
 import React from 'react';
+import { useGetStudentsQuery } from '../../../../features/api/studentApi';
+import Loading from '../../../Shared/Loading/Loading';
+import { useGetRoomsQuery } from '../../../../features/api/roomsApi';
 
 const Students = ({ hall }) => {
-  const { atstudent, avseat, prstudent, tseat } = hall;
+  const { data: students, isLoading: studentIsLoading } = useGetStudentsQuery();
+  const { data: rooms, isLoading: roomsIsLoading } = useGetRoomsQuery();
+  // console.log(students);
+  if (studentIsLoading || roomsIsLoading) {
+    <Loading />;
+  }
+
+  const filteredStudent = students?.filter((students) => {
+    return students.hall === hall.name;
+  });
+  const presentStudent = filteredStudent?.filter((students) => {
+    return (
+      students.room === '' ||
+      students.room === undefined ||
+      students.room === null
+    );
+  });
+
+  const filteredRooms = rooms?.filter((rooms) => {
+    return rooms.hall === hall.name;
+  });
+  const attachStudent = filteredStudent?.length;
+  const totalSeat = filteredRooms?.length * 4;
+  const totalpresentStudent = attachStudent - presentStudent?.length;
+  const availabelSeat = totalSeat - totalpresentStudent;
+
+  // console.log(filteredStudent);
+
   return (
     <div>
       {' '}
@@ -25,7 +55,7 @@ const Students = ({ hall }) => {
                 data-aos='fade-up'
                 className='card grid lg:w-[300px] w-[350px] text-white mb-3'>
                 <div className='card-body items-center'>
-                  <h1 className=' card-title text-7xl'>{atstudent}</h1>
+                  <h1 className=' card-title text-7xl'>{attachStudent}</h1>
                   <h2 className=' text-xl'>Total Atached Students</h2>
                 </div>
               </div>
@@ -33,7 +63,7 @@ const Students = ({ hall }) => {
                 data-aos='fade-up'
                 className='card lg:w-[300px] w-[350px] text-white mb-3'>
                 <div className='card-body items-center'>
-                  <h1 className=' card-title text-7xl'>{tseat}</h1>
+                  <h1 className=' card-title text-7xl'>{totalSeat}</h1>
                   <h2 className=' text-xl'>Total Seat Capacity</h2>
                 </div>
               </div>
@@ -41,7 +71,9 @@ const Students = ({ hall }) => {
                 data-aos='fade-up'
                 className='card lg:w-[300px] w-[350px] text-white mb-3'>
                 <div className='card-body items-center'>
-                  <h1 className=' card-title text-7xl'>{prstudent}</h1>
+                  <h1 className=' card-title text-7xl'>
+                    {totalpresentStudent}
+                  </h1>
                   <h2 className=' text-xl'>Total Present Students </h2>
                 </div>
               </div>
@@ -49,7 +81,7 @@ const Students = ({ hall }) => {
                 data-aos='fade-up'
                 className='card lg:w-[300px] w-[350px] text-white mb-1 lg:mb-3'>
                 <div className='card-body items-center'>
-                  <h1 className=' card-title text-7xl'>{avseat}</h1>
+                  <h1 className=' card-title text-7xl'>{availabelSeat}</h1>
                   <h2 className=' text-xl'>Available Seat</h2>
                 </div>
               </div>
