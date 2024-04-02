@@ -11,6 +11,7 @@ const Profile = ({ student, refetch }) => {
     name,
     sid,
     dept,
+    faculty,
     cgpa,
     hall,
     email,
@@ -23,6 +24,7 @@ const Profile = ({ student, refetch }) => {
     parmanent,
     blood,
     nid,
+    room,
   } = student;
 
   const handleStatus = () => {
@@ -138,6 +140,15 @@ const Profile = ({ student, refetch }) => {
               placeholder='student id'
               className='input input-bordered w-full max-w-xs mb-2'
             />
+            <p className='pl-2 mb-1 font-semibold'>Faculty </p>
+            <input
+              readOnly
+              type='text'
+              name='dept'
+              defaultValue={faculty}
+              placeholder='ex: cse'
+              className='input input-bordered w-full max-w-xs mb-2'
+            />
             <p className='pl-2 mb-1 font-semibold'>Department </p>
             <input
               readOnly
@@ -191,6 +202,14 @@ const Profile = ({ student, refetch }) => {
               type='text'
               name='hall'
               defaultValue={hall}
+              className='input input-bordered w-full max-w-xs mb-2'
+            />
+            <p className='pl-2 mb-1 font-semibold'>Room No. </p>
+            <input
+              readOnly
+              type='text'
+              name='hall'
+              defaultValue={room ? room : 'Non-Residential'}
               className='input input-bordered w-full max-w-xs mb-2'
             />
           </div>

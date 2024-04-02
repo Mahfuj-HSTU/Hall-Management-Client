@@ -86,27 +86,30 @@ const Application = () => {
           <span className='grid grid-cols-2 w-full gap-9'>
             <div className='shadow-xl shadow-slate-400 rounded-xl p-5'>
               <h2 className='text-3xl mb-5'>Apply for a Hall Seat</h2>
-              {!filteredNotice ? (
-                <h2 className='text-2xl my-5 text-red-500'>
-                  Applications will start soon
+              {student?.room ? (
+                <h2 className='text-2xl font-semibold my-5 text-blue-700'>
+                  Room No: {student?.room}
                 </h2>
               ) : (
                 <>
-                  {filteredNotice?.date > getDateOnly(date) ? (
-                    <button
-                      disabled={
-                        filteredNotice?.date > getDateOnly(date)
-                          ? null
-                          : 'disabled'
-                      }
-                      onClick={handleHallSeat}
-                      className='btn btn-success px-6'>
-                      Apply
-                    </button>
-                  ) : (
+                  {!filteredNotice ? (
                     <h2 className='text-2xl my-5 text-red-500'>
-                      Applications date is over.
+                      Applications will start soon
                     </h2>
+                  ) : (
+                    <>
+                      {filteredNotice?.date > getDateOnly(date) ? (
+                        <button
+                          onClick={handleHallSeat}
+                          className='btn btn-success px-6'>
+                          Apply
+                        </button>
+                      ) : (
+                        <h2 className='text-2xl my-5 text-red-500'>
+                          Applications date is over.
+                        </h2>
+                      )}
+                    </>
                   )}
                 </>
               )}
