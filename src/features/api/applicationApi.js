@@ -42,6 +42,13 @@ export const applicationApi = createApi({
       }),
       invalidatesTags: ['Application'],
     }),
+    deleteApplication: builder.mutation({
+      query: (data) => ({
+        url: `/api/applications/${data?._id}`,
+        method: 'delete',
+      }),
+      invalidatesTags: ['Application'],
+    }),
   }),
 });
 
@@ -50,4 +57,5 @@ export const {
   useGetApplicationsQuery,
   useAddApplicationMutation,
   useUpdateApplicationMutation,
+  useDeleteApplicationMutation,
 } = applicationApi;

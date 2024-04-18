@@ -1,18 +1,27 @@
 import React, { useContext, useRef, useState } from 'react';
-import { ServerLink } from '../../../../Hooks/useServerLink';
 import { AuthContext } from '../../../../AuthProvider/AuthProvider';
 import Loading from '../../../Shared/Loading/Loading';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import StudentDetails from './StudentDetails';
 import AddStudent from './AddStudent';
-import { useGetStudentsQuery } from '../../../../features/api/studentApi';
+import {
+  useGetStudentsQuery,
+  useUpdateStudentMutation,
+} from '../../../../features/api/studentApi';
 import { useGetUserQuery } from '../../../../features/api/userApi';
+import {
+  useDeleteApplicationMutation,
+  useGetApplicationsQuery,
+} from '../../../../features/api/applicationApi';
+import { useRemoveStudentMutation } from '../../../../features/api/roomsApi';
+import toast from 'react-hot-toast';
 
 const AllStudents = () => {
   const { user, loading } = useContext(AuthContext);
   const inputRef = useRef(null);
   const [search, setSearch] = useState('');
   const [selected, setSelected] = useState('');
+  // console.log(selected);
 
   const {
     data: students,
@@ -27,8 +36,19 @@ const AllStudents = () => {
     isError: userIsError,
   } = useGetUserQuery(user?.email);
 
-  if (userIsLoading || studentIsLoading || loading) {
+  const { data: applications, isLoading } = useGetApplicationsQuery();
+  const [updateStudent, { isSuccess }] = useUpdateStudentMutation();
+  const [removeStudent, { isSuccess: removeIsSuccess }] =
+    useRemoveStudentMutation();
+  const [deleteApplication] = useDeleteApplicationMutation();
+  // console.log(applications);
+
+  if (userIsLoading || studentIsLoading || loading || isLoading) {
     <Loading />;
+  }
+
+  if (isSuccess && removeIsSuccess) {
+    toast.success('Student remove successfully.');
   }
 
   if (userIsError || studentIsError) {
@@ -37,6 +57,9 @@ const AllStudents = () => {
 
   if (!userData) {
     return <div>User not found.</div>;
+  }
+  if (!applications) {
+    return <div>Applications not found.</div>;
   }
 
   if (!students) {
@@ -47,8 +70,8 @@ const AllStudents = () => {
     if (search === '' && user.hall === userData?.hallName) {
       return true;
     } else if (
-      user?.sid.toString().includes(search?.toString()) &&
-      user.hall === userData.hallName
+      user?.sid?.toString().includes(search?.toString()) &&
+      user?.hall === userData?.hallName
     ) {
       return true;
     }
@@ -61,23 +84,30 @@ const AllStudents = () => {
   };
 
   const handleDelete = (usr) => {
-    // console.log(user);
+    const application = applications?.find(
+      (item) => item?.type === 'HallSeat' && item?.sid === usr?.sid
+    );
     const agree = window.confirm(
-      `Are you sure? you want to delete: ${usr.name}`
+      `Are you sure? you want to release "${usr?.name}" from hall.`
     );
     if (agree) {
+      const info = {
+        ...usr,
+        room: '',
+      };
+      const room = {
+        room: usr.room,
+        hall: usr.hall,
+        id: usr.sid,
+      };
+      // console.log(room);
+      removeStudent(room);
+      updateStudent(info);
+      if (application) {
+        console.log(application);
+        deleteApplication(application);
+      }
       refetch();
-      fetch(`${ServerLink}/api/users/${usr.sid}`, {
-        method: 'DELETE',
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          if (data.deletedCount > 0) {
-            alert('user deleted successfully.');
-            refetch();
-          }
-        });
     }
   };
 

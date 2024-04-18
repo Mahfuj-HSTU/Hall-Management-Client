@@ -3,6 +3,7 @@ import { AuthContext } from '../../../AuthProvider/AuthProvider';
 import Loading from '../../Shared/Loading/Loading';
 import { useGetUserQuery } from '../../../features/api/userApi';
 import { useGetStudentDetailsQuery } from '../../../features/api/studentApi';
+import { useGetApplicationQuery } from '../../../features/api/applicationApi';
 
 const StudentDashboard = () => {
   const { user } = useContext(AuthContext);
@@ -16,6 +17,8 @@ const StudentDashboard = () => {
     isLoading: studentIsLoading,
     isError: studentIsError,
   } = useGetStudentDetailsQuery(userData?.sid);
+  const { data: applications } = useGetApplicationQuery(userData?.sid);
+  // console.log(applications);
 
   if (userIsLoading || studentIsLoading) {
     <Loading />;
@@ -84,11 +87,38 @@ const StudentDashboard = () => {
           <div className='flex flex-row md:flex-row  gap-5 p-5'>
             <div className='w-full  shadow-inherit rounded-lg bg-white drop-shadow-lg p-3'>
               <h2 className='text-2xl font-semibold'>Applications</h2>
-              {/* <p>Applied for {application.type} </p> */}
+              {applications?.map((application) => (
+                <>
+                  {!application ? (
+                    <h2 className='text-2xl my-5 text-red-500'>
+                      You don't have any application.
+                    </h2>
+                  ) : (
+                    <>
+                      {application?.type === 'HallSeat' ? (
+                        <p>
+                          <span className='font-bold text-black'>🖋</span> Your
+                          hall <b>seat</b> application is{' '}
+                          <b>
+                            {application.status}. <br />{' '}
+                          </b>
+                        </p>
+                      ) : null}
+                      {application?.type === 'HallClearence' ? (
+                        <p>
+                          <span className='font-bold text-black'>🖋</span> Your
+                          hall <b>clearence</b> application is{' '}
+                          <b>{application.status}.</b>
+                        </p>
+                      ) : null}
+                    </>
+                  )}
+                </>
+              ))}
             </div>{' '}
             <div className='w-full  shadow-inherit rounded-lg bg-white drop-shadow-lg p-3'>
               <h2 className='text-2xl font-semibold'>Notifications</h2>
-              {/* <p>Applied for {application.type} </p> */}
+              <p>Empty </p>
             </div>
           </div>
         </div>

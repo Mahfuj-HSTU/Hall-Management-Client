@@ -26,7 +26,7 @@ export const studentApi = createApi({
         method: 'post',
         body: JSON.stringify(data),
         headers: {
-          'content-type': 'application/json;',
+          'content-type': 'application/json',
         },
       }),
       invalidatesTags: ['Students'],
