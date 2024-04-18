@@ -14,7 +14,18 @@ export const noticeApi = createApi({
       }),
       providesTags: ['Notice'],
     }),
+    postNotice: builder.mutation({
+      query: (data) => ({
+        url: '/api/notice',
+        method: 'post',
+        body: JSON.stringify(data),
+        headers: {
+          'content-type': 'application/json',
+        },
+      }),
+      invalidatesTags: ['Notice'],
+    }),
   }),
 });
 
-export const { useGetNoticeQuery } = noticeApi;
+export const { useGetNoticeQuery, usePostNoticeMutation } = noticeApi;

@@ -25,7 +25,22 @@ export const roomApi = createApi({
       }),
       invalidatesTags: ['Rooms'],
     }),
+    removeStudent: builder.mutation({
+      query: (data) => ({
+        url: '/api/rooms',
+        method: 'delete',
+        body: JSON.stringify(data),
+        headers: {
+          'content-type': 'application/json',
+        },
+      }),
+      invalidatesTags: ['Rooms'],
+    }),
   }),
 });
 
-export const { useGetRoomsQuery, useUpdateRoomMutation } = roomApi;
+export const {
+  useGetRoomsQuery,
+  useUpdateRoomMutation,
+  useRemoveStudentMutation,
+} = roomApi;

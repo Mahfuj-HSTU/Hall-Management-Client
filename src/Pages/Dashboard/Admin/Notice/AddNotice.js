@@ -3,12 +3,13 @@ import { AuthContext } from '../../../../AuthProvider/AuthProvider';
 import { useDispatch, useSelector } from 'react-redux';
 import Loading from '../../../Shared/Loading/Loading';
 import { fetchRole } from '../../../../Hooks/Role/useRoleSlice';
-import { ServerLink } from '../../../../Hooks/useServerLink';
 import toast from 'react-hot-toast';
+import { usePostNoticeMutation } from '../../../../features/api/noticeApi';
 
 const AddNotice = () => {
   const { user, loading } = useContext(AuthContext);
   const details = useSelector((state) => state?.roleReducer.role);
+  const [addNotice, { isSuccess }] = usePostNoticeMutation();
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     title: '',
@@ -19,6 +20,11 @@ const AddNotice = () => {
   if (loading) {
     <Loading></Loading>;
   }
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success('Successfully added a new notice');
+    }
+  }, [isSuccess]);
 
   useEffect(() => {
     user?.email && dispatch(fetchRole(user?.email));
@@ -39,22 +45,9 @@ const AddNotice = () => {
       ...formData,
       hall: details.hallName,
     };
+    addNotice(info);
     // console.log(info);
-    fetch(`${ServerLink}/api/notice`, {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify(info),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        event.target.reset();
-        if (data.acknowledged) {
-          toast.success('Successfully added a new notice');
-          event.target.reset();
-        }
-      });
+    event.target.reset();
   };
 
   return (
