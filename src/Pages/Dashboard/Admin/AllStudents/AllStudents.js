@@ -21,7 +21,27 @@ const AllStudents = () => {
   const inputRef = useRef(null);
   const [search, setSearch] = useState('');
   const [selected, setSelected] = useState('');
-  // console.log(selected);
+  const currentYear = new Date().getFullYear();
+  // const [currentYear, setYear] = useState(date);
+  const [selectedYear, setSelectedYear] = useState('');
+  //* Generate a list of years for the past 5 years
+  const pastYears = Array.from(
+    { length: 5 },
+    (_, index) =>
+      Number(selectedYear ? selectedYear : currentYear) - (index + 1)
+  );
+  //* Generate a list of years for the next 5 years
+  const futureYears = Array.from(
+    { length: 5 },
+    (_, index) =>
+      Number(selectedYear ? selectedYear : currentYear) + (index + 1)
+  );
+  //* Combine the past and future years, and include the current year
+  const allYears = [
+    ...pastYears.reverse(),
+    selectedYear ? selectedYear : currentYear,
+    ...futureYears,
+  ];
 
   const {
     data: students,
@@ -67,15 +87,23 @@ const AllStudents = () => {
   }
 
   const searchUser = students?.filter((user) => {
-    if (search === '' && user.hall === userData?.hallName) {
-      return true;
-    } else if (
-      user?.sid?.toString().includes(search?.toString()) &&
-      user?.hall === userData?.hallName
-    ) {
-      return true;
+    const studentYear = Math.floor(user?.sid / 100000);
+    const selectedYearPrefix = selectedYear ? selectedYear % 100 : null;
+    const matchesSearch =
+      user?.sid?.toString().includes(search?.toString()) ||
+      user?.name?.toLowerCase().includes(search?.toString().toLowerCase()) ||
+      user?.dept?.toLowerCase().includes(search?.toString().toLowerCase());
+    const matchesHall = user.hall === userData?.hallName;
+
+    if (search === '') {
+      if (selectedYearPrefix) {
+        return matchesHall && studentYear === selectedYearPrefix;
+      } else {
+        return matchesHall;
+      }
+    } else {
+      return matchesSearch && matchesHall;
     }
-    return null;
   });
 
   const handleSearch = () => {
@@ -113,7 +141,7 @@ const AllStudents = () => {
 
   return (
     <div className='md:my-5 mb-5'>
-      <div className='lg:flex lg:justify-between mb-5 p-4 pt-12 md:pt-6 lg:pt-5 bg-slate-300 rounded-lg md:ml-4'>
+      <div className='lg:flex lg:justify-between mb-4 p-4 pt-12 md:pt-6 lg:pt-5 bg-slate-300 rounded-lg md:ml-4'>
         <div className='lg:flex lg:justify-between gap-9'>
           <span className='flex justify-between gap-5 mb-3'>
             <h2 className='text-4xl mb-4'>Student List</h2>
@@ -122,14 +150,33 @@ const AllStudents = () => {
               value='Add'
             />
           </span>
-          <input
-            ref={inputRef}
-            id='searchName'
-            className='input input-bordered p-2 w-72 rounded-xl'
-            type='text'
-            placeholder='Search'
-            onChange={handleSearch}
-          />
+          <span className='flex gap-5'>
+            <input
+              ref={inputRef}
+              id='searchName'
+              className='input input-bordered p-2 w-72 rounded-xl'
+              type='text'
+              placeholder='Search'
+              onChange={handleSearch}
+            />
+            <select
+              value={selectedYear || ''}
+              onChange={(e) => setSelectedYear(Number(e.target.value))}
+              className='select select-bordered w-72 max-w-xs'>
+              <option
+                value=''
+                selected>
+                Select Session
+              </option>
+              {allYears?.map((yr, i) => (
+                <option
+                  key={i}
+                  value={yr}>
+                  {yr}
+                </option>
+              ))}
+            </select>
+          </span>
         </div>
 
         <label
@@ -138,6 +185,12 @@ const AllStudents = () => {
           Add Student
         </label>
       </div>
+      <h2 className='flex ml-4 mb-2 text-xl font-semibold'>
+        Total Attached Students:{' '}
+        <span className='text-red-700 font-bold underline pl-2'>
+          {searchUser?.length}
+        </span>{' '}
+      </h2>
       <table className='table table-compact w-full border-2 shadow-lg md:mx-4 mx-0 overflow-x-scroll'>
         <thead className='text-center bg-slate-200 font-semibold'>
           <tr className='text-[17px]'>
@@ -151,7 +204,7 @@ const AllStudents = () => {
         </thead>
         <tbody>
           {searchUser
-            ?.sort((a, b) => a.sid - b.sid)
+            ?.sort((a, b) => b.sid - a.sid)
             .map((user, i) => (
               <tr
                 key={user?._id}
@@ -173,7 +226,9 @@ const AllStudents = () => {
                 <td className='border-2 text-center p-0'>
                   <button
                     onClick={() => handleDelete(user)}
-                    className='text-red-600 text-2xl'>
+                    className={`text-red-600 text-2xl ${
+                      !user?.room ? 'btn btn-disabled' : null
+                    }`}>
                     <MdOutlineDeleteOutline />
                   </button>
                 </td>
