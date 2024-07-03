@@ -9,18 +9,10 @@ import ProfileLayout from '../Layout/ProfileLayout';
 import Login from '../Pages/Registration/Login/Login';
 import SignUp from '../Pages/Registration/SignUp/SignUp';
 import { ServerLink } from '../Hooks/useServerLink';
-import MyAccount from '../Pages/Dashboard/Student/Profile/MyAccount';
-import Application from '../Pages/Dashboard/Student/Application/Application';
-import StudentDashboard from '../Pages/Dashboard/Student/StudentDashboard';
-import AdminDashboard from '../Pages/Dashboard/Admin/AdminDashboard';
-import AdminRoute from './AdminRoute/AdminRoute';
-import StudentRoute from './StudentRoute/StudentRoute';
 import PrivateRoute from './PrivateRoute/PrivateRoute';
-import AdminProfile from '../Pages/Dashboard/Admin/AdminProfile/AdminProfile';
-import AllStudents from '../Pages/Dashboard/Admin/AllStudents/AllStudents';
-import Applications from '../Pages/Dashboard/Admin/Applications/Applications';
-import AddNotice from '../Pages/Dashboard/Admin/Notice/AddNotice';
 import Notice from '../Pages/Halls/Notice/Notice';
+import { adminPaths } from './admin.routes';
+import { studentPaths } from './student.routes';
 
 const router = createBrowserRouter([
   {
@@ -43,12 +35,12 @@ const router = createBrowserRouter([
     loader: ({ params }) => fetch(`${ServerLink}/api/halls/${params.id}`),
     children: [
       {
-        path: '/hall/:id',
+        index: true,
         element: <HallDetails></HallDetails>,
         loader: ({ params }) => fetch(`${ServerLink}/api/halls/${params.id}`),
       },
       {
-        path: '/hall/:id/notice',
+        path: 'notice',
         element: <Notice></Notice>,
       },
     ],
@@ -64,72 +56,30 @@ const router = createBrowserRouter([
     loader: ({ params }) => fetch(`${ServerLink}/api/halls/${params.id}`),
   },
 
+  //* admin routes
   {
-    path: '/dashboard/:id',
+    path: '/dashboard/:id/admin',
     element: (
       <PrivateRoute>
         <ProfileLayout></ProfileLayout>
       </PrivateRoute>
     ),
     loader: ({ params }) => fetch(`${ServerLink}/api/halls/${params.id}`),
-    children: [
-      // admin routes
-      {
-        path: '/dashboard/:id/admin',
-        element: (
-          <AdminRoute>
-            <AdminDashboard></AdminDashboard>
-          </AdminRoute>
-        ),
-      },
-      {
-        path: '/dashboard/:id/admin/profile',
-        element: (
-          <AdminRoute>
-            <AdminProfile></AdminProfile>
-          </AdminRoute>
-        ),
-      },
-      {
-        path: '/dashboard/:id/admin/students',
-        element: (
-          // <AdminRoute>
-          <AllStudents></AllStudents>
-          // </AdminRoute>
-        ),
-      },
-      {
-        path: '/dashboard/:id/admin/application',
-        element: (
-          // <AdminRoute>
-          <Applications></Applications>
-          // </AdminRoute>
-        ),
-      },
-      {
-        path: '/dashboard/:id/admin/add-notice',
-        element: <AddNotice></AddNotice>,
-      },
-
-      // students routes
-      {
-        path: '/dashboard/:id/student',
-        element: (
-          <StudentRoute>
-            <StudentDashboard></StudentDashboard>
-          </StudentRoute>
-        ),
-      },
-      {
-        path: '/dashboard/:id/student/profile',
-        element: <MyAccount></MyAccount>,
-      },
-      {
-        path: '/dashboard/:id/student/application',
-        element: <Application></Application>,
-      },
-    ],
+    children: adminPaths,
   },
+
+  //* student routes
+  {
+    path: '/dashboard/:id/student',
+    element: (
+      <PrivateRoute>
+        <ProfileLayout></ProfileLayout>
+      </PrivateRoute>
+    ),
+    loader: ({ params }) => fetch(`${ServerLink}/api/halls/${params.id}`),
+    children: studentPaths,
+  },
+
   {
     path: '*',
     element: (
