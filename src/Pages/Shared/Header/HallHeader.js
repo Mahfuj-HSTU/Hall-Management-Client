@@ -6,10 +6,11 @@ import { IoPersonCircle } from 'react-icons/io5';
 import { AuthContext } from '../../../AuthProvider/AuthProvider';
 import { useQuery } from '@tanstack/react-query';
 import { ServerLink } from '../../../Hooks/useServerLink';
+import { useGetUserQuery } from '../../../features/api/userApi';
+import Loading from '../Loading/Loading';
 
 const HallHeader = ({ hall }) => {
   const { user, logOut } = useContext(AuthContext);
-
   const handleLogOut = () => {
     logOut().then().catch();
   };
@@ -18,8 +19,19 @@ const HallHeader = ({ hall }) => {
     queryKey: ['notices'],
     queryFn: () => fetch(`${ServerLink}/api/notice`).then((res) => res.json()),
   });
+
+  const { data, isLoading, isError } = useGetUserQuery(user?.email);
+
   const filteredNotice = notices?.filter((item) => item.hall === hall?.name);
-  // console.log(filteredNotice);
+
+  // console.log(data);
+
+  if (isLoading) {
+    <Loading />;
+  }
+  if (isError) {
+    return <div>Error fetching user data</div>;
+  }
 
   const menuItems = (
     <>
@@ -79,7 +91,9 @@ const HallHeader = ({ hall }) => {
             </button>
             <ul className='absolute lg:right-0 hidden group-hover:block mt-9 z-[1] menu p-2 shadow bg-base-100 rounded-box w-auto divide-y divide-blue-300'>
               <li className='font-semibold'>
-                <Link to={`/dashboard/${hall._id}`}>Dashboard</Link>
+                <Link to={`/dashboard/${hall._id}/${data?.role}`}>
+                  Dashboard
+                </Link>
               </li>
               <li className='font-semibold'>
                 <Link to=''>Notifications</Link>

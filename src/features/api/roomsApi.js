@@ -14,6 +14,17 @@ export const roomApi = createApi({
       }),
       providesTags: ['Rooms'],
     }),
+    addRoom: builder.mutation({
+      query: (data) => ({
+        url: '/api/rooms',
+        method: 'post',
+        body: JSON.stringify(data),
+        headers: {
+          'content-type': 'application/json',
+        },
+      }),
+      invalidatesTags: ['Rooms'],
+    }),
     updateRoom: builder.mutation({
       query: (data) => ({
         url: '/api/rooms',
@@ -43,4 +54,5 @@ export const {
   useGetRoomsQuery,
   useUpdateRoomMutation,
   useRemoveStudentMutation,
+  useAddRoomMutation,
 } = roomApi;
