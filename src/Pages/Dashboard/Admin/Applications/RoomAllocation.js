@@ -83,8 +83,13 @@ const RoomAllocation = ({ selected, user }) => {
           >
             ✕
           </label>
+<<<<<<< HEAD
           <h2 className="text-xl font-semibold">
             Room Allocation for {selected.name}
+=======
+          <h2 className='text-xl font-semibold'>
+            Room Allocation for <b> {selected.name}</b>
+>>>>>>> 7f7a95ab585e963db07573810388a40ca1d81573
           </h2>
           <div className="card w-full">
             <div className="card-body text-start">

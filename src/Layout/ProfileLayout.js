@@ -28,9 +28,6 @@ const ProfileLayout = () => {
     user?.email && dispatch(fetchRole(user?.email));
   }, [dispatch, user?.email]);
 
-  // console.log(details);
-  // console.log(role);
-
   return (
     <div>
       <div className='drawer drawer-mobile lg:drawer-open relative'>
