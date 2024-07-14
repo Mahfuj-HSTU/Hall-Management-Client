@@ -56,6 +56,7 @@ const RoomAllocation = ({ selected, user }) => {
     <div>
       <input
         type='checkbox'
+        y
         id='room-allocation-modal'
         className='modal-toggle'
       />
