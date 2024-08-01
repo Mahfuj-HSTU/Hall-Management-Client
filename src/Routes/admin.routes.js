@@ -3,6 +3,7 @@ import AdminProfile from '../Pages/Dashboard/Admin/AdminProfile/AdminProfile';
 import AllStudents from '../Pages/Dashboard/Admin/AllStudents/AllStudents';
 import Applications from '../Pages/Dashboard/Admin/Applications/Applications';
 import AddNotice from '../Pages/Dashboard/Admin/Notice/AddNotice';
+import Rooms from '../Pages/Dashboard/Admin/Rooms/Rooms';
 import AdminRoute from './AdminRoute/AdminRoute';
 
 export const adminPaths = [
@@ -40,6 +41,18 @@ export const adminPaths = [
   },
   {
     path: 'add-notice',
-    element: <AddNotice></AddNotice>,
+    element: (
+      <AdminRoute>
+        <AddNotice></AddNotice>
+      </AdminRoute>
+    ),
+  },
+  {
+    path: 'rooms',
+    element: (
+      <AdminRoute>
+        <Rooms></Rooms>
+      </AdminRoute>
+    ),
   },
 ];
