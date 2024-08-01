@@ -15,6 +15,7 @@ const ProfileLayout = () => {
   const superAdmin = 'superAdmin';
   const admin = 'admin';
   const student = 'student';
+  console.log(hall);
 
   if (loading) {
     <Loading></Loading>;
@@ -62,74 +63,79 @@ const ProfileLayout = () => {
             htmlFor='my-drawer-2'
             aria-label='close sidebar'
             className='drawer-overlay'></label>
-          <ul className='menu p-4 w-80 min-h-full bg-base-200 text-base-content'>
-            {/* Sidebar content here */}
-            <Link
-              to={`/hall/${hall._id}`}
-              className='flex justify-center normal-case mb-5'>
-              <img
-                className='h-14'
-                src={hstu}
-                alt=''
-                width='50px'
-                height='50px'
-              />
-            </Link>
-            {user?.email && (
-              <>
-                {role === superAdmin && <></>}
-                {role === admin && (
-                  <>
-                    <li className='font-semibold'>
-                      <Link to={`/dashboard/${hall._id}/admin`}>Dashboard</Link>{' '}
-                    </li>
-                    <li className='font-semibold'>
-                      <Link to={`/dashboard/${hall._id}/admin/profile`}>
-                        Profile
-                      </Link>{' '}
-                    </li>
-                    <li className='font-semibold'>
-                      <Link to={`/dashboard/${hall._id}/admin/students`}>
-                        All Students
-                      </Link>{' '}
-                    </li>
-                    <li className='font-semibold'>
-                      <Link to={`/dashboard/${hall._id}/admin/application`}>
-                        Applications
-                      </Link>{' '}
-                    </li>
-                    <li className='font-semibold'>
-                      <Link to={`/dashboard/${hall._id}/admin/add-notice`}>
-                        Create Notice
-                      </Link>{' '}
-                    </li>
-                  </>
-                )}
-                {role === student && (
-                  <>
-                    {' '}
-                    <li className='font-semibold'>
-                      <Link to={`/dashboard/${hall._id}/student`}>
-                        Dashboard
-                      </Link>{' '}
-                    </li>
-                    <li className='font-semibold'>
-                      <Link to={`/dashboard/${hall._id}/student/profile`}>
-                        Profile
-                      </Link>{' '}
-                    </li>
-                    <li className='font-semibold'>
-                      <Link to={`/dashboard/${hall._id}/student/application`}>
-                        Applications
-                      </Link>{' '}
-                    </li>
-                  </>
-                )}
-                <li className='font-semibold'>
-                  <button onClick={handleLogOut}>Log Out</button>
-                </li>
-              </>
-            )}
+          <ul className='menu p-4 w-80 min-h-full bg-base-200 text-base-content flex flex-col justify-between'>
+            <div>
+              <Link
+                to={`/hall/${hall._id}`}
+                className='flex justify-center normal-case mb-5'>
+                <img
+                  className='h-14'
+                  src={hstu}
+                  alt=''
+                  width='50px'
+                  height='50px'
+                />
+              </Link>
+              {user?.email && (
+                <>
+                  {role === superAdmin && <></>}
+                  {role === admin && (
+                    <>
+                      <li className='font-semibold'>
+                        <Link to={`/dashboard/${hall._id}/admin`}>
+                          Dashboard
+                        </Link>
+                      </li>
+                      <li className='font-semibold'>
+                        <Link to={`/dashboard/${hall._id}/admin/profile`}>
+                          Profile
+                        </Link>
+                      </li>
+                      <li className='font-semibold'>
+                        <Link to={`/dashboard/${hall._id}/admin/students`}>
+                          All Students
+                        </Link>
+                      </li>
+                      <li className='font-semibold'>
+                        <Link to={`/dashboard/${hall._id}/admin/application`}>
+                          Applications
+                        </Link>
+                      </li>
+                      <li className='font-semibold'>
+                        <Link to={`/dashboard/${hall._id}/admin/add-notice`}>
+                          Create Notice
+                        </Link>
+                      </li>
+                    </>
+                  )}
+                  {role === student && (
+                    <>
+                      <li className='font-semibold'>
+                        <Link to={`/dashboard/${hall._id}/student`}>
+                          Dashboard
+                        </Link>
+                      </li>
+                      <li className='font-semibold'>
+                        <Link to={`/dashboard/${hall._id}/student/profile`}>
+                          Profile
+                        </Link>
+                      </li>
+                      <li className='font-semibold'>
+                        <Link to={`/dashboard/${hall._id}/student/application`}>
+                          Applications
+                        </Link>
+                      </li>
+                    </>
+                  )}
+                  <li className='font-semibold'>
+                    <button onClick={handleLogOut}>Log Out</button>
+                  </li>
+                </>
+              )}
+            </div>
+            <div className='mb-10'>
+              <p className='font-semibold'>{hall.name}</p>
+            </div>
           </ul>
         </div>
       </div>
