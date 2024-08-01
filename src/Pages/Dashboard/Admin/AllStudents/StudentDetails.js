@@ -14,7 +14,9 @@ const StudentDetails = ({ selected }) => {
     present,
     parmanent,
     cgpa,
+    img,
   } = selected;
+
   return (
     <div>
       <input
@@ -29,15 +31,15 @@ const StudentDetails = ({ selected }) => {
             className='btn btn-sm btn-circle absolute right-2 top-2'>
             ✕
           </label>
-          <h2 className='text-2xl font-semibold'>Student Details</h2>
-          <div className='card w-full'>
-            {/* <figure>
-                <img
-                  src={photoUrl}
-                  alt='Profile'
-                />
-              </figure> */}
-            <div className='card-body text-start'>
+          <h2 className='text-2xl font-semibold mb-3'>Student Details</h2>
+          <div className='card w-full flex items-center'>
+            <figure className='rounded-full h-52 w-52'>
+              <img
+                src={img}
+                alt='Profile'
+              />
+            </figure>
+            <div className='card-body text-start py-5 px-2'>
               <h2 className='card-title'>Name: {name}</h2>
               <p>
                 {' '}
