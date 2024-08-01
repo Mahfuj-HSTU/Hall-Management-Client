@@ -15,7 +15,7 @@ const ProfileLayout = () => {
   const superAdmin = 'superAdmin';
   const admin = 'admin';
   const student = 'student';
-  console.log(hall);
+  // console.log(hall);
 
   if (loading) {
     <Loading></Loading>;
@@ -110,6 +110,11 @@ const ProfileLayout = () => {
                       <li className='font-semibold'>
                         <Link to={`/dashboard/${hall._id}/admin/add-notice`}>
                           Create Notice
+                        </Link>
+                      </li>
+                      <li className='font-semibold'>
+                        <Link to={`/dashboard/${hall._id}/admin/rooms`}>
+                          Rooms
                         </Link>
                       </li>
                     </>
