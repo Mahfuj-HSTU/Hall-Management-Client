@@ -65,9 +65,7 @@ const ProfileLayout = () => {
             className='drawer-overlay'></label>
           <ul className='menu p-4 w-80 min-h-full bg-base-200 text-base-content flex flex-col justify-between'>
             <div>
-              <Link
-                to={`/hall/${hall._id}`}
-                className='flex justify-center normal-case mb-5'>
+              <div className='flex justify-center normal-case mb-5'>
                 <img
                   className='h-14'
                   src={hstu}
@@ -75,7 +73,15 @@ const ProfileLayout = () => {
                   width='50px'
                   height='50px'
                 />
+              </div>
+              {/* <div> */}
+              <Link
+                to={`/hall/${hall._id}`}
+                className='font-semibold'>
+                {hall.name}
               </Link>
+              <div className='divider divider-primary'></div>
+              {/* </div> */}
               {user?.email && (
                 <>
                   {role === superAdmin && <></>}
@@ -132,9 +138,6 @@ const ProfileLayout = () => {
                   </li>
                 </>
               )}
-            </div>
-            <div className='mb-10'>
-              <p className='font-semibold'>{hall.name}</p>
             </div>
           </ul>
         </div>
