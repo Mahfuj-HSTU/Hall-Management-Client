@@ -1,30 +1,46 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useGetRoomsQuery } from '../../../../features/api/roomsApi';
 import { useGetUserQuery } from '../../../../features/api/userApi';
 import { AuthContext } from '../../../../AuthProvider/AuthProvider';
 import { fetchRole } from '../../../../Hooks/Role/useRoleSlice';
 import { useDispatch } from 'react-redux';
+import Loading from '../../../Shared/Loading/Loading';
+import AddRoom from './AddRoom';
 
 const Rooms = () => {
   const { user } = useContext(AuthContext);
-  const { data } = useGetUserQuery(user?.email);
+  const inputRef = useRef(null);
+  const [roomSearch, setRoomSearch] = useState('');
+  const { data: userData } = useGetUserQuery(user?.email);
   const dispatch = useDispatch();
   // console.log(data);
 
   const { data: rooms, isLoading } = useGetRoomsQuery();
-  // console.log(rooms);
+  console.log(rooms);
+
+  if (isLoading) {
+    <Loading />;
+  }
 
   useEffect(() => {
     dispatch(fetchRole(user?.email));
   }, [dispatch, user?.email]);
 
+  const handleSearch = () => {
+    const searchData = inputRef.current.value;
+    setRoomSearch(searchData);
+  };
+
   const filteredRoom = rooms?.filter((usr) => {
-    if (usr.hall === data.hallName) {
-      return true;
+    if (usr.hall === userData.hallName) {
+      if (roomSearch === '') {
+        return true;
+      } else {
+        return usr?.room?.toString().includes(roomSearch?.toString());
+      }
     }
     return null;
   });
-  console.log(filteredRoom);
 
   return (
     <div className='md:my-5 mb-5'>
@@ -37,10 +53,20 @@ const Rooms = () => {
               value='Add'
             />
           </span>
+          <span className='flex gap-5'>
+            <input
+              ref={inputRef}
+              id='searchName'
+              className='input input-bordered p-2 w-72 rounded-xl'
+              type='text'
+              placeholder='Search'
+              onChange={handleSearch}
+            />
+          </span>
         </div>
 
         <label
-          htmlFor='add-modal'
+          htmlFor='add-room-modal'
           className='hidden btn btn-info rounded-xl w-32 lg:grid place-items-center'>
           Add Room
         </label>
@@ -57,8 +83,6 @@ const Rooms = () => {
             <th className='border-2 border-r-slate-300'>SL No.</th>
             <th className='border-2 border-r-slate-300'>Room No.</th>
             <th className='border-2 border-r-slate-300'>Students</th>
-            {/* <th className='border-2 border-r-slate-300'>Department</th>
-            <th className='border-2 border-r-slate-300'>R. Status</th> */}
           </tr>
         </thead>
         <tbody>
@@ -68,9 +92,12 @@ const Rooms = () => {
               <tr
                 key={room?._id}
                 className='border-1'>
-                <td>{i + 1}</td>
-                <td>{room.room} </td>
-                <td className='border-2 py-1'>
+                <td className='text-center border-2'>{i + 1}</td>
+                <td className='text-center border-2'>
+                  <span className='font-semibold'>Room-</span>
+                  {room.room}{' '}
+                </td>
+                <td className='border-2'>
                   {room.ids.map((id, index) => (
                     <td
                       key={index}
@@ -83,6 +110,7 @@ const Rooms = () => {
             ))}
         </tbody>
       </table>
+      <AddRoom details={userData} />
     </div>
   );
 };
