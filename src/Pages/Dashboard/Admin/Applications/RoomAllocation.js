@@ -106,7 +106,7 @@ const RoomAllocation = ({ selected, user }) => {
                           <input
                             type='radio'
                             name='radio-3'
-                            className='radio radio-success mr-5'
+                            className='radio radio-success mr-5 cursor-default'
                             value={room.room}
                             checked={selectedRadio === room.room}
                           />
