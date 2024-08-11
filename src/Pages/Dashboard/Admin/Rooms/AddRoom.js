@@ -1,7 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BsSendCheckFill } from 'react-icons/bs';
+import { useAddRoomMutation } from '../../../../features/api/roomsApi';
+import toast from 'react-hot-toast';
 
 const AddRoom = ({ details }) => {
+  const [addRoom, { isSuccess, isError, error }] = useAddRoomMutation();
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success('Room added successfully');
+    }
+  }, [isSuccess]);
+  if (isError) {
+    toast.error('Failed to add a new room ', { id: 'addRoom' });
+  }
+  if (error) {
+    toast.error(error?.data?.message, { id: 'addRoom' });
+  }
+  // console.log(error?.data.message);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const form = event.target;
@@ -9,9 +26,9 @@ const AddRoom = ({ details }) => {
     const hall = form.hall.value;
     const ids = [];
 
-    const user = { room, hall, ids };
-    console.log(user);
-    // form.reset();
+    const data = { room, hall, ids };
+    addRoom(data);
+    form.reset();
   };
 
   return (
@@ -51,7 +68,9 @@ const AddRoom = ({ details }) => {
                   className='input input-bordered w-full max-w-xs mb-7 mt-1'
                 />
                 <br />
-                <label className='relative'>
+                <label
+                  htmlFor='add-room-modal'
+                  className='relative'>
                   <input
                     type='submit'
                     value='submit'

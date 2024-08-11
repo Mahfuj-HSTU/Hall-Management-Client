@@ -133,11 +133,11 @@ const HallHeader = ({ hall }) => {
               />
             </svg>
           </label>
-          <u
+          <ul
             tabIndex={1}
             className='menu menu-compact dropdown-content z-[1] p-2 shadow bg-slate-300 rounded-box w-52'>
             {menuItems}
-          </u>
+          </ul>
         </div>
         <Link
           to='/'

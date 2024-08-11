@@ -16,7 +16,7 @@ const Rooms = () => {
   // console.log(data);
 
   const { data: rooms, isLoading } = useGetRoomsQuery();
-  console.log(rooms);
+  // console.log(rooms);
 
   if (isLoading) {
     <Loading />;
