@@ -6,17 +6,21 @@ import { fetchRole } from '../../../../Hooks/Role/useRoleSlice';
 import { useDispatch } from 'react-redux';
 import Loading from '../../../Shared/Loading/Loading';
 import AddRoom from './AddRoom';
+import { useGetStudentDetailsQuery } from '../../../../features/api/studentApi';
+import StudentDetails from '../AllStudents/StudentDetails';
 
 const Rooms = () => {
   const { user } = useContext(AuthContext);
   const inputRef = useRef(null);
   const [roomSearch, setRoomSearch] = useState('');
+  const [id, setId] = useState('');
   const { data: userData } = useGetUserQuery(user?.email);
   const dispatch = useDispatch();
   // console.log(data);
 
   const { data: rooms, isLoading } = useGetRoomsQuery();
-  // console.log(rooms);
+  const { data: studentDetails } = useGetStudentDetailsQuery(id);
+  // console.log(studentDetails);
 
   if (isLoading) {
     <Loading />;
@@ -59,7 +63,7 @@ const Rooms = () => {
               id='searchName'
               className='input input-bordered p-2 w-72 rounded-xl'
               type='text'
-              placeholder='Search'
+              placeholder='Search by room number'
               onChange={handleSearch}
             />
           </span>
@@ -99,17 +103,20 @@ const Rooms = () => {
                 </td>
                 <td className='border-2'>
                   {room.ids.map((id, index) => (
-                    <td
+                    <label
+                      htmlFor='my-modal'
+                      onClick={() => setId(id)}
                       key={index}
-                      className='p-0 pr-2 font-semibold'>
+                      className='p-0 pr-2 font-semibold cursor-pointer link-hover'>
                       {id} ,
-                    </td>
+                    </label>
                   ))}
                 </td>
               </tr>
             ))}
         </tbody>
       </table>
+      {studentDetails && <StudentDetails selected={studentDetails} />}
       <AddRoom details={userData} />
     </div>
   );
