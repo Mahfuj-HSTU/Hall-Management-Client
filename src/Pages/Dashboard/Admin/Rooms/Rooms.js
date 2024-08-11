@@ -107,7 +107,7 @@ const Rooms = () => {
                       htmlFor='my-modal'
                       onClick={() => setId(id)}
                       key={index}
-                      className='p-0 pr-2 font-semibold cursor-pointer link-hover'>
+                      className='p-0 pr-2 font-semibold cursor-pointer link link-primary'>
                       {id} ,
                     </label>
                   ))}
