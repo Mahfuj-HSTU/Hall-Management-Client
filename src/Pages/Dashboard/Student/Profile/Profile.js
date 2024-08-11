@@ -293,7 +293,6 @@ const Profile = ({ student, refetch }) => {
               type='file'
               name='img'
               onChange={(e) => postDetails(e.target.files[0])}
-              placeholder='National ID / Birth Certificate No'
               className='input input-bordered w-full max-w-xs mb-2'
             />
           </div>
