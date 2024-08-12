@@ -7,7 +7,7 @@ import Loading from '../../../Shared/Loading/Loading';
 import { useUpdateStudentMutation } from '../../../../features/api/studentApi';
 import toast from 'react-hot-toast';
 import { useUpdateApplicationMutation } from '../../../../features/api/applicationApi';
-import { sendEmail } from '../../../../services/emailService';
+import { sendEmail } from '../../../../Utilities/emailService';
 
 const RoomAllocation = ({ selected, user }) => {
   const [selectedRadio, setSelectedRadio] = useState(null);

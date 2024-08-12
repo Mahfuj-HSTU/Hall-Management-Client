@@ -10,7 +10,7 @@ import {
   useUpdateApplicationMutation,
 } from '../../../../features/api/applicationApi';
 import RoomAllocation from './RoomAllocation';
-import { sendEmail } from '../../../../services/emailService';
+import { sendEmail } from '../../../../Utilities/emailService';
 
 const Applications = () => {
   const { user, loading } = useContext(AuthContext);
