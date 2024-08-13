@@ -77,7 +77,7 @@ const ProfileLayout = () => {
               {/* <div> */}
               <Link
                 to={`/hall/${hall._id}`}
-                className='font-semibold'>
+                className='font-semibold link-hover'>
                 {hall.name}
               </Link>
               <div className='divider divider-primary'></div>

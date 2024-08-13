@@ -1,16 +1,13 @@
-import toast from 'react-hot-toast';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { AuthContext } from '../../../../AuthProvider/AuthProvider';
 import Loading from '../../../Shared/Loading/Loading';
 import HallClearence from './HallClearence';
 import { getDateOnly } from '../../../../Hooks/getDateOnly';
 import { useGetStudentDetailsQuery } from '../../../../features/api/studentApi';
-import {
-  useAddApplicationMutation,
-  useGetApplicationQuery,
-} from '../../../../features/api/applicationApi';
+import { useGetApplicationQuery } from '../../../../features/api/applicationApi';
 import { useGetUserQuery } from '../../../../features/api/userApi';
 import { useGetNoticeQuery } from '../../../../features/api/noticeApi';
+import HallSeat from './HallSeat';
 
 const Application = () => {
   const { user, loading } = useContext(AuthContext);
@@ -35,13 +32,6 @@ const Application = () => {
   const { data: applications } = useGetApplicationQuery(userData?.sid);
   // console.log(applications);
   const { data: notices, isLoading: noticeIsLoading } = useGetNoticeQuery();
-  const [addApplication, { isSuccess }] = useAddApplicationMutation();
-
-  useEffect(() => {
-    if (isSuccess) {
-      toast.success('Applied successfully');
-    }
-  }, [isSuccess]);
 
   if (userIsLoading || studentIsLoading || noticeIsLoading) {
     <Loading />;
@@ -65,18 +55,6 @@ const Application = () => {
     (item) => item.type === 'HallClearence'
   );
 
-  const handleHallSeat = () => {
-    const agree = window.confirm(`Do you want to apply for hall seat?`);
-    const info = {
-      ...student,
-      status: 'pending',
-      type: 'HallSeat',
-    };
-    if (agree) {
-      addApplication(info);
-    }
-  };
-
   return (
     <div className='mt-16'>
       {studentIsLoading ? (
@@ -99,11 +77,12 @@ const Application = () => {
                   ) : (
                     <>
                       {filteredNotice?.date > getDateOnly(date) ? (
-                        <button
-                          onClick={handleHallSeat}
+                        <label
+                          htmlFor='hall-seat-modal'
+                          // onClick={handleHallSeat}
                           className='btn btn-success px-6'>
                           Apply
-                        </button>
+                        </label>
                       ) : (
                         <h2 className='text-2xl my-5 text-red-500'>
                           Applications date is over.
@@ -216,6 +195,10 @@ const Application = () => {
                   </>
                 )}
               </span>
+              <HallSeat
+                student={student}
+                refetch={refetch}
+              />
               <HallClearence
                 student={student}
                 refetch={refetch}

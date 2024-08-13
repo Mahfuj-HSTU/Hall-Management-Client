@@ -1,67 +1,102 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BsSendCheckFill } from 'react-icons/bs';
-import { ServerLink } from '../../../../Hooks/useServerLink';
 import toast from 'react-hot-toast';
+import { District } from '../../../../Utilities/district';
+import { useAddApplicationMutation } from '../../../../features/api/applicationApi';
 
 const HallSeat = ({ student, refetch }) => {
-  const handleHallSeat = () => {
+  const [selectedDistrict, setSelectedDistrict] = useState('');
+  const [addApplication, { isSuccess }] = useAddApplicationMutation();
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success('Applied successfully');
+    }
+  }, [isSuccess]);
+  const handleHallSeat = (event) => {
+    event.preventDefault();
+    const form = event.target;
     const agree = window.confirm(`Do you want to apply for hall seat?`);
     const info = {
       ...student,
       status: 'pending',
       type: 'HallSeat',
+      fOccupation: form.foccupation.value,
+      fIncome: form.fincome.value,
+      district: selectedDistrict,
     };
     if (agree) {
-      fetch(`${ServerLink}/api/applications`, {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-        },
-        body: JSON.stringify(info),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.acknowledged || data.message === 'Application updated.') {
-            console.log(data);
-            toast.success('Applied successfully');
-            refetch();
-          }
-        });
+      console.log(info);
+      addApplication(info);
+      form.reset();
     }
   };
   return (
     <div>
       <input
         type='checkbox'
-        id='hall-clearence-modal'
+        id='hall-seat-modal'
         className='modal-toggle'
       />
       <div className='modal '>
         <div className='modal-box relative max-w-md'>
           <label
-            htmlFor='hall-clearence-modal'
+            htmlFor='hall-seat-modal'
             className='btn btn-sm btn-circle absolute right-2 top-2'>
             ✕
           </label>
-          <h2 className='text-2xl font-semibold'>
-            Applying for Hall Clearence
-          </h2>
+          <h2 className='text-2xl font-semibold'>Applying for Hall Seat</h2>
           <div className='card w-full'>
             <div className='card-body text-start'>
               <form
                 onSubmit={handleHallSeat}
                 className='rounded-xl text-blue-900 relative'>
-                <label className='font-semibold pl-1'>Payment Info.</label>{' '}
+                <label className='font-semibold pl-1'>
+                  Father's Occupation
+                </label>{' '}
                 <br />
                 <input
                   required
                   type='text'
-                  name='name'
-                  placeholder='payment information'
-                  className='input input-bordered w-full max-w-xs mb-7 mt-3'
+                  name='foccupation'
+                  placeholder='fathers occupation'
+                  className='input input-bordered w-full max-w-xs mb-2 mt-1'
                 />
                 <br />
-                <label className='relative'>
+                <label className='font-semibold pl-1'>
+                  Father's Income/Year
+                </label>{' '}
+                <br />
+                <input
+                  required
+                  type='text'
+                  name='fincome'
+                  placeholder='fathers salary per year'
+                  className='input input-bordered w-full max-w-xs mb-7 mt-1'
+                />
+                <br />
+                <select
+                  required
+                  value={selectedDistrict || ''}
+                  onChange={(e) => setSelectedDistrict(e.target.value)}
+                  className='select select-bordered w-full mb-7 max-w-xs'>
+                  <option
+                    value=''
+                    selected>
+                    Select Your Distirict
+                  </option>
+                  {District?.map((district, i) => (
+                    <option
+                      key={i}
+                      value={district.name}>
+                      {district.name}
+                    </option>
+                  ))}
+                </select>
+                <br />
+                <label
+                  htmlFor='hall-seat-modal'
+                  className='relative'>
                   <input
                     type='submit'
                     value='submit'
