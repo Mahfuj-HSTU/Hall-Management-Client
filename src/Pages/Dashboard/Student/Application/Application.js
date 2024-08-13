@@ -55,18 +55,6 @@ const Application = () => {
     (item) => item.type === 'HallClearence'
   );
 
-  // const handleHallSeat = () => {
-  //   const agree = window.confirm(`Do you want to apply for hall seat?`);
-  //   const info = {
-  //     ...student,
-  //     status: 'pending',
-  //     type: 'HallSeat',
-  //   };
-  //   if (agree) {
-  //     addApplication(info);
-  //   }
-  // };
-
   return (
     <div className='mt-16'>
       {studentIsLoading ? (

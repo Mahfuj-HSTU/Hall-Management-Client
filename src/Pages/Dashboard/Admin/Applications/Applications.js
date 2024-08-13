@@ -11,6 +11,7 @@ import {
 } from '../../../../features/api/applicationApi';
 import RoomAllocation from './RoomAllocation';
 import { sendEmail } from '../../../../Utilities/emailService';
+import FilterApplications from './FilterApplications';
 
 const Applications = () => {
   const { user, loading } = useContext(AuthContext);
@@ -130,20 +131,9 @@ const Applications = () => {
 
   return (
     <div className='mt-5'>
-      <div className='lg:flex lg:justify-between mb-5 p-4 pt-12 md:pt-6 lg:pt-5 bg-slate-300 rounded-lg md:ml-4'>
-        <h2 className='text-4xl mb-7'>Applied Students</h2>
-        <select
-          onChange={(e) => setSelectedValue(e.target.value)}
-          name='application'
-          className='select select-bordered w-full max-w-xs'>
-          <option
-            selected
-            value=''>
-            All Application
-          </option>
-          <option value='hallSeat'>Hall Seat</option>
-          <option value='hallClearence'>Hall Clearence</option>
-        </select>
+      <div className='lg:flex mb-5 p-4 pt-12 md:pt-6 lg:pt-5 bg-slate-300 rounded-lg md:ml-4'>
+        <h2 className='text-4xl mb-7 mr-7'>Applied Students</h2>
+        <FilterApplications setSelectedValue={setSelectedValue} />
       </div>
       {isLoading ? (
         <span className='loading loading-spinner text-primary'></span>
