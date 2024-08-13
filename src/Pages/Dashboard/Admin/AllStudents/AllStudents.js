@@ -15,33 +15,15 @@ import {
 } from '../../../../features/api/applicationApi';
 import { useRemoveStudentMutation } from '../../../../features/api/roomsApi';
 import toast from 'react-hot-toast';
+import { Years } from '../../../../Utilities/Years';
 
 const AllStudents = () => {
   const { user, loading } = useContext(AuthContext);
   const inputRef = useRef(null);
   const [search, setSearch] = useState('');
   const [selected, setSelected] = useState('');
-  const currentYear = new Date().getFullYear();
-  // const [currentYear, setYear] = useState(date);
   const [selectedYear, setSelectedYear] = useState('');
-  //* Generate a list of years for the past 5 years
-  const pastYears = Array.from(
-    { length: 5 },
-    (_, index) =>
-      Number(selectedYear ? selectedYear : currentYear) - (index + 1)
-  );
-  //* Generate a list of years for the next 5 years
-  const futureYears = Array.from(
-    { length: 5 },
-    (_, index) =>
-      Number(selectedYear ? selectedYear : currentYear) + (index + 1)
-  );
-  //* Combine the past and future years, and include the current year
-  const allYears = [
-    ...pastYears.reverse(),
-    selectedYear ? selectedYear : currentYear,
-    ...futureYears,
-  ];
+  const allYears = Years(selectedYear);
 
   const {
     data: students,

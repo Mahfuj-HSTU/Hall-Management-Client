@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { BsSendCheckFill } from 'react-icons/bs';
-import { ServerLink } from '../../../../Hooks/useServerLink';
 import toast from 'react-hot-toast';
 import { District } from '../../../../Utilities/district';
 import { useAddApplicationMutation } from '../../../../features/api/applicationApi';
@@ -22,7 +21,7 @@ const HallSeat = ({ student, refetch }) => {
       ...student,
       status: 'pending',
       type: 'HallSeat',
-      fOcupation: form.focupation.value,
+      fOccupation: form.foccupation.value,
       fIncome: form.fincome.value,
       district: selectedDistrict,
     };
@@ -59,7 +58,7 @@ const HallSeat = ({ student, refetch }) => {
                 <input
                   required
                   type='text'
-                  name='focupation'
+                  name='foccupation'
                   placeholder='fathers occupation'
                   className='input input-bordered w-full max-w-xs mb-2 mt-1'
                 />
