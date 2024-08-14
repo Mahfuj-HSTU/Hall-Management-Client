@@ -80,15 +80,11 @@ const HallSeat = ({ student, refetch }) => {
                   value={selectedDistrict || ''}
                   onChange={(e) => setSelectedDistrict(e.target.value)}
                   className='select select-bordered w-full mb-7 max-w-xs'>
-                  <option
-                    value=''
-                    selected>
-                    Select Your Distirict
-                  </option>
+                  <option selected>Select Your Distirict</option>
                   {District?.map((district, i) => (
                     <option
                       key={i}
-                      value={district.name}>
+                      value={district.id}>
                       {district.name}
                     </option>
                   ))}
