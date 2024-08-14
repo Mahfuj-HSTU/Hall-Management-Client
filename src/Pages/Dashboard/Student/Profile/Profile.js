@@ -230,7 +230,7 @@ const Profile = ({ student, refetch }) => {
             <p className='pl-2 mb-1 font-semibold'>Father Mobile </p>
             <input
               required
-              readOnly={status || fmobile ? 'readOnly' : null}
+              readOnly={status ? 'readOnly' : null}
               type='number'
               name='fmobile'
               defaultValue={fmobile}
@@ -248,7 +248,7 @@ const Profile = ({ student, refetch }) => {
             />
             <p className='pl-2 mb-1 font-semibold'>Mother Mobile </p>
             <input
-              readOnly={status || mmobile ? 'readOnly' : null}
+              readOnly={status ? 'readOnly' : null}
               type='number'
               name='mmobile'
               defaultValue={mmobile}

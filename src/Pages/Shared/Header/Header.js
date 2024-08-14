@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import hstu from '../../../images/HSTU_Logo.png';
-import MujibBorsho from '../../../images/Mujib Borsho.png';
+// import MujibBorsho from '../../../images/Mujib Borsho.png';
 import { RiArrowDropDownLine } from 'react-icons/ri';
 
 const Header = () => {
@@ -75,13 +75,12 @@ const Header = () => {
       </li>
     </>
   );
-  //flex flex-col justify-center items-center
 
   return (
     <div>
       <div className='flex justify-between lg:justify-evenly items-center'>
         <img
-          className='h-16 lg:h-28'
+          className='h-16 lg:h-24'
           src={hstu}
           alt='hstu logo'
         />{' '}
@@ -93,11 +92,11 @@ const Header = () => {
             হাজী মোহাম্মদ দানেশ বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়
           </h2>
         </span>
-        <img
+        {/* <img
           className='h-16 lg:h-28'
           src={MujibBorsho}
           alt='Mujib Borsho'
-        />
+        /> */}
       </div>
       <div className='navbar justify-center h-16 bg-slate-300 mx-auto'>
         <div className='navbar-start lg:hidden'>

@@ -39,18 +39,12 @@ const Applications = () => {
     const matchesType = selectedValue
       ? application?.type.toLowerCase().includes(selectedValue.toLowerCase())
       : true;
-    const matchesSalary = salary ? application.salary !== undefined : true;
-    const matchesDistance = distance
-      ? application.distance !== undefined
-      : true;
 
     return (
       application.hall === details.hallName &&
       application.status === 'pending' &&
       matchesYear &&
-      matchesType &&
-      matchesSalary &&
-      matchesDistance
+      matchesType
     );
   });
 
