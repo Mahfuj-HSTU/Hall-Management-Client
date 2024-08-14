@@ -22,10 +22,13 @@ const AddStudent = ({ details, refetch }) => {
     const form = event.target;
     const name = form.name.value;
     const sid = form.sid.value;
-    const hall = form.hall.value;
+    const hall = details.hallName;
     const dept = form.dept.value;
+    const mobile = form.mobile.value;
+    const room = form.room.value;
 
-    const user = { name, sid, hall, dept };
+    const user = { name, sid, hall, dept, mobile, room };
+    // console.log(user);
     addStudent(user);
     form.reset();
   };
@@ -38,13 +41,15 @@ const AddStudent = ({ details, refetch }) => {
         className='modal-toggle '
       />
       <div className='modal'>
-        <div className='modal-box relative max-w-md'>
+        <div className='modal-box relative max-w-lg'>
           <label
             htmlFor='add-modal'
             className='btn btn-sm btn-circle absolute right-2 top-2'>
             ✕
           </label>
-          <h1 className='text-4xl font-bold py-2 text-blue-800'>Add Student</h1>
+          <h1 className='text-2xl font-bold py-1 text-blue-900'>
+            Add Student for "{details.hallName}"
+          </h1>
           <div className='card w-full '>
             <div className='card-body text-start'>
               <form
@@ -56,7 +61,7 @@ const AddStudent = ({ details, refetch }) => {
                   type='text'
                   name='name'
                   placeholder='student name'
-                  className='input input-bordered w-full max-w-xs mb-3 mt-1'
+                  className='input input-bordered w-full max-w-sm mb-3 mt-1'
                 />
                 <br />
                 <label className='font-semibold pl-1'>Student Id</label> <br />
@@ -64,16 +69,15 @@ const AddStudent = ({ details, refetch }) => {
                   type='number'
                   name='sid'
                   placeholder='190...'
-                  className='input input-bordered w-full max-w-xs mb-3 mt-1'
+                  className='input input-bordered w-full max-w-sm mb-3 mt-1'
                 />
                 <br />
-                <label className='font-semibold pl-1'>Hall Name</label> <br />
+                <label className='font-semibold pl-1'>Mobile No.</label> <br />
                 <input
-                  value={details.hallName}
-                  type='text'
-                  name='hall'
-                  placeholder='hall name'
-                  className='input input-bordered w-full max-w-xs mb-3 mt-1'
+                  type='number'
+                  name='mobile'
+                  placeholder='017XXXX...'
+                  className='input input-bordered w-full max-w-sm mb-3 mt-1'
                 />
                 <br />
                 <label className='font-semibold pl-1'>Department</label> <br />
@@ -81,13 +85,21 @@ const AddStudent = ({ details, refetch }) => {
                   type='text'
                   name='dept'
                   placeholder='department name'
-                  className='input input-bordered w-full max-w-xs mb-7 mt-1'
+                  className='input input-bordered w-full max-w-sm mb-7 mt-1'
                 />
+                <label className='font-semibold pl-1'>Room No.</label> <br />
+                <input
+                  type='number'
+                  name='room'
+                  placeholder='room number'
+                  className='input input-bordered w-full max-w-sm mb-7 mt-1'
+                />
+                <br />
                 <label className='relative'>
                   <input
                     type='submit'
                     value='submit'
-                    className='bg-teal-300 cursor-pointer font-semibold input input-bordered w-full max-w-xs'
+                    className='bg-teal-300 cursor-pointer font-semibold input input-bordered w-full max-w-sm'
                   />
                   <BsSendCheckFill className='pointer-events-none w-4 h-4 text-green-800 absolute top-1/4 right-28' />
                 </label>
