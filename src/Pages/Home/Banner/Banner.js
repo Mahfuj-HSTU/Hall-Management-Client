@@ -1,7 +1,7 @@
 import React from 'react';
 import banner1 from '../../../images/banner1.jpg';
-import banner2 from '../../../images/banner.jpg';
-import banner3 from '../../../images/banner2.jpg';
+import banner2 from '../../../images/banner2.jpg';
+// import banner3 from '../../../images/banner2.jpg';
 // import './banner.css';
 
 const Banner = () => {
@@ -23,7 +23,7 @@ const Banner = () => {
         </div>
         <div className='absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2'>
           <a
-            href='#slide4'
+            href='#slide2'
             className='btn btn-accent mr-5'>
             ❮
           </a>
@@ -56,14 +56,14 @@ const Banner = () => {
             ❮
           </a>
           <a
-            href='#slide3'
+            href='#slide1'
             className='btn btn-accent'>
             ❯
           </a>
         </div>
       </div>
 
-      <div
+      {/* <div
         id='slide3'
         className='carousel-item relative w-full'>
         <img
@@ -88,7 +88,7 @@ const Banner = () => {
             ❯
           </a>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import vc from '../../../images/prof_kamruzzaman.jpg';
+// import vc from '../../../images/prof_kamruzzaman.jpg';
 
 const Message = () => {
   return (
@@ -10,12 +10,12 @@ const Message = () => {
       <div className='p-6 px-10'>
         <span className='float-left pr-6 pb-2'>
           <img
-            src={vc}
+            src={'vc'}
             width={250}
             height={150}
             alt='vice chanchellor'
           />
-          <b>Professor Dr. M. Kamruzzaman</b>
+          <b>Vice Chanchellor</b>
         </span>
         <p className='text-justify text-black'>
           Welcome to the website of Hajee Mohammad Danesh Science and Technology

@@ -1,8 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../../../AuthProvider/AuthProvider';
-import { useDispatch, useSelector } from 'react-redux';
-import Loading from '../../../Shared/Loading/Loading';
-import { fetchRole } from '../../../../Hooks/Role/useRoleSlice';
 import StudentDetails from '../AllStudents/StudentDetails';
 import toast from 'react-hot-toast';
 import {
@@ -12,61 +9,54 @@ import {
 import RoomAllocation from './RoomAllocation';
 import { sendEmail } from '../../../../Utilities/emailService';
 import FilterApplications from './FilterApplications';
+import { useGetUserQuery } from '../../../../features/api/userApi';
 
 const Applications = () => {
-  const { user, loading } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [selected, setSelected] = useState('');
+  const [selectedYear, setSelectedYear] = useState('');
   const [selectedValue, setSelectedValue] = useState('');
-  const details = useSelector((state) => state?.roleReducer.role);
-  const dispatch = useDispatch();
-
-  if (loading) {
-    <Loading></Loading>;
-  }
-
-  useEffect(() => {
-    user?.email && dispatch(fetchRole(user?.email));
-  }, [dispatch, user?.email]);
+  const [salary, setSalary] = useState(false); // Initially false
+  const [distance, setDistance] = useState(false); // Initially false
+  const { data: details } = useGetUserQuery(user?.email);
 
   const { data: applications, refetch, isLoading } = useGetApplicationsQuery();
   const [updateApplication, { isSuccess }] = useUpdateApplicationMutation();
-  if (isLoading) {
-    <Loading />;
-  }
+
   useEffect(() => {
     if (isSuccess) {
       toast.success('Application Action Performed');
     }
   }, [isSuccess]);
 
-  const filteredApplications = applications?.filter((user) => {
-    if (
-      selectedValue === '' &&
-      user.hall === details.hallName &&
-      user.status === 'pending'
-    ) {
-      return true;
-    } else if (
-      user?.type.toLowerCase().includes(selectedValue?.toLowerCase()) &&
-      user.hall === details.hallName &&
-      user.status === 'pending'
-    ) {
-      return true;
-    }
-    return null;
+  // Filter applications based on selected criteria
+  const filteredApplications = applications?.filter((application) => {
+    const studentYear = Math.floor(application?.sid / 100000);
+    const selectedYearPrefix = selectedYear ? selectedYear % 100 : null;
+    const matchesYear = selectedYear
+      ? studentYear === selectedYearPrefix
+      : true;
+    const matchesType = selectedValue
+      ? application?.type.toLowerCase().includes(selectedValue.toLowerCase())
+      : true;
+
+    return (
+      application.hall === details.hallName &&
+      application.status === 'pending' &&
+      matchesYear &&
+      matchesType
+    );
   });
 
   const sortedApplication = filteredApplications?.sort((a, b) => {
-    const aSidPrefix = Math.floor(a.sid / 100000);
-    const bSidPrefix = Math.floor(b.sid / 100000);
-    // console.log(aSidPrefix, bSidPrefix);
-
-    if (aSidPrefix === bSidPrefix) {
-      return b.cgpa - a.cgpa;
+    if (distance && a.distance !== undefined && b.distance !== undefined) {
+      return b.distance - a.distance;
     }
-    return aSidPrefix - bSidPrefix;
+    if (salary && a.salary !== undefined && b.salary !== undefined) {
+      return a.salary - b.salary;
+    }
+    return b.cgpa - a.cgpa;
   });
-  // console.log(filteredApplications);
 
   const handleAccept = (event) => {
     const templateParams = {
@@ -101,6 +91,7 @@ const Applications = () => {
       refetch();
     }
   };
+
   const handleReject = (event) => {
     const templateParams = {
       to_name: event.name,
@@ -131,9 +122,15 @@ const Applications = () => {
 
   return (
     <div className='mt-5'>
-      <div className='lg:flex mb-5 p-4 pt-12 md:pt-6 lg:pt-5 bg-slate-300 rounded-lg md:ml-4'>
+      <div className='lg:flex mb-5 p-4 pt-4 lg:pt-5 bg-slate-300 rounded-lg md:ml-4'>
         <h2 className='text-4xl mb-7 mr-7'>Applied Students</h2>
-        <FilterApplications setSelectedValue={setSelectedValue} />
+        <FilterApplications
+          selectedYear={selectedYear}
+          setSelectedYear={setSelectedYear}
+          setSelectedValue={setSelectedValue}
+          setDistance={(value) => setDistance(value === 'distance')}
+          setSalary={(value) => setSalary(value === 'salary')}
+        />
       </div>
       {isLoading ? (
         <span className='loading loading-spinner text-primary'></span>
@@ -153,39 +150,39 @@ const Applications = () => {
           </thead>
 
           <tbody>
-            {sortedApplication.map((user, i) => (
+            {sortedApplication.map((application, i) => (
               <tr
-                key={user?._id}
+                key={application?._id}
                 className='border-2'>
                 <td className='border-2 text-center w-14'>{i + 1}</td>
                 <td className='border-2 font-semibold w-60'>
                   <label
                     htmlFor='my-modal'
                     className='link link-primary'
-                    onClick={() => setSelected(user)}>
-                    {user.name}
+                    onClick={() => setSelected(application)}>
+                    {application.name}
                   </label>
                 </td>
-                <td className='border-2 w-40'>{user.sid}</td>
-                <td className='border-2 w-52'>{user.type}</td>
-                <td className='border-2 w-44'>{user.dept}</td>
+                <td className='border-2 w-40'>{application.sid}</td>
+                <td className='border-2 w-52'>{application.type}</td>
+                <td className='border-2 w-44'>{application.dept}</td>
                 <td className='border-2 text-center p-0 w-56'>
-                  {user?.type === 'HallClearence' ? (
+                  {application?.type === 'HallClearence' ? (
                     <button
-                      onClick={() => handleAccept(user)}
-                      className='btn btn-sm btn-success '>
+                      onClick={() => handleAccept(application)}
+                      className='btn btn-sm btn-success'>
                       Accept
                     </button>
                   ) : (
                     <label
-                      onClick={() => setSelected(user)}
+                      onClick={() => setSelected(application)}
                       htmlFor='room-allocation-modal'
                       className='btn btn-sm btn-success'>
                       Accept
                     </label>
                   )}
                   <button
-                    onClick={() => handleReject(user)}
+                    onClick={() => handleReject(application)}
                     className='btn btn-sm btn-error ml-3'>
                     Reject
                   </button>

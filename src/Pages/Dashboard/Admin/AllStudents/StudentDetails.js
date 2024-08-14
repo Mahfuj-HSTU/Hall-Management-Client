@@ -15,6 +15,8 @@ const StudentDetails = ({ selected }) => {
     parmanent,
     cgpa,
     img,
+    salary,
+    fOccupation,
   } = selected;
 
   return (
@@ -70,6 +72,15 @@ const StudentDetails = ({ selected }) => {
               </p>
               <p>
                 <span className='font-semibold'>Mother Mobile:</span> {mmobile}
+              </p>
+              <p>
+                <span className='font-semibold'>
+                  Father's/Guardian's Occupation:
+                </span>{' '}
+                {fOccupation}
+              </p>
+              <p>
+                <span className='font-semibold'>Yearly Income:</span> {salary}
               </p>
               <p>
                 <span className='font-semibold'>Present Address:</span>{' '}
