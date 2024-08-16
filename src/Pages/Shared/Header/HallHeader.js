@@ -113,12 +113,30 @@ const HallHeader = ({ hall }) => {
   );
 
   return (
-    <div className='navbar h-16 bg-slate-300 mx-auto lg:px-16'>
-      <div className='navbar-start flex-row-reverse	md:flex-row'>
-        <div className='dropdown'>
+    <div className='navbar h-16 bg-slate-300 mx-auto flex justify-between items-center z-20'>
+      <div className='navbar-start lg:pl-5'>
+        <Link
+          to='/'
+          className='btn btn-ghost normal-case'>
+          <img
+            className='h-14'
+            src={hstu}
+            alt=''
+            width='50px'
+            height='50px'
+          />
+        </Link>
+      </div>
+      <div className='navbar-end flex justify-center'>
+        <div className='hidden lg:flex'>
+          <ul className='menu menu-horizontal p-0'>{menuItems}</ul>
+        </div>
+      </div>
+      <div className='navbar-end lg:hidden flex-row-reverse	md:flex-row'>
+        <div className='dropdown relative'>
           <label
             tabIndex={1}
-            className='btn btn-ghost lg:hidden'>
+            className='btn btn-ghost lg:hidden absolute md:right-4 -right-32 -top-6 z-[1]'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               className='h-5 w-5'
@@ -135,25 +153,14 @@ const HallHeader = ({ hall }) => {
           </label>
           <ul
             tabIndex={1}
-            className='menu menu-compact dropdown-content z-[1] p-2 shadow bg-slate-300 rounded-box w-52'>
+            className='menu menu-compact dropdown-content z-[1] p-2 shadow bg-slate-300 rounded-box w-52 absolute md:right-4 -right-32 left-auto top-2'>
             {menuItems}
           </ul>
         </div>
-        <Link
-          to='/'
-          className='btn btn-ghost normal-case'>
-          <img
-            className='h-14'
-            src={hstu}
-            alt=''
-            width='50px'
-            height='50px'
-          />
-        </Link>
       </div>
-      <div className='navbar-end hidden lg:flex '>
+      {/* <div className='navbar-end hidden lg:flex '>
         <ul className='menu menu-horizontal p-0'>{menuItems}</ul>
-      </div>
+      </div> */}
     </div>
   );
 };

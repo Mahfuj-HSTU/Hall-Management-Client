@@ -37,12 +37,12 @@ const StudentDashboard = () => {
   }
 
   return (
-    <div>
+    <div className=''>
       {studentIsLoading ? (
         <span className='loading loading-spinner text-primary'></span>
       ) : (
-        <div className=' flex flex-col text-center md:text-left  mt-2 md:mx-5 bg-gray-100   '>
-          <div className='w-full  shadow-inherit rounded-lg bg-white drop-shadow-lg p-3 text-center items-center justify-center'>
+        <div className='flex flex-col text-start md:text-left mt-2 md:mx-5 bg-gray-100   '>
+          <div className='w-full shadow-inherit rounded-lg bg-white drop-shadow-lg p-3 text-center items-center justify-center'>
             <div class='avatar'>
               <div class='w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2'>
                 <img
@@ -72,20 +72,20 @@ const StudentDashboard = () => {
               </p>
             </span>
           </div>{' '}
-          <div className='flex flex-row md:flex-row  gap-5 p-5'>
-            <div className='w-full  shadow-inherit rounded-lg bg-white drop-shadow-lg p-3'>
+          <div className='flex flex-col md:flex-row gap-5 p-5'>
+            <div className='w-full shadow-inherit rounded-lg bg-white drop-shadow-lg p-3'>
               <h2 className='text-2xl font-semibold'>Contacts</h2>
               <p>Mobile: {student.mobile}</p>
               <p>Email : {student.email}</p>
             </div>
-            <div className='w-full  shadow-inherit rounded-lg bg-white drop-shadow-lg p-3'>
+            <div className='w-full shadow-inherit rounded-lg bg-white drop-shadow-lg p-3'>
               <h2 className='text-2xl font-semibold'>Address</h2>
               <p>Present address : {student.present}</p>
               <p>Parmanent address : {student.parmanent}</p>
             </div>
           </div>
-          <div className='flex flex-row md:flex-row  gap-5 p-5'>
-            <div className='w-full  shadow-inherit rounded-lg bg-white drop-shadow-lg p-3'>
+          <div className='flex flex-col md:flex-row  gap-5 p-5'>
+            <div className='w-full shadow-inherit rounded-lg bg-white drop-shadow-lg p-3'>
               <h2 className='text-2xl font-semibold'>Applications</h2>
               {applications?.map((application) => (
                 <>
