@@ -42,15 +42,15 @@ const MyAccount = () => {
         <div className='mx-auto bg-cyan-200 rounded-lg my-3 max-w-[1100px] ml-3'>
           <div className='flex flex-col p-5'>
             <div className='flex bg-white items-center mt-16 rounded-lg'>
-              <div className='m-5 bg-white shadow-lg rounded-lg -mt-10'>
+              <div className='m-5 bg-white shadow-lg rounded-lg -mt-10 md:mx-5 ml-3 mr-1'>
                 <img
-                  className='w-40 h-44 p-2 rounded-lg'
+                  className='w-24 lg:w-40 h-28 lg:h-44 p-2 rounded-lg'
                   src={student?.img}
                   alt='user img'
                 />
               </div>
-              <div className='p-2 rounded-lg text-left -mt-4'>
-                <h1 className='text-3xl font-semibold'>
+              <div className='p-2 rounded-lg text-left -mt-4 pt-5 lg:pt-0'>
+                <h1 className='md:text-3xl font-semibold'>
                   Name: {student?.name}
                 </h1>
                 <span>ID: {student?.sid}</span>
