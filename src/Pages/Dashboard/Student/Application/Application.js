@@ -61,8 +61,8 @@ const Application = () => {
         <Loading />
       ) : (
         <div className='grid place-items-center h-full mx-5'>
-          <span className='grid grid-cols-2 w-full gap-9'>
-            <div className='shadow-xl shadow-slate-400 rounded-xl p-5'>
+          <span className='grid md:grid-cols-2 w-full gap-9'>
+            <div className='shadow-xl shadow-slate-300 rounded-xl p-5'>
               <h2 className='text-3xl mb-5'>Apply for a Hall Seat</h2>
               {student?.room ? (
                 <h2 className='text-2xl font-semibold my-5 text-blue-700'>
@@ -107,7 +107,7 @@ const Application = () => {
             <h2 className='text-3xl mb-7 mt-20 font-semibold'>
               Application progess
             </h2>
-            <div className='md:flex md:justify-between gap-28'>
+            <div className='md:flex md:justify-between gap-24 lg:gap-32'>
               <span>
                 <h2 className='text-2xl my-5'>Hall Seat Application</h2>
                 {!hallSeat ? (
@@ -123,9 +123,9 @@ const Application = () => {
                         Please try again later
                       </h2>
                     ) : (
-                      <ul className='steps steps-vertical lg:steps-horizontal'>
+                      <ul className='steps steps-vertical md:steps-horizontal'>
                         <li
-                          className={`step mx-5 ${
+                          className={`step md:mx-5 ${
                             (hallSeat?.status === 'pending' ||
                               hallSeat?.status === 'accept') &&
                             'step-primary'
@@ -140,7 +140,6 @@ const Application = () => {
                           }`}>
                           Pending
                         </li>
-                        {/* <li className='step'>Accept</li> */}
                         <li
                           className={`step ${
                             hallSeat?.status === 'accept' && 'step-primary'
@@ -166,9 +165,9 @@ const Application = () => {
                         later
                       </h2>
                     ) : (
-                      <ul className='steps steps-vertical lg:steps-horizontal'>
+                      <ul className='steps steps-vertical md:steps-horizontal'>
                         <li
-                          className={`step mx-5 ${
+                          className={`step md:mx-5 ${
                             (hallClearence?.status === 'pending' ||
                               hallClearence?.status === 'accept') &&
                             'step-primary'
@@ -195,15 +194,15 @@ const Application = () => {
                   </>
                 )}
               </span>
-              <HallSeat
-                student={student}
-                refetch={refetch}
-              />
-              <HallClearence
-                student={student}
-                refetch={refetch}
-              />
             </div>
+            <HallSeat
+              student={student}
+              refetch={refetch}
+            />
+            <HallClearence
+              student={student}
+              refetch={refetch}
+            />
           </div>
         </div>
       )}

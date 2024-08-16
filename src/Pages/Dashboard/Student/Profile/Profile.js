@@ -105,7 +105,7 @@ const Profile = ({ student, refetch }) => {
 
   return (
     <div className='flex-col flex gap-5 text-center md:text-left w-full mt-2 md:mx-5 pb-5 '>
-      <div className='flex justify-between'>
+      <div className='flex justify-between md:mx-0 mx-2'>
         <h1 className='text-2xl font-semibold'>Profile</h1>
         <div>
           <label
