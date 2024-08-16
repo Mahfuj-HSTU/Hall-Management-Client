@@ -1,33 +1,34 @@
 import React, { useContext, useEffect } from 'react';
 import hstu from '../images/HSTU_Logo.png';
 import { Link, Outlet, useLoaderData } from 'react-router-dom';
-import { fetchRole } from '../Hooks/Role/useRoleSlice';
 import { AuthContext } from '../AuthProvider/AuthProvider';
-import { useDispatch, useSelector } from 'react-redux';
 import Loading from '../Pages/Shared/Loading/Loading';
+import { useGetUserQuery } from '../features/api/userApi';
 
 const ProfileLayout = () => {
   const hall = useLoaderData();
   const { user, loading, logOut } = useContext(AuthContext);
-  const details = useSelector((state) => state?.roleReducer.role);
-  const dispatch = useDispatch();
-  const role = details.role;
+  const { data: details, isLoading } = useGetUserQuery(user?.email);
+  // const dispatch = useDispatch();
+  const role = details?.role;
   const superAdmin = 'superAdmin';
   const admin = 'admin';
   const student = 'student';
-  // console.log(hall);
+  // console.log(role);
 
-  if (loading) {
-    <Loading></Loading>;
-  }
+  useEffect(() => {
+    if (isLoading || loading) {
+      <Loading></Loading>;
+    }
+  }, [isLoading, loading]);
 
   const handleLogOut = () => {
     logOut().then().catch();
   };
 
-  useEffect(() => {
-    user?.email && dispatch(fetchRole(user?.email));
-  }, [dispatch, user?.email]);
+  // useEffect(() => {
+  //   user?.email && dispatch(fetchRole(user?.email));
+  // }, [dispatch, user?.email]);
 
   return (
     <div>
@@ -39,7 +40,7 @@ const ProfileLayout = () => {
         />
         <label
           htmlFor='my-drawer-2'
-          className='btn btn-ghost lg:hidden absolute top-3 left-4'>
+          className='btn btn-ghost lg:hidden absolute top-3 left-4 z-[1]'>
           <svg
             xmlns='http://www.w3.org/2000/svg'
             className='h-5 w-5'
@@ -54,7 +55,7 @@ const ProfileLayout = () => {
             />
           </svg>
         </label>
-        <div className='drawer-content'>
+        <div className='drawer-content z-[0]'>
           {/* Page content here */}
           <Outlet></Outlet>
         </div>
@@ -74,14 +75,12 @@ const ProfileLayout = () => {
                   height='50px'
                 />
               </div>
-              {/* <div> */}
               <Link
                 to={`/hall/${hall._id}`}
                 className='font-semibold link-hover'>
                 {hall.name}
               </Link>
               <div className='divider divider-primary'></div>
-              {/* </div> */}
               {user?.email && (
                 <>
                   {role === superAdmin && <></>}

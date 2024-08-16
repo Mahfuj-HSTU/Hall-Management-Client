@@ -93,12 +93,14 @@ const SignUp = () => {
       }
     });
     if (!registrationAllowed) {
-      toast.error('Your SID is registered. Please login');
+      toast.error('Your Student ID is already registered. Please login');
       userFound = true;
     }
 
     if (!userFound) {
-      toast.error('Your hall and SID don`t match.');
+      toast.error(
+        'Your hall and student ID don`t match. please provide valid student ID.'
+      );
     }
   };
 
