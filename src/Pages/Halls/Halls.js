@@ -3,11 +3,11 @@ import HallCard from './HallCard';
 import { useGetHallsQuery } from '../../features/api/hallApi';
 
 const Halls = () => {
-  const { data, isLoading } = useGetHallsQuery();
+  const { data, isLoading, isFetching } = useGetHallsQuery();
   // console.log(data);
   const Halls = data;
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return <span className='loading loading-spinner text-primary'></span>;
   }
 
