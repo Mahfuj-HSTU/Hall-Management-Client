@@ -11,16 +11,23 @@ const StudentDashboard = () => {
     data: userData,
     isLoading: userIsLoading,
     isError: userIsError,
+    isFetching: userIsFetching,
   } = useGetUserQuery(user?.email);
   const {
     data: student,
     isLoading: studentIsLoading,
     isError: studentIsError,
+    isFetching: studentIsFetching,
   } = useGetStudentDetailsQuery(userData?.sid);
   const { data: applications } = useGetApplicationQuery(userData?.sid);
   // console.log(applications);
 
-  if (userIsLoading || studentIsLoading) {
+  if (
+    userIsLoading ||
+    studentIsLoading ||
+    studentIsFetching ||
+    userIsFetching
+  ) {
     <Loading />;
   }
 
