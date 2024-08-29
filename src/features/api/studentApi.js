@@ -23,7 +23,7 @@ export const studentApi = createApi({
     addStudent: builder.mutation({
       query: (data) => ({
         url: '/api/students',
-        method: 'post',
+        method: 'POST',
         body: JSON.stringify(data),
         headers: {
           'content-type': 'application/json',
@@ -34,7 +34,7 @@ export const studentApi = createApi({
     updateStudent: builder.mutation({
       query: (data) => ({
         url: '/api/students',
-        method: 'put',
+        method: 'PUT',
         body: JSON.stringify(data),
         headers: {
           'content-type': 'application/json',

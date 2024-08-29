@@ -31,6 +31,7 @@ const HallSeat = ({ student, refetch }) => {
       form.reset();
     }
   };
+  
   return (
     <div>
       <input
