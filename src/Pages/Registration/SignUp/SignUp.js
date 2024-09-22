@@ -7,10 +7,12 @@ import { ServerLink } from '../../../Hooks/useServerLink';
 import { useQuery } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import { AuthContext } from '../../../AuthProvider/AuthProvider';
+import { ClipLoader } from 'react-spinners';
 
 const SignUp = () => {
   const hall = useLoaderData();
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const { createUser, verifyEmail } = useContext(AuthContext);
   const navigate = useNavigate();
   const { data: students = [], refetch } = useQuery({
@@ -31,6 +33,7 @@ const SignUp = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setLoading(true);
     const form = event.target;
     const sid = form.sid.value;
     const hallName = form.hall.value;
@@ -53,7 +56,7 @@ const SignUp = () => {
     students.forEach((st) => {
       if (st.sid === sid && st.hall === hallName) {
         userFound = true;
-
+        setLoading(false);
         if (registrationAllowed) {
           createUser(email, password)
             .then((result) => {
@@ -170,13 +173,24 @@ const SignUp = () => {
               {error.slice(22, 45)}
             </p>
 
-            <label className='relative'>
-              <BsSendCheckFill className='pointer-events-none w-4 h-5 text-green-800 absolute right-28 mt-4' />
-              <input
-                type='submit'
-                className='bg-teal-300 cursor-pointer font-semibold input input-bordered w-full max-w-xs mb-2'
-              />
+            <label className='relative '>
+              {loading ? (
+                <button className='bg-teal-300 cursor-pointer font-semibold input input-bordered w-full max-w-xs mb-2'>
+                  <ClipLoader size={20} />
+                </button>
+              ) : (
+                <>
+                  <BsSendCheckFill className='pointer-events-none w-4 h-5 text-green-800 absolute right-28 mt-4' />
+                  <button
+                    type='submit'
+                    className='bg-teal-300 cursor-pointer font-semibold input input-bordered w-full max-w-xs mb-2'
+                    disabled={loading}>
+                    Submit
+                  </button>
+                </>
+              )}
             </label>
+
             <p className='pt-2'>
               Already have an accoung?{' '}
               <Link

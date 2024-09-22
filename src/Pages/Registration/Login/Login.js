@@ -7,28 +7,27 @@ import ForgatePassword from './ForgatePassword';
 import { IoArrowBackCircleOutline } from 'react-icons/io5';
 import toast from 'react-hot-toast';
 import { AuthContext } from '../../../AuthProvider/AuthProvider';
+import { ClipLoader } from 'react-spinners';
 
 const Login = () => {
   const hall = useLoaderData();
   const { login } = useContext(AuthContext);
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  // console.log(hall);
 
   const handleLogin = (event) => {
     event.preventDefault();
+    setLoading(true);
     const form = event.target;
     const email = form.email.value;
     const password = form.password.value;
 
-    // const user = { email, password }
-    // console.log( user )
-
     login(email, password)
       .then((result) => {
         const user = result.user;
-        // console.log(user);
         form.reset();
+        setLoading(false);
         if (user.emailVerified) {
           toast.success('Successfully logged in!');
           navigate(`/hall/${hall._id}`);
@@ -42,6 +41,7 @@ const Login = () => {
         console.error('error ', error);
         toast.error('Register first to login');
         setError(error.message);
+        setLoading(false);
         form.reset();
       });
   };
@@ -57,7 +57,7 @@ const Login = () => {
         <div className='max-w-[360px]'>
           <form
             onSubmit={handleLogin}
-            className='bg-indigo-300 bg-opacity-80 pt-5 pb-14 rounded-xl text-black relative'>
+            className='bg-indigo-300 bg-opacity-80 pt-5 pb-14 rounded-xl text-black relative animate__animated animate__fadeInUp'>
             <span className='text-start absolute top-4 left-2 '>
               <Link
                 to={`/hall/${hall._id}`}
@@ -70,7 +70,7 @@ const Login = () => {
             </h1>
             <label
               htmlFor='email'
-              className='relative '>
+              className='relative'>
               <MdMarkEmailRead className='pointer-events-none w-5 h-5 text-green-600 absolute top-1/2 transform -translate-y-1/2 right-3' />
               <input
                 required
@@ -78,7 +78,7 @@ const Login = () => {
                 name='email'
                 id='email'
                 placeholder='test@gmail.com'
-                className='input input-bordered w-full max-w-xs mb-7'
+                className='input input-bordered w-full max-w-xs mb-7 bg-white'
               />
             </label>
 
@@ -92,9 +92,9 @@ const Login = () => {
                 name='password'
                 id='password'
                 placeholder='password'
-                className='input input-bordered w-full max-w-xs'
+                className='input input-bordered w-full max-w-xs bg-white'
               />
-              <p className='pb-4 text-start pl-6 text-xs font-semibold'>
+              <p className='pb-4 text-start pl-6 text-xs font-semibold mt-[2px]'>
                 <label
                   htmlFor='reset-modal'
                   className='label-text-alt link link-hover'>
@@ -106,12 +106,22 @@ const Login = () => {
               </p>
             </label>
 
-            <label className='relative'>
-              <BsSendCheckFill className='pointer-events-none w-4 h-4 text-green-800 absolute top-1/2 transform -translate-y-1/2 right-28' />
-              <input
-                type='submit'
-                className='bg-teal-300 cursor-pointer font-semibold input input-bordered w-full max-w-xs mb-2'
-              />
+            <label className='relative '>
+              {loading ? (
+                <button className='bg-teal-500 hover:bg-teal-600 text-lg font-semibold input input-bordered w-full max-w-xs mb-2 cursor-pointer'>
+                  <ClipLoader size={20} />
+                </button>
+              ) : (
+                <>
+                  <BsSendCheckFill className='pointer-events-none w-4 h-4 text-green-800 absolute top-2/3 transform -translate-y-1/2 right-[118px]' />
+                  <button
+                    type='submit'
+                    className='bg-teal-500 hover:bg-teal-600 text-lg font-semibold input input-bordered w-full max-w-xs mb-2 cursor-pointer'
+                    disabled={loading}>
+                    Login
+                  </button>
+                </>
+              )}
             </label>
             <p className='pt-2 font-semibold'>
               New to website?{' '}
