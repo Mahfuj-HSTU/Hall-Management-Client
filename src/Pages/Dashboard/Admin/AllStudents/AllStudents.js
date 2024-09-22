@@ -114,7 +114,7 @@ const AllStudents = () => {
       removeStudent(room);
       updateStudent(info);
       if (application) {
-        console.log(application);
+        // console.log(application);
         deleteApplication(application);
       }
       refetch();

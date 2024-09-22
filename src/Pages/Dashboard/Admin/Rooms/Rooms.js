@@ -13,6 +13,7 @@ const Rooms = () => {
   const { user } = useContext(AuthContext);
   const inputRef = useRef(null);
   const [roomSearch, setRoomSearch] = useState('');
+  const [selectedFloor, setSelectedFloor] = useState('');
   const [id, setId] = useState('');
   const { data: userData } = useGetUserQuery(user?.email);
   const dispatch = useDispatch();
@@ -35,16 +36,41 @@ const Rooms = () => {
     setRoomSearch(searchData);
   };
 
-  const filteredRoom = rooms?.filter((usr) => {
-    if (usr.hall === userData.hallName) {
-      if (roomSearch === '') {
-        return true;
-      } else {
-        return usr?.room?.toString().includes(roomSearch?.toString());
-      }
+  // First, filter rooms by the user's hall
+  const roomsInHall = rooms?.filter((room) => room.hall === userData.hallName);
+
+  // Calculate the max floor based on rooms from the selected hall
+  const maxFloor = roomsInHall?.reduce((max, room) => {
+    const floor = Math.floor(room?.room / 100);
+    return Math.max(max, floor);
+  }, 0);
+
+  // Create an array of floors from 1 to maxFloor
+  const floorsArray = Array.from({ length: maxFloor }, (_, index) => index + 1);
+
+  // Now filter rooms based on the selected floor and room search
+  const filteredRoom = roomsInHall?.filter((room) => {
+    const floor = Math.floor(room?.room / 100);
+
+    // Filter based on the selected floor
+    if (selectedFloor && floor !== selectedFloor) {
+      return false;
     }
-    return null;
+
+    // Filter by room search input
+    if (roomSearch === '') {
+      return true;
+    } else {
+      return room?.room?.toString().includes(roomSearch?.toString());
+    }
   });
+
+  const getOrdinal = (n) => {
+    const s = ['th', 'st', 'nd', 'rd'];
+    const v = n % 100;
+    return n + (s[(v - 20) % 10] || s[v] || s[0]);
+  };
+  // console.log(selectedFloor);
 
   return (
     <div className='md:my-5 mb-5'>
@@ -57,7 +83,7 @@ const Rooms = () => {
               value='Add'
             />
           </span>
-          <span className='flex gap-5'>
+          <span className='md:flex md:justify-between gap-5'>
             <input
               ref={inputRef}
               id='searchName'
@@ -66,6 +92,19 @@ const Rooms = () => {
               placeholder='Search by room number'
               onChange={handleSearch}
             />
+            <select
+              value={selectedFloor || ''}
+              onChange={(e) => setSelectedFloor(Number(e.target.value))}
+              className='select select-bordered w-56 md:mt-0 mt-3 max-w-xs block'>
+              <option value=''>Select Floor</option>
+              {floorsArray?.map((floor, i) => (
+                <option
+                  key={i}
+                  value={floor}>
+                  {getOrdinal(floor)}
+                </option>
+              ))}
+            </select>
           </span>
         </div>
 
