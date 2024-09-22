@@ -26,7 +26,7 @@ const HallSeat = ({ student, refetch }) => {
       district: selectedDistrict,
     };
     if (agree) {
-      console.log(info);
+      // console.log(info);
       addApplication(info);
       form.reset();
     }
