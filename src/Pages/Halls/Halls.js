@@ -29,7 +29,7 @@ const Halls = () => {
           <HallCard
             isLoading={isLoading}
             hall={hall}
-            key={hall.id}></HallCard>
+            key={hall._id}></HallCard>
         ))}
       </div>
     </div>

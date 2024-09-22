@@ -4,9 +4,10 @@ import { Link, Outlet, useLoaderData } from 'react-router-dom';
 import { AuthContext } from '../AuthProvider/AuthProvider';
 import Loading from '../Pages/Shared/Loading/Loading';
 import { useGetUserQuery } from '../features/api/userApi';
+import { useGetHallsQuery } from '../features/api/hallApi';
 
 const ProfileLayout = () => {
-  const hall = useLoaderData();
+  // const hall = useLoaderData();
   const { user, loading, logOut } = useContext(AuthContext);
   const {
     data: details,
@@ -22,11 +23,20 @@ const ProfileLayout = () => {
   const student = 'student';
   // console.log(role);
 
+  const {
+    data: halls,
+    isLoading: hallIsLoading,
+    isFetching: hallIsFatching,
+  } = useGetHallsQuery();
+
+  const hall = halls?.find((hl) => hl.name === details?.hallName);
+  console.log(hall);
+
   useEffect(() => {
-    if (isLoading || loading || isFetching) {
+    if (isLoading || loading || isFetching || hallIsLoading || hallIsFatching) {
       <Loading></Loading>;
     }
-  }, [isLoading, loading, isFetching]);
+  }, [isLoading, loading, isFetching, hallIsLoading, hallIsFatching]);
 
   if (isError) {
     return <div>Error to fetching data.</div>;
@@ -34,6 +44,14 @@ const ProfileLayout = () => {
 
   if (!details) {
     return <div>User not found.</div>;
+  }
+  if (!hall) {
+    return (
+      <div>
+        Hall not found.
+        <Loading></Loading>
+      </div>
+    );
   }
 
   const handleLogOut = () => {
@@ -102,7 +120,7 @@ const ProfileLayout = () => {
                     {role === admin && (
                       <>
                         <li className='font-semibold'>
-                          <Link to={`/dashboard/${hall._id}/admin`}>
+                          <Link to={`/dashboard/${hall?._id}/admin`}>
                             Dashboard
                           </Link>
                         </li>
