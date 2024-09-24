@@ -95,9 +95,9 @@ const HallHeader = ({ hall }) => {
                   Dashboard
                 </Link>
               </li>
-              <li className='font-semibold'>
+              {/* <li className='font-semibold'>
                 <Link to=''>Notifications</Link>
-              </li>
+              </li> */}
               <li className='font-semibold'>
                 <button onClick={handleLogOut}>Log Out</button>
               </li>

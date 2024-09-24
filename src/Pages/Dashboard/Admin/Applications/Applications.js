@@ -6,10 +6,10 @@ import {
   useGetApplicationsQuery,
   useUpdateApplicationMutation,
 } from '../../../../features/api/applicationApi';
-import RoomAllocation from './RoomAllocation';
 import { sendEmail } from '../../../../Utilities/emailService';
 import FilterApplications from './FilterApplications';
 import { useGetUserQuery } from '../../../../features/api/userApi';
+import RoomAllocation from './RoomAllocation';
 
 const Applications = () => {
   const { user } = useContext(AuthContext);

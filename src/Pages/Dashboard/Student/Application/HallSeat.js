@@ -22,8 +22,8 @@ const HallSeat = ({ student, refetch }) => {
       status: 'pending',
       type: 'HallSeat',
       fOccupation: form.foccupation.value,
-      fIncome: form.fincome.value,
-      district: selectedDistrict,
+      salary: form.fincome.value,
+      distance: selectedDistrict,
     };
     if (agree) {
       // console.log(info);
@@ -31,7 +31,7 @@ const HallSeat = ({ student, refetch }) => {
       form.reset();
     }
   };
-  
+
   return (
     <div>
       <input

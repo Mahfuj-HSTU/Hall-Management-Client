@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import hstu from '../images/HSTU_Logo.png';
-import { Link, Outlet, useLoaderData } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import { AuthContext } from '../AuthProvider/AuthProvider';
 import Loading from '../Pages/Shared/Loading/Loading';
 import { useGetUserQuery } from '../features/api/userApi';
@@ -30,7 +30,7 @@ const ProfileLayout = () => {
   } = useGetHallsQuery();
 
   const hall = halls?.find((hl) => hl.name === details?.hallName);
-  console.log(hall);
+  // console.log(hall);
 
   useEffect(() => {
     if (isLoading || loading || isFetching || hallIsLoading || hallIsFatching) {

@@ -6,16 +6,17 @@ import StudentDetails from './StudentDetails';
 import AddStudent from './AddStudent';
 import {
   useGetStudentsQuery,
-  useUpdateStudentMutation,
+  // useUpdateStudentMutation,
 } from '../../../../features/api/studentApi';
 import { useGetUserQuery } from '../../../../features/api/userApi';
 import {
-  useDeleteApplicationMutation,
+  // useDeleteApplicationMutation,
   useGetApplicationsQuery,
 } from '../../../../features/api/applicationApi';
-import { useRemoveStudentMutation } from '../../../../features/api/roomsApi';
-import toast from 'react-hot-toast';
+// import { useRemoveStudentMutation } from '../../../../features/api/roomsApi';
+// import toast from 'react-hot-toast';
 import { Years } from '../../../../Utilities/Years';
+import DeleteStudent from './DeleteStudent';
 
 const AllStudents = () => {
   const { user, loading } = useContext(AuthContext);
@@ -39,18 +40,11 @@ const AllStudents = () => {
   } = useGetUserQuery(user?.email);
 
   const { data: applications, isLoading } = useGetApplicationsQuery();
-  const [updateStudent, { isSuccess }] = useUpdateStudentMutation();
-  const [removeStudent, { isSuccess: removeIsSuccess }] =
-    useRemoveStudentMutation();
-  const [deleteApplication] = useDeleteApplicationMutation();
+
   // console.log(applications);
 
   if (userIsLoading || studentIsLoading || loading || isLoading) {
     <Loading />;
-  }
-
-  if (isSuccess && removeIsSuccess) {
-    toast.success('Student remove successfully.');
   }
 
   if (userIsError || studentIsError) {
@@ -58,14 +52,29 @@ const AllStudents = () => {
   }
 
   if (!userData) {
-    return <div>User not found.</div>;
+    return (
+      <div>
+        User not found.
+        <Loading />
+      </div>
+    );
   }
   if (!applications) {
-    return <div>Applications not found.</div>;
+    return (
+      <div>
+        Applications not found.
+        <Loading />
+      </div>
+    );
   }
 
   if (!students) {
-    return <div>Student not found.</div>;
+    return (
+      <div>
+        Student not found.
+        <Loading />
+      </div>
+    );
   }
 
   const searchUser = students?.filter((user) => {
@@ -93,33 +102,34 @@ const AllStudents = () => {
     setSearch(searchData);
   };
 
-  const handleDelete = (usr) => {
-    const application = applications?.find(
-      (item) => item?.type === 'HallSeat' && item?.sid === usr?.sid
-    );
-    const agree = window.confirm(
-      `Are you sure? you want to release "${usr?.name}" from hall.`
-    );
-    if (agree) {
-      const info = {
-        ...usr,
-        room: '',
-      };
-      const room = {
-        room: usr.room,
-        hall: usr.hall,
-        id: usr.sid,
-      };
-      // console.log(room);
-      removeStudent(room);
-      updateStudent(info);
-      if (application) {
-        // console.log(application);
-        deleteApplication(application);
-      }
-      refetch();
-    }
-  };
+  // const handleDelete = (usr) => {
+  // const application = applications?.find(
+  //   (item) => item?.type === 'HallSeat' && item?.sid === usr?.sid
+  // );
+  // alert(<button>1</button>);
+  // const agree = window.confirm(
+  //   `Are you sure? you want to release "${usr?.name}" from hall.`
+  // );
+  // if (agree) {
+  //   const info = {
+  //     ...usr,
+  //     room: '',
+  //   };
+  //   const room = {
+  //     room: usr.room,
+  //     hall: usr.hall,
+  //     id: usr.sid,
+  //   };
+  //   // console.log(room);
+  //   removeStudent(room);
+  //   updateStudent(info);
+  //   if (application) {
+  //     // console.log(application);
+  //     deleteApplication(application);
+  //   }
+  //   refetch();
+  // }
+  // };
 
   return (
     <div className='md:my-5 mb-5'>
@@ -206,14 +216,29 @@ const AllStudents = () => {
                   {user?.room || 'Non-Residential'}
                 </td>
                 <td className='border-2 text-center p-0'>
-                  <button
+                  {/* <button
                     onClick={() => handleDelete(user)}
                     className={`text-red-600 text-2xl ${
                       !user?.room ? 'btn btn-disabled' : null
                     }`}>
                     <MdOutlineDeleteOutline />
+                  </button> */}
+                  <button
+                    className={`text-red-600 text-2xl ${
+                      !user?.room ? 'btn btn-disabled' : null
+                    }`}
+                    onClick={() => {
+                      document.getElementById('my_modal_2').showModal();
+                      setSelected(user);
+                    }}>
+                    <MdOutlineDeleteOutline />
                   </button>
                 </td>
+                <DeleteStudent
+                  user={selected}
+                  applications={applications}
+                  refetch={refetch}
+                />
               </tr>
             ))}
         </tbody>

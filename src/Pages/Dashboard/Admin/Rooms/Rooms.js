@@ -20,10 +20,11 @@ const Rooms = () => {
   // console.log(data);
 
   const { data: rooms, isLoading } = useGetRoomsQuery();
-  const { data: studentDetails } = useGetStudentDetailsQuery(id);
+  const { data: studentDetails, isLoading: isStudentIsLoading } =
+    useGetStudentDetailsQuery(id);
   // console.log(studentDetails);
 
-  if (isLoading) {
+  if (isLoading || isStudentIsLoading) {
     <Loading />;
   }
 
