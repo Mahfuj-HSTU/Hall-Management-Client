@@ -64,29 +64,37 @@ const Application = () => {
           <span className='grid md:grid-cols-2 w-full gap-9'>
             <div className='shadow-xl shadow-slate-300 rounded-xl p-5'>
               <h2 className='text-3xl mb-5'>Apply for a Hall Seat</h2>
-              {student?.room ? (
-                <h2 className='text-2xl font-semibold my-5 text-blue-700'>
-                  Room No: {student?.room}
+              {student.isDeleted ? (
+                <h2 className='text-red-700 text-xl'>
+                  Your Studentship is Over
                 </h2>
               ) : (
                 <>
-                  {!filteredNotice ? (
-                    <h2 className='text-2xl my-5 text-red-500'>
-                      Applications will start soon
+                  {student?.room ? (
+                    <h2 className='text-2xl font-semibold my-5 text-blue-700'>
+                      Room No: {student?.room}
                     </h2>
                   ) : (
                     <>
-                      {filteredNotice?.date > getDateOnly(date) ? (
-                        <label
-                          htmlFor='hall-seat-modal'
-                          // onClick={handleHallSeat}
-                          className='btn btn-success px-6'>
-                          Apply
-                        </label>
-                      ) : (
+                      {!filteredNotice ? (
                         <h2 className='text-2xl my-5 text-red-500'>
-                          Applications date is over.
+                          Applications will start soon
                         </h2>
+                      ) : (
+                        <>
+                          {filteredNotice?.date > getDateOnly(date) ? (
+                            <label
+                              htmlFor='hall-seat-modal'
+                              // onClick={handleHallSeat}
+                              className='btn btn-success px-6'>
+                              Apply
+                            </label>
+                          ) : (
+                            <h2 className='text-2xl my-5 text-red-500'>
+                              Applications date is over.
+                            </h2>
+                          )}
+                        </>
                       )}
                     </>
                   )}
@@ -95,12 +103,17 @@ const Application = () => {
             </div>
             <div className='shadow-xl shadow-slate-300 rounded-xl p-5'>
               <h2 className='text-3xl mb-5'>Apply for Hall Clearence</h2>
-              <label
-                htmlFor='hall-clearence-modal'
-                // onClick={handleHallClearence}
-                className='btn btn-success px-6'>
-                Apply
-              </label>
+              {student.isDeleted ? (
+                <h2 className='text-red-700 text-xl'>
+                  Your Studentship is Over
+                </h2>
+              ) : (
+                <label
+                  htmlFor='hall-clearence-modal'
+                  className='btn btn-success px-6'>
+                  Apply
+                </label>
+              )}
             </div>
           </span>
           <div>
@@ -110,7 +123,7 @@ const Application = () => {
             <div className='md:flex md:justify-between gap-24 lg:gap-32'>
               <span>
                 <h2 className='text-2xl my-5'>Hall Seat Application</h2>
-                {!hallSeat ? (
+                {!hallSeat || student.isDeleted ? (
                   <h2 className='text-2xl my-5 text-red-500'>
                     You did not apply
                   </h2>
@@ -153,7 +166,7 @@ const Application = () => {
               </span>
               <span>
                 <h2 className='text-2xl my-5'>Hall Clearence Application</h2>
-                {!hallClearence ? (
+                {!hallClearence || student.isDeleted ? (
                   <h2 className='text-2xl my-5 text-red-500'>
                     You did not apply
                   </h2>
