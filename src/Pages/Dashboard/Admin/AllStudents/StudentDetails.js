@@ -5,6 +5,7 @@ const StudentDetails = ({ selected }) => {
     name,
     sid,
     dept,
+    faculty,
     email,
     mobile,
     fname,
@@ -46,6 +47,9 @@ const StudentDetails = ({ selected }) => {
               <h2 className='card-title'>Name: {name}</h2>
               <p>
                 <span className='font-semibold'>Student ID:</span> {sid}
+              </p>
+              <p>
+                <span className='font-semibold'>Faculty:</span> {faculty}
               </p>
               <p>
                 <span className='font-semibold'>Department:</span> {dept}
