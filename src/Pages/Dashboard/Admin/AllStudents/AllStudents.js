@@ -189,9 +189,7 @@ const AllStudents = () => {
                     <MdOutlineDeleteOutline />
                   </button> */}
                   <button
-                    className={`text-red-600 text-2xl ${
-                      !user?.room ? 'btn btn-disabled' : null
-                    }`}
+                    className={`text-red-600 text-2xl`}
                     onClick={() => {
                       document.getElementById('my_modal_2').showModal();
                       setSelected(user);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BsSendCheckFill } from 'react-icons/bs';
 import toast from 'react-hot-toast';
 import { useAddStudentMutation } from '../../../../features/api/studentApi';
@@ -10,9 +10,11 @@ const AddStudent = ({ details, refetch }) => {
   if (isLoading) {
     toast.loading('posting...', { id: 'addStudent' });
   }
-  if (isSuccess) {
-    toast.success('Successfully added a new student ', { id: 'addStudent' });
-  }
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success('Successfully added a new student ', { id: 'addStudent' });
+    }
+  }, [isSuccess]);
   if (isError) {
     toast.error('Failed to add a new student ', { id: 'addStudent' });
   }
@@ -24,10 +26,11 @@ const AddStudent = ({ details, refetch }) => {
     const sid = form.sid.value;
     const hall = details.hallName;
     const dept = form.dept.value;
+    const faculty = form.faculty.value;
     const mobile = form.mobile.value;
     const room = form.room.value;
 
-    const user = { name, sid, hall, dept, mobile, room };
+    const user = { name, sid, hall, dept, faculty, mobile, room };
     // console.log(user);
     addStudent(user);
     form.reset();
@@ -60,6 +63,7 @@ const AddStudent = ({ details, refetch }) => {
                 <input
                   type='text'
                   name='name'
+                  required
                   placeholder='student name'
                   className='input input-bordered w-full max-w-sm mb-3 mt-1'
                 />
@@ -68,6 +72,7 @@ const AddStudent = ({ details, refetch }) => {
                 <input
                   type='number'
                   name='sid'
+                  required
                   placeholder='190...'
                   className='input input-bordered w-full max-w-sm mb-3 mt-1'
                 />
@@ -82,9 +87,18 @@ const AddStudent = ({ details, refetch }) => {
                 <br />
                 <label className='font-semibold pl-1'>Department</label> <br />
                 <input
+                  required
                   type='text'
                   name='dept'
                   placeholder='department name'
+                  className='input input-bordered w-full max-w-sm mb-7 mt-1'
+                />
+                <label className='font-semibold pl-1'>Faculty</label> <br />
+                <input
+                  required
+                  type='text'
+                  name='faculty'
+                  placeholder='faculty name'
                   className='input input-bordered w-full max-w-sm mb-7 mt-1'
                 />
                 <label className='font-semibold pl-1'>Room No.</label> <br />
