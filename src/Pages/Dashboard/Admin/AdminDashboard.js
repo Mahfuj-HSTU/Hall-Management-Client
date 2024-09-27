@@ -1,6 +1,4 @@
 import React, { useContext } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { ServerLink } from '../../../Hooks/useServerLink';
 import { AuthContext } from '../../../AuthProvider/AuthProvider';
 import Loading from '../../Shared/Loading/Loading';
 import imageUrl from '../../../images/avater.png';
@@ -19,7 +17,6 @@ const AdminDashboard = () => {
   } = useGetRoomsQuery();
   const { data: details } = useGetUserQuery(user?.email);
   const { data: applications, isLoading } = useGetApplicationsQuery();
-  const student = {};
 
   if (studentIsLoading || roomsIsLoading || isLoading || isFetching) {
     <Loading />;

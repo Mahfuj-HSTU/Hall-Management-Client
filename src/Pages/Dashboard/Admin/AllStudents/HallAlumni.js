@@ -1,16 +1,12 @@
 import React, { useContext, useRef, useState } from 'react';
 import { AuthContext } from '../../../../AuthProvider/AuthProvider';
-import Loading from '../../../Shared/Loading/Loading';
-import { MdOutlineDeleteOutline } from 'react-icons/md';
-import StudentDetails from './StudentDetails';
-import AddStudent from './AddStudent';
+import { Years } from '../../../../Utilities/Years';
 import { useGetStudentsQuery } from '../../../../features/api/studentApi';
 import { useGetUserQuery } from '../../../../features/api/userApi';
-import { useGetApplicationsQuery } from '../../../../features/api/applicationApi';
-import { Years } from '../../../../Utilities/Years';
-import DeleteStudent from './DeleteStudent';
+import Loading from '../../../Shared/Loading/Loading';
+import StudentDetails from './StudentDetails';
 
-const AllStudents = () => {
+const HallAlumni = () => {
   const { user, loading } = useContext(AuthContext);
   const inputRef = useRef(null);
   const [search, setSearch] = useState('');
@@ -22,7 +18,6 @@ const AllStudents = () => {
     data: students,
     isLoading: studentIsLoading,
     isError: studentIsError,
-    refetch,
   } = useGetStudentsQuery();
 
   const {
@@ -31,11 +26,9 @@ const AllStudents = () => {
     isError: userIsError,
   } = useGetUserQuery(user?.email);
 
-  const { data: applications, isLoading } = useGetApplicationsQuery();
-
   // console.log(applications);
 
-  if (userIsLoading || studentIsLoading || loading || isLoading) {
+  if (userIsLoading || studentIsLoading || loading) {
     <Loading />;
   }
 
@@ -47,14 +40,6 @@ const AllStudents = () => {
     return (
       <div>
         User not found.
-        <Loading />
-      </div>
-    );
-  }
-  if (!applications) {
-    return (
-      <div>
-        Applications not found.
         <Loading />
       </div>
     );
@@ -78,7 +63,8 @@ const AllStudents = () => {
       user?.dept?.toLowerCase().includes(search?.toString().toLowerCase());
     const matchesHall = user.hall === userData?.hallName;
 
-    const notDeleted = user?.isDeleted !== true;
+    // Check if the student is not deleted
+    const notDeleted = user?.isDeleted === true;
 
     if (search === '') {
       if (selectedYearPrefix) {
@@ -99,51 +85,37 @@ const AllStudents = () => {
   return (
     <div className='md:my-5 mb-5'>
       <div className='lg:flex lg:justify-between mb-4 p-4 pt-12 md:pt-6 lg:pt-5 bg-slate-300 rounded-lg md:ml-4'>
-        <div className='lg:flex lg:justify-between gap-9'>
-          <span className='flex justify-between gap-5 mb-3'>
-            <h2 className='text-4xl mb-4'>Student List</h2>
-            <input
-              className='lg:hidden block btn btn-primary rounded-xl w-20'
-              value='Add'
-            />
-          </span>
-          <span className='flex gap-5'>
-            <input
-              ref={inputRef}
-              id='searchName'
-              className='input input-bordered p-2 w-72 rounded-xl'
-              type='text'
-              placeholder='Search'
-              onChange={handleSearch}
-            />
-            <select
-              value={selectedYear || ''}
-              onChange={(e) => setSelectedYear(Number(e.target.value))}
-              className='select select-bordered w-72 max-w-xs'>
+        <h2 className='text-4xl mb-4'>Alumni Student List</h2>
+        <span className='flex gap-16'>
+          <input
+            ref={inputRef}
+            id='searchName'
+            className='input input-bordered p-2 w-72 rounded-xl'
+            type='text'
+            placeholder='Search'
+            onChange={handleSearch}
+          />
+          <select
+            value={selectedYear || ''}
+            onChange={(e) => setSelectedYear(Number(e.target.value))}
+            className='select select-bordered w-72 max-w-xs'>
+            <option
+              value=''
+              selected>
+              Select Session
+            </option>
+            {allYears?.map((yr, i) => (
               <option
-                value=''
-                selected>
-                Select Session
+                key={i}
+                value={yr}>
+                {yr}
               </option>
-              {allYears?.map((yr, i) => (
-                <option
-                  key={i}
-                  value={yr}>
-                  {yr}
-                </option>
-              ))}
-            </select>
-          </span>
-        </div>
-
-        <label
-          htmlFor='add-modal'
-          className='hidden btn btn-info rounded-xl w-32 lg:grid place-items-center'>
-          Add Student
-        </label>
+            ))}
+          </select>
+        </span>
       </div>
       <h2 className='flex ml-4 mb-2 text-xl font-semibold'>
-        Total Attached Students:{' '}
+        Total Alumni Students:{' '}
         <span className='text-red-700 font-bold underline pl-2'>
           {searchUser?.length}
         </span>{' '}
@@ -155,8 +127,6 @@ const AllStudents = () => {
             <th className='border-2 border-r-slate-300'>Name</th>
             <th className='border-2 border-r-slate-300'>Student Id</th>
             <th className='border-2 border-r-slate-300'>Department</th>
-            <th className='border-2 border-r-slate-300'>R. Status</th>
-            <th className='border-2'>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -177,44 +147,13 @@ const AllStudents = () => {
                 </td>
                 <td className='border-2 text-center'>{user.sid}</td>
                 <td className='border-2 w-80'>{user.dept}</td>
-                <td className='border-2 text-center'>
-                  {user?.room || 'Non-Residential'}
-                </td>
-                <td className='border-2 text-center p-0'>
-                  {/* <button
-                    onClick={() => handleDelete(user)}
-                    className={`text-red-600 text-2xl ${
-                      !user?.room ? 'btn btn-disabled' : null
-                    }`}>
-                    <MdOutlineDeleteOutline />
-                  </button> */}
-                  <button
-                    className={`text-red-600 text-2xl ${
-                      !user?.room ? 'btn btn-disabled' : null
-                    }`}
-                    onClick={() => {
-                      document.getElementById('my_modal_2').showModal();
-                      setSelected(user);
-                    }}>
-                    <MdOutlineDeleteOutline />
-                  </button>
-                </td>
-                <DeleteStudent
-                  user={selected}
-                  applications={applications}
-                  refetch={refetch}
-                />
               </tr>
             ))}
         </tbody>
       </table>
-      <AddStudent
-        details={userData}
-        refetch={refetch}
-      />
       {selected && <StudentDetails selected={selected}></StudentDetails>}
     </div>
   );
 };
 
-export default AllStudents;
+export default HallAlumni;

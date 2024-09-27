@@ -150,7 +150,7 @@ const Applications = () => {
           </thead>
 
           <tbody>
-            {sortedApplication.map((application, i) => (
+            {sortedApplication?.map((application, i) => (
               <tr
                 key={application?._id}
                 className='border-2'>

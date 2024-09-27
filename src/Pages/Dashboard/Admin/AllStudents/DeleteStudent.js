@@ -42,22 +42,27 @@ const DeleteStudent = ({ user, applications, refetch }) => {
     const application = applications?.find(
       (item) => item?.type === 'HallSeat' && item?.sid === usr?.sid
     );
-    const info = {
-      ...usr,
-      isDeleted: true,
-      room: '',
-    };
-    const room = {
-      room: usr.room,
-      hall: usr.hall,
-      id: usr.sid,
-    };
-    removeStudent(room);
-    updateStudent(info);
-    if (application) {
-      deleteApplication(application);
+    const agree = window.confirm(
+      'Are you sure you want to delete this student?'
+    );
+    if (agree) {
+      const info = {
+        ...usr,
+        isDeleted: true,
+        room: '',
+      };
+      const room = {
+        room: usr.room,
+        hall: usr.hall,
+        id: usr.sid,
+      };
+      removeStudent(room);
+      updateStudent(info);
+      if (application) {
+        deleteApplication(application);
+      }
+      refetch();
     }
-    refetch();
   };
 
   return (
