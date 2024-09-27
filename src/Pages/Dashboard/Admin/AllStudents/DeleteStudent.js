@@ -85,22 +85,37 @@ const DeleteStudent = ({ user, applications, refetch }) => {
             Are you sure? you want to release "${user?.name}" from hall.
           </h3>
           <p className='pt-8 flex justify-evenly'>
-            <button
-              onClick={() => {
-                handleTemporaryDelete(user);
-                document.getElementById('my_modal_2').close();
-              }}
-              className='btn btn-warning'>
-              Temporary
-            </button>
-            <button
-              onClick={() => {
-                handleParmanentDelete(user);
-                document.getElementById('my_modal_2').close();
-              }}
-              className='btn btn-error'>
-              Permanent
-            </button>
+            {user?.room ? (
+              <>
+                <button
+                  onClick={() => {
+                    handleTemporaryDelete(user);
+                    document.getElementById('my_modal_2').close();
+                  }}
+                  className='btn btn-warning'>
+                  Temporary
+                </button>
+                <button
+                  onClick={() => {
+                    handleParmanentDelete(user);
+                    document.getElementById('my_modal_2').close();
+                  }}
+                  className='btn btn-error'>
+                  Permanent
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={() => {
+                    handleParmanentDelete(user);
+                    document.getElementById('my_modal_2').close();
+                  }}
+                  className='btn btn-error'>
+                  Permanent
+                </button>
+              </>
+            )}
           </p>
         </div>
         <form
