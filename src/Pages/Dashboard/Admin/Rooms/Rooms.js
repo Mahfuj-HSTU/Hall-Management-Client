@@ -118,7 +118,7 @@ const Rooms = () => {
       <h2 className='flex ml-4 mb-3 text-xl font-semibold'>
         Total Rooms:
         <span className='text-red-700 font-bold underline pl-2'>
-          {filteredRoom.length}
+          {filteredRoom?.length}
         </span>{' '}
       </h2>
       <table className='table table-compact w-full border-2 shadow-lg md:mx-4 mx-0 overflow-x-scroll'>
