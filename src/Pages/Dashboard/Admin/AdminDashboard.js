@@ -22,8 +22,11 @@ const AdminDashboard = () => {
     <Loading />;
   }
 
-  const filteredStudent = students?.filter((student) => {
-    return student.hall === details.hallName;
+  const filteredPresentStudent = students?.filter((student) => {
+    return student.hall === details.hallName && student.isDeleted !== true;
+  });
+  const filteredPastStudent = students?.filter((student) => {
+    return student.hall === details.hallName && student.isDeleted === true;
   });
   const filteredRooms = rooms?.filter((room) => {
     return room.hall === details.hallName;
@@ -34,7 +37,8 @@ const AdminDashboard = () => {
   });
   // console.log(filteredApplications);
 
-  const totalAttachedStudent = filteredStudent?.length;
+  const totalAttachedStudent = filteredPresentStudent?.length;
+  const totalPastStudent = filteredPastStudent?.length;
   const totalRoom = filteredRooms?.length;
   const totalPendingApplication = filteredApplications?.filter(
     (application) => {
@@ -42,10 +46,10 @@ const AdminDashboard = () => {
     }
   ).length;
   const totalSeat = totalRoom * 4;
-  const totalResedentialStudents = filteredStudent?.filter((student) => {
+  const totalResedentialStudents = filteredPresentStudent?.filter((student) => {
     return student.room;
   }).length;
-  console.log(totalSeat, totalAttachedStudent, totalPendingApplication);
+  // console.log(totalSeat, totalAttachedStudent, totalPendingApplication);
   const totalavailabelSeats = totalSeat - totalResedentialStudents;
 
   return (
@@ -77,6 +81,12 @@ const AdminDashboard = () => {
               Total Residential Students :{' '}
               <span className='underline font-semibold'>
                 {totalResedentialStudents}
+              </span>
+            </p>
+            <p>
+              Total Alumni Students :{' '}
+              <span className='underline font-semibold'>
+                {totalPastStudent}
               </span>
             </p>
           </div>

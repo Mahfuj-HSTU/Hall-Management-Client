@@ -1,25 +1,22 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import hstu from '../../../images/HSTU_Logo.png';
 import { Link } from 'react-router-dom';
 import { RiArrowDropDownLine } from 'react-icons/ri';
 import { IoPersonCircle } from 'react-icons/io5';
 import { AuthContext } from '../../../AuthProvider/AuthProvider';
-import { useQuery } from '@tanstack/react-query';
-import { ServerLink } from '../../../Hooks/useServerLink';
 import { useGetUserQuery } from '../../../features/api/userApi';
 import Loading from '../Loading/Loading';
+import { useGetNoticeQuery } from '../../../features/api/noticeApi';
+import NoticeDetails from '../../Halls/Notice/NoticeDetails';
 
 const HallHeader = ({ hall }) => {
+  const [selected, setSelected] = useState('');
   const { user, logOut } = useContext(AuthContext);
   const handleLogOut = () => {
     logOut().then().catch();
   };
 
-  const { data: notices = [] } = useQuery({
-    queryKey: ['notices'],
-    queryFn: () => fetch(`${ServerLink}/api/notice`).then((res) => res.json()),
-  });
-
+  const { data: notices } = useGetNoticeQuery();
   const { data, isLoading, isError } = useGetUserQuery(user?.email);
 
   const filteredNotice = notices?.filter((item) => item.hall === hall?.name);
@@ -53,28 +50,28 @@ const HallHeader = ({ hall }) => {
           </li>
         </ul>
       </li>
-      {/* <li className='font-semibold'>
-        <Link to={`/hall/${hall._id}/notice`}>Notice</Link>{' '}
-      </li> */}
       <li className='font-semibold relative group'>
         <button tabIndex={1}>
           Notice
           <RiArrowDropDownLine className='text-xl' />
         </button>
-        <ul className='absolute hidden group-hover:block mt-9 z-[1] menu p-2 shadow bg-base-100 rounded-box w-72 divide-y divide-blue-300'>
-          {filteredNotice?.map((notice) => (
-            <li className='collapse collapse-arrow bg-base-200'>
-              <input
-                type='radio'
-                name='my-accordion-2'
-                checked='checked'
-              />
-              <p className='collapse-title font-medium'>{notice?.title}</p>
-              <p className='collapse-content'>
-                {notice?.description.slice(0, 35)}
-              </p>
+        <ul className='absolute hidden group-hover:block mt-9 z-[1] menu p-2 shadow bg-base-100 rounded-lg w-72 divide-y divide-blue-300'>
+          {filteredNotice?.slice(0, 10).map((notice) => (
+            <li className='bg-base-200 mb-1'>
+              {/* <p className='font-medium'>{notice?.title}</p> */}
+              <label
+                htmlFor='notice-modal'
+                className='link link-primary'
+                onClick={() => setSelected(notice)}>
+                {notice?.title}
+              </label>
             </li>
           ))}
+          {filteredNotice?.length > 10 && (
+            <li className='font-semibold'>
+              <Link to={`/hall/${hall._id}/notice`}>Notice</Link>{' '}
+            </li>
+          )}
         </ul>
       </li>
       <li className='font-semibold'>
@@ -158,9 +155,7 @@ const HallHeader = ({ hall }) => {
           </ul>
         </div>
       </div>
-      {/* <div className='navbar-end hidden lg:flex '>
-        <ul className='menu menu-horizontal p-0'>{menuItems}</ul>
-      </div> */}
+      <NoticeDetails selected={selected} />
     </div>
   );
 };
