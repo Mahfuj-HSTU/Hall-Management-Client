@@ -1,6 +1,7 @@
 import AdminDashboard from '../Pages/Dashboard/Admin/AdminDashboard';
 import AdminProfile from '../Pages/Dashboard/Admin/AdminProfile/AdminProfile';
 import AllStudents from '../Pages/Dashboard/Admin/AllStudents/AllStudents';
+import HallAlumni from '../Pages/Dashboard/Admin/AllStudents/HallAlumni';
 import Applications from '../Pages/Dashboard/Admin/Applications/Applications';
 import AddNotice from '../Pages/Dashboard/Admin/Notice/AddNotice';
 import Rooms from '../Pages/Dashboard/Admin/Rooms/Rooms';
@@ -28,6 +29,14 @@ export const adminPaths = [
     element: (
       <AdminRoute>
         <AllStudents></AllStudents>
+      </AdminRoute>
+    ),
+  },
+  {
+    path: 'alumni-students',
+    element: (
+      <AdminRoute>
+        <HallAlumni></HallAlumni>
       </AdminRoute>
     ),
   },
