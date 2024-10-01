@@ -30,8 +30,6 @@ const Students = ({ hall }) => {
   const totalpresentStudent = attachStudent - presentStudent?.length;
   const availabelSeat = totalSeat - totalpresentStudent;
 
-  // console.log(filteredStudent);
-
   return (
     <div>
       {' '}
@@ -55,7 +53,7 @@ const Students = ({ hall }) => {
                 data-aos='fade-up'
                 className='card grid lg:w-[300px] w-[350px] text-white mb-3'>
                 <div className='card-body items-center'>
-                  <h1 className=' card-title text-7xl'>{attachStudent}</h1>
+                  <h1 className=' card-title text-7xl'>{'attachStudent'}</h1>
                   <h2 className=' text-xl'>Total Atached Students</h2>
                 </div>
               </div>
@@ -72,7 +70,7 @@ const Students = ({ hall }) => {
                 className='card lg:w-[300px] w-[350px] text-white mb-3'>
                 <div className='card-body items-center'>
                   <h1 className=' card-title text-7xl'>
-                    {totalpresentStudent}
+                    {'totalpresentStudent'}
                   </h1>
                   <h2 className=' text-xl'>Total Present Students </h2>
                 </div>

@@ -1,4 +1,5 @@
-const currentYear = new Date().getFullYear();
+// const currentYear = new Date().getFullYear();
+const currentYear = 2020;
 
 export const Years = (selectedYear) => {
   //* Generate a list of years for the past 5 years
