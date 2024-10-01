@@ -25,7 +25,7 @@ export const adminPaths = [
     ),
   },
   {
-    path: 'students',
+    path: 'student',
     element: (
       <AdminRoute>
         <AllStudents></AllStudents>
@@ -41,7 +41,7 @@ export const adminPaths = [
     ),
   },
   {
-    path: 'application',
+    path: 'applications',
     element: (
       <AdminRoute>
         <Applications></Applications>
@@ -57,7 +57,7 @@ export const adminPaths = [
     ),
   },
   {
-    path: 'rooms',
+    path: 'room',
     element: (
       <AdminRoute>
         <Rooms></Rooms>
