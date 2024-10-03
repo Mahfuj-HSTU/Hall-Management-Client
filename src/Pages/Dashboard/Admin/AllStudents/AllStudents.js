@@ -181,13 +181,6 @@ const AllStudents = () => {
                   {user?.room || 'Non-Residential'}
                 </td>
                 <td className='border-2 text-center p-0'>
-                  {/* <button
-                    onClick={() => handleDelete(user)}
-                    className={`text-red-600 text-2xl ${
-                      !user?.room ? 'btn btn-disabled' : null
-                    }`}>
-                    <MdOutlineDeleteOutline />
-                  </button> */}
                   <button
                     className={`text-red-600 text-2xl`}
                     onClick={() => {
